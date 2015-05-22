@@ -1,0 +1,118 @@
+<template name="table">
+   <head>
+<title>new job</title>
+</head>
+
+<body>
+
+  
+
+  <div id="right">
+    <div id="wrap">
+    <!--This script basically makes sure that there is data in each of the sections of the form-->
+    <script> 
+function validateForm() {
+    var x = document.forms["myForm"]["partnumber"].value;
+    var y = document.forms["myForm"]["initials"].value;
+    var z = document.forms["myForm"]["quantity"].value;
+    var w = document.forms["myForm"]["cavitation"].value;
+    if (x == null || x == "") {
+        alert("Please enter a part number");
+        return false;
+    }
+    if (y == null || y == "") {
+        alert("Please enter your initials");
+        return false;
+    }
+    if (z == null || z == "") {
+        alert("Please enter the quantity");
+        return false;
+    }
+    if (w == null || w == "") {
+        alert("Please enter the cavitation");
+        return false;
+    }
+//     if(!this.form.checkbox.checked)
+// {
+//     alert('Please check the checkbox to confirm doing the following tasks');
+//     return false;
+// }
+}
+</script> 
+      <form name="myForm" onsubmit="return validateForm()" method="post" class="workcenterSelection">
+      <table>
+        <tr>
+      <td> Work Center: {{>workcenter}}</td>
+      </tr> 
+        <tr>
+        <td>Part number:</td>
+        <td>  
+          <div class="form-group">
+            <label for="partnumber"></label>
+            <input type="partnumber" name="partnumber" required class="form-control" id="partnumber"  placeholder="Enter Part number">
+          </div>
+        </td>
+        </tr>
+        <tr>
+        <td colspan="2"><span id="project-id"></span>
+        </td>
+        </tr>
+        <tr>
+        <td>Initials:</td> <td> 
+          <div class="form-group">
+            <label for="initials"></label>
+            <input type="initials" name="initials" required class="form-control" id="initials" placeholder="Enter Initials">
+          </div>
+          </td>
+        </tr>
+        <tr>
+        <td>Quantity:</td> <td> 
+          <div class="form-group">
+            <label for="quantity"></label>
+            <input type="quantity" name="quantity" required class="form-control" id="quantity" placeholder="Enter Quantity">
+          </div>
+          </td>
+        </tr>
+        <tr>
+        <td>Cavitation:</td> <td> 
+          <div class="form-group">
+            <label for="cavitation"></label>
+            <input type="cavitation" name="cavitation" required class="form-control" id="cavitation" placeholder="Enter Cavitation">
+          </div>
+          </td>
+        </tr>
+        <tr>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <div class="checkbox">
+              <label>
+                  <input  name = "checkbox" required type="checkbox" value="check"> By checking this box I verify that I have completed the following:
+                 <!--  <input type="submit" name="email_submit" value="submit" onclick="if(!this.form.checkbox.checked){alert('Please check the check box.');return false}"  /> -->
+              </label>
+
+            </div> 
+            <ul>
+              <li>Process verification</li>
+              <li>1st piece inspection</li>
+              <li>Mold protection verification</li>
+            </ul>
+          </td>
+        </tr>
+      </table>
+        
+       <button type="submit" class="btn btn-default" onclick="alert('Make sure the machine is in Automatic before continuing');">Select</button>
+      <!-- <input type="submit" value="Submit" class="btn btn-primary"/> -->
+
+      </form>
+<!-- <button type="submit" class="btn btn-default" onclick="alert('Make sure the machine is in Automatic before continuing');">Enter</button> 
+
+ -->
+<!-- <input type='button' onclick='checkForm()' value='Enter' /> -->
+
+    </div>
+  </div>
+</body>
+
+
+</template>

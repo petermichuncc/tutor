@@ -1,0 +1,39 @@
+<!-- a layout for the main pages that shows the side bar with various options -->
+<template name="layout">
+<script src="functions.js"></script>
+
+  
+   <div id="left"> <!--start of div -->
+   
+ <script type = "text/javascript">
+ $(".nav1").on("click", function(event){
+     if(confirm("Page Sent")){
+        return true;
+     } else {
+         event.preventDefault();
+        return false;
+     }
+ });
+
+
+ </script> 
+
+
+
+
+   <a href="{{pathFor 'main'}}"><input id="mybutton" type="image" name="submit" value="submit" src="http://10.87.38.162/web/logo.jpg" width=100%></a>
+  		
+   		<a class="nav1" href="javascript:super()">page super</a>
+      
+      	<a class="nav1" href="javascript:techalert()">page tech</a>
+      	<a class="nav1" href="javascript:page('mh')">page mat HDL</a>
+      	<a class="nav" href="{{pathFor 'table'}}">start new job</a><a class="nav" href="{{pathFor 'links'}}">links</a>
+    </div>
+    <div id="right">
+      {{> yield}}
+    </div>
+  
+</template>
+
+
+

@@ -1,0 +1,368 @@
+body{
+    font-family: verdana,arial,sans-serif;
+    margin: 0; 
+    padding: 0;
+  background: #999999;
+  color: black;
+  font-weight: 300;
+  height: 100%;
+}
+table{
+  width: 100%;
+    font-size: 20px;
+
+}
+#machinenumber
+{
+
+  color:black;
+}
+table.parts
+{
+align: "left";
+width:"2000";
+
+
+
+}
+table th{ 
+  padding: 2%;
+        font-size: 15px;
+}
+table td{
+  padding: 2%;
+}
+
+table.display{
+    border-collapse: separate;
+    border-spacing: 3px 0px;
+    font-size: 20px;
+  text-align: center;
+}
+
+table.display th{ 
+  padding: 5px;
+  text-align: center;
+}
+
+table.display td{ 
+  padding: 5px;
+  width: 3%;
+  border-bottom:#222222 1px solid;
+}
+
+table.display tr{ 
+  padding: 5px;
+}
+
+a:link, a:visited{
+color: #FFA07A;
+text-decoration: none;
+text-shadow: 0.1em 0.1em 0.05em #000;
+font-size: 30px;
+
+}
+a:active{
+color: #FF7256;
+text-decoration: none;
+text-shadow: 0.1em 0.1em 0.05em #000;
+
+
+}
+
+a.nav:link, a.nav:visited{
+    position: relative;
+  display: block;
+  height: 3%;
+  border-bottom: #333333 1px solid;
+    outline: none;
+    color: #ffffff;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  padding-top: 15%;
+    padding-bottom: 15%;
+  padding-left: 15%;
+    font-size: 90%;
+}
+a.nav:active{
+    position: relative;
+  display: block;
+  background: #333333;
+  height: 3%;
+  border-bottom: #333333 1px solid;
+    outline: none;
+    color: #000000;
+    text-decoration: none;
+  text-transform: uppercase;
+    letter-spacing: 1px;
+  padding-top: 15%;
+    padding-bottom: 15%;
+  padding-left: 15%;
+    font-size: 90%;
+}
+a.nav1:link, a.nav1:visited{
+    position: relative;
+  display: block;
+  height: 3%;
+  border-bottom: #333333 1px solid;
+    outline: none;
+    color: #ffffff;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  padding-top: 15%;
+    padding-bottom: 15%;
+  padding-left: 15%;
+    font-size: 90%;
+}
+a.nav1:active{
+    position: relative;
+  display: block;
+  background: #333333;
+  height: 3%;
+  border-bottom: #333333 1px solid;
+    outline: none;
+    color: #000000;
+    text-decoration: none;
+  text-transform: uppercase;
+    letter-spacing: 1px;
+  padding-top: 15%;
+    padding-bottom: 15%;
+  padding-left: 15%;
+    font-size: 90%;
+}
+
+.modal-title
+{
+
+position: relative;
+
+}
+textarea{
+  width: 100%;
+}
+
+#centered_box{
+    background: #666666;
+  padding: 2%;
+    box-shadow: 5px 5px 15px #888888;
+}
+
+#container{
+  padding: 15px;
+  margin-right: 10%;
+}
+#repairlog_container{
+  padding: 15%;
+  margin-left:10%;
+  margin-right: 10%;
+  margin-top:5%;
+}
+.modalDialog {
+  position: fixed;
+  font-family: Arial, Helvetica, sans-serif;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 99999;
+  opacity:0;
+  -webkit-transition: opacity 400ms ease-in;
+  -moz-transition: opacity 400ms ease-in;
+  transition: opacity 400ms ease-in;
+  pointer-events: none;
+}
+
+#status{
+  border:#222222 1px solid;
+    overflow: hidden;
+    background: green;
+    box-shadow: 5px 5px 15px #888888;
+  font-size: 10px;
+  padding: 1%;
+}
+option.id
+{
+color: black;
+}
+}
+#left{
+  position: fixed;
+  top:0;
+  bottom:0;
+  left:0;
+  height:100%;
+  background: #000000;
+  width:17%;
+}
+#choice
+{
+
+  color:black;
+}
+#right{
+  align: left;
+  color: black;
+  font-size: 10px;
+  position: absolute;
+  top: 0;
+  left: 17%;
+  right:0;
+  bottom: 0;
+  padding: 2%;
+}
+#rightNew{
+  align: left;
+  font-size: 10px;
+  position: absolute;
+  top: 0;
+  left: 17%;
+  right:0;
+  bottom: 0;
+  padding: 2%;
+}
+.progresslabel {
+    font-family: "Arial";
+  color: #000000;
+    position: relative;
+  top: -14px;
+  left: 5%;
+    font-size: 10px;
+}
+input[type="button"]{ 
+  font-size: 10px;
+  border: #333333 1px solid;
+  background: #c2c2c2;
+  padding: 1%;
+  box-shadow: 0px 5px 6px #222222;
+  color:black;
+}
+input[type="button"]:disabled{
+  background:#dddddd;
+  color:black;
+} 
+input[type="button"]:active{
+  margin-top: 2px;
+  box-shadow: none;
+  color:black;
+} 
+input[type="submit"]{ 
+  font-size: 10px;
+  border: #333333 1px solid;
+  background: #c2c2c2;
+  padding: 1%;
+  box-shadow: 0px 5px 6px #222222;
+  color:black;
+}
+input[type="submit"]:disabled{
+  background:#dddddd;
+  color:black;
+} 
+input[type="submit"]:active{
+  margin-top: 2px;
+  box-shadow: none;
+  color:black;
+} 
+
+progress {
+  width: 100%;
+  height: 15px;
+}
+
+#inmanual {
+     visibility: hidden;
+     position: absolute;
+     left: 0px;
+     top: 0px;
+     width:100%;
+     height:100%;
+     text-align:center;
+     z-index: 1000;
+background: rgba(47, 47, 47, .5);
+}
+
+#inmanual div {
+     width:300px;
+     margin: 100px auto;
+     background-color: #222222;
+     border:1px solid #000;
+     padding:15px;
+     text-align:center;
+}
+#slow {
+     visibility: hidden;
+     position: absolute;
+     left: 0px;
+     top: 0px;
+     width:100%;
+     height:100%;
+     text-align:center;
+     z-index: 1000;
+background: rgba(47, 47, 47, .5);
+}
+
+#slow div {
+     width:300px;
+     margin: 100px auto;
+     background-color: #222222;
+     border:1px solid #000;
+     padding:15px;
+     text-align:center;
+}
+#techalert {
+     visibility: hidden;
+     position: absolute;
+     left: 0px;
+     top: 0px;
+     width:100%;
+     height:100%;
+     text-align:center;
+     z-index: 1000;
+background: rgba(47, 47, 47, .5);
+}
+
+#techalert div {
+     width:300px;
+     margin: 100px auto;
+     background-color: #222222;
+     border:1px solid #000;
+     padding:15px;
+     text-align:center;
+}
+#confirm {
+     visibility: hidden;
+     position: absolute;
+     left: 0px;
+     top: 0px;
+     width:100%;
+     height:100%;
+     text-align:center;
+     z-index: 1000;
+background: rgba(47, 47, 47, .5);
+}
+
+#confirm div {
+     width:300px;
+     margin: 100px auto;
+     background-color: #222222;
+     border:1px solid #000;
+     padding:15px;
+     text-align:center;
+}
+
+#submit_button{
+  margin-right: 30px;
+}
+
+#submit_buttons {
+    margin-top: 30px;
+    margin-right: 30px;
+}
+
+#machine {
+    display:block;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}

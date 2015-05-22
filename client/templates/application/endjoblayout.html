@@ -1,0 +1,14 @@
+<!-- Slightly altered layout -->
+<template name="endjoblayout">
+	<div id="left">
+		<a ><input id="mybutton" type="image" name="submit" value="submit" src="http://10.87.38.162/web/logo.jpg" width=100%></a>
+		<a class="nav" href="javascript:page('super')">page super</a>
+		<a class="nav" href="javascript:techalert()">page Tech</a>
+		<a class="nav" href="javascript:page('mh')">page mat HDL</a>
+		<a class="nav" href="endjob.html">end current job</a><a class="nav" href="links.html">links</a>
+	</div>
+		<div id="right">
+		{{>yield}}
+		</div>
+
+</template>

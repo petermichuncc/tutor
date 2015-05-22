@@ -1,0 +1,31 @@
+<!--When a job is started this is shown to allow the user to select the machine number to begin with -->
+<template name="start">
+   <link href="style.css" rel="stylesheet" type="text/css">
+  
+  	
+	<!-- Basically this part presents a form that is populated by a machinenumber template	-->		  
+<h3>Assign a Machine:</h3>
+
+<form class="workcenterSelection">
+<select class="form-control" id="someId">
+{{#each entries}}
+<option value="{{machinenumber}}">{{machinenumber}}</option>
+{{/each}}
+</select>
+<button type="submit" class="btn btn-default">Select</button>
+</form>
+
+	
+</template>
+  
+			
+
+			
+				
+				 
+				
+
+
+				
+			
+			
