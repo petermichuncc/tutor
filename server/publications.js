@@ -11,3 +11,6 @@ Meteor.publish('machines', function() {
 Meteor.publish('parts', function() {
   return Parts.find();
 });
+Meteor.publish('cycles', function() {
+  return Cycles.find();
+});

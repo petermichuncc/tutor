@@ -1,30 +1,22 @@
-//Meteor.subscribe('cycles-recent');
-
-// Meteor.methods({
-//   getCurrentTime: function () {
-//     var currentTime = moment().format("h:mm:ss a");
-//     console.log("result from client SON " + currentTime);
-//     return currentTime;
-//   }
+// Meteor.subscribe('parts-to-access', function () {
+//     var test = Parts.find({workcenter: '304A'}).fetch();
+//     console.log(test[0].cavitation);
 // });
+Meteor.subscribe('parts');
+//console.log("Getting a single entry: "+ Parts.find().count() );
 
 var start_time = moment().hour(7).format("YYYY-MM-DD hh:mm:ss.SSS");
 console.log(start_time);
 
 var partStats = {
-    workcenterName: "01",
-    partNumber: "CCDD",
-    partCycleTime: "23",
-    partsPlanned: "20000",
-    cavities: "4",
-    tech: "LE",
-    startTime: start_time
-};
-//
-//Jobs.insert({
-//    workcenterName: "01"
-//});
-
+    workcenterName: Machines.findOne().machinenumber,
+     partNumber: Parts.findOne().partnumber,
+     partCycleTime: "23",
+     partsPlanned: Parts.findOne().quantity,
+     cavities: Parts.findOne().cavitation,
+     tech: Parts.findOne().initials,
+     startTime: start_time
+ };
 
 
 Template.job.helpers({
@@ -43,16 +35,39 @@ Template.job.helpers({
     incomingCycles: function () {
         //grab all cycles from today
         Meteor.subscribe('cycles-recent', partStats.startTime);
-        return (Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()) * partStats.cavities;
+        return (100 * partStats.cavities);
     },
     partsPlanned: function () {
         return partStats.partsPlanned;
     },
     partNumber: function () {
-        return partStats.partNumber;
+         return partStats.partNumber;
     },
     earnedHours: function () {
-        var earnedHoursCalc = ((Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()) * partStats.cavities) / partStats.partsPlanned;
+        var earnedHoursCalc = (1 * partStats.cavities) / partStats.partsPlanned;
         return earnedHoursCalc;
-    }
+    },
+    parts: function() {
+    return Parts.find();
+   },
+   columns: function() {
+     // the context is a part
+     var result = _.values(this.data);
+     result.unshift(this.text);
+     return result;
+}
 });
+
+// Template.table.events({
+//  "submit .workcenterSelection": function(event){
+//  event.preventDefault();
+//  console.log(event);
+//  var text = $( "#someId" ).val();
+//  var partStats = {
+//        partNumber: $( "#partnumber" ).val(),
+//         partsPlanned: $( "#quantity" ).val(),
+//        tech: $( "#initials" ).val(),
+//         cavities: $( "#cavitation" ).val(),
+//         workcenter: Machines.findOne().machinenumber
+
+//       };
