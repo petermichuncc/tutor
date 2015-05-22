@@ -1,0 +1,31 @@
+<template name="job">
+  Time to completion: {{calculateTime}} <br />
+  <!--<table width="90%">-->
+    <!--<tr><th>Index Key</th><th>Press Number</th><th>Auto Status</th><th>Cycle Time Stamp</th></tr>-->
+  <!--{{#each incomingCycles}}-->
+    <!--<tr><td>{{IndexKey}}</td><td>{{PressNumber}}</td><td>{{AutoStatus}}</td> <td>{{CycleTimeStamp}}</td></tr>-->
+  <!--{{/each}}-->
+  <!--</table>-->
+
+  <table width="90%">
+      <tr>
+          <th>Hour</th>
+          <th>Part #</th>
+          <th>Planned</th>
+          <th>Actual</th>
+          <th>Earned Hours</th>
+          <th>Status</th>
+          <th>Reason</th>
+      </tr>
+      <tr>
+          <td>STUB</td>
+          <td>{{partNumber}}</td>
+          <td>{{partsPlanned}}</td>
+          <td>{{incomingCycles}}</td>
+          <td>{{earnedHours}}</td>
+          <td>STUB</td>
+          <td>STUB</td>
+      </tr>
+  </table>
+
+</template>
