@@ -1,6 +1,8 @@
 // Helper for the parts template that feeds it data
-Meteor.subscribe('parts');
 
+
+var start_time = moment().hour(7).format("YYYY-MM-DD hh:mm:ss.SSS");
+console.log(start_time);
 
 
 
@@ -22,6 +24,11 @@ Template.job.helpers({
         //grab all cycles from today
         
         return (100 * Parts.findOne().cavitation);
+    },
+    calculateTime: function () {
+        //calculate the amount of time needed for the job
+        var estimatedTime = (Parts.findOne().quantity / Parts.findOne().cavitation) * "23";
+        return displayHours = moment().startOf('day').seconds(estimatedTime).format('H:mm:ss');
     }
 
 });

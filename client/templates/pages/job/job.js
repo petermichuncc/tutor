@@ -2,21 +2,11 @@
 //     var test = Parts.find({workcenter: '304A'}).fetch();
 //     console.log(test[0].cavitation);
 // });
-Meteor.subscribe('parts');
+
 //console.log("Getting a single entry: "+ Parts.find().count() );
 
 var start_time = moment().hour(7).format("YYYY-MM-DD hh:mm:ss.SSS");
 console.log(start_time);
-
-var partStats = {
-    workcenterName: Machines.findOne().machinenumber,
-     partNumber: Parts.findOne().partnumber,
-     partCycleTime: "23",
-     partsPlanned: Parts.findOne().quantity,
-     cavities: Parts.findOne().cavitation,
-     tech: Parts.findOne().initials,
-     startTime: start_time
- };
 
 
 Template.job.helpers({
@@ -57,17 +47,3 @@ Template.job.helpers({
      return result;
 }
 });
-
-// Template.table.events({
-//  "submit .workcenterSelection": function(event){
-//  event.preventDefault();
-//  console.log(event);
-//  var text = $( "#someId" ).val();
-//  var partStats = {
-//        partNumber: $( "#partnumber" ).val(),
-//         partsPlanned: $( "#quantity" ).val(),
-//        tech: $( "#initials" ).val(),
-//         cavities: $( "#cavitation" ).val(),
-//         workcenter: Machines.findOne().machinenumber
-
-//       };
