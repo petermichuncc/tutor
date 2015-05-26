@@ -14,6 +14,9 @@ Meteor.publish('parts', function() {
 Meteor.publish('cycles', function() {
   return Cycles.find();
 });
+Meteor.publish('users', function() {
+  return UserAccounts.find();
+});
 
 
 Meteor.publish('cycles-recent', function (startTime) {

@@ -9,6 +9,11 @@ console.log(start_time);
 // console.log("This is your cavitation" +Parts.findOne().cavitation);
 
 Template.job.helpers({
+  calculateTime: function () {
+         //calculate the amount of time needed for the job
+         var estimatedTime = (partStats.partsPlanned / partStats.cavities) * partStats.partCycleTime;
+         return displayHours = moment().startOf('day').seconds(estimatedTime).format('H:mm:ss');
+     },
   parts: function() {
     return Parts.find();
    },
