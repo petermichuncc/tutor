@@ -14,3 +14,9 @@ Meteor.publish('parts', function() {
 Meteor.publish('cycles', function() {
   return Cycles.find();
 });
+
+
+Meteor.publish('cycles-recent', function (startTime) {
+console.log(startTime);
+return Cycles.find({CycleTimeStamp: { $gte: startTime}});
+});

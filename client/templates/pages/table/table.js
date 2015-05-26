@@ -25,7 +25,7 @@ console.log(text);
 Meteor.subscribe('parts');
      Meteor.call('partsInsert', post)
 console.log("second hi");
-Router.go('main'); 
+Router.go('job'); 
 return false;
 
 }
