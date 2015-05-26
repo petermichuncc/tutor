@@ -20,6 +20,6 @@ Meteor.publish('users', function() {
 
 
 Meteor.publish('cycles-recent', function (startTime) {
-console.log(startTime);
+console.log("This is the start time for the publish" +startTime);
 return Cycles.find({CycleTimeStamp: { $gte: startTime}});
 });
