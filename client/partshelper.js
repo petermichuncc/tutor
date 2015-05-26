@@ -11,8 +11,9 @@ console.log(start_time);
 Template.job.helpers({
   calculateTime: function () {
          //calculate the amount of time needed for the job
-         var estimatedTime = (partStats.partsPlanned / partStats.cavities) * partStats.partCycleTime;
-         return displayHours = moment().startOf('day').seconds(estimatedTime).format('H:mm:ss');
+         estimatedTime = (Parts.findOne().quantity / Parts.findOne().cavitation) *"23";
+         displayHours = moment().startOf('day').seconds(estimatedTime).format("YYYY-MM-DD hh:mm:ss.SSS");
+         return displayHours;
      },
   parts: function() {
     return Parts.find();
@@ -25,22 +26,19 @@ Template.job.helpers({
    },
    earnedHours: function () {
         var earnedHoursCalc = ((Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()) * Parts.findOne().cavitation) / Parts.findOne().quantity;
+        earnedHoursCalc = earnedHoursCalc.toFixed(2);
         return earnedHoursCalc;
         
     },
      incomingCycles: function () {
         //grab all cycles from today
-
+    if (moment().format("YYYY-MM-DD hh:mm:ss.SSS") < displayHours) {
          Meteor.subscribe('cycles-recent', start_time);
+     }
         return (Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()) * Parts.findOne().cavitation ;
         console.log("This is the cycles find"+Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count());
     },
-    calculateTime: function () {
-        //calculate the amount of time needed for the job
-        var estimatedTime = (Parts.findOne().quantity / Parts.findOne().cavitation) * "23";
-        return displayHours = moment().startOf('day').seconds(estimatedTime).format('H:mm:ss');
-   
-    },
+    
     returnTimeStamp: function () {
         //calculate the amount of time needed for the job
         var timeStamp = parts.findOne().timeStamp;
