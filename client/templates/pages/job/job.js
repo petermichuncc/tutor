@@ -29,27 +29,25 @@ Template.job.helpers({
      return result;
    },
    earnedHours: function () {
+    
         var earnedHoursCalc = ((Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()) * Parts.findOne().cavitation) / Parts.findOne().quantity;
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
+        console.log("This is the earned hours "+ earnedHoursCalc)
         return earnedHoursCalc;
-        
-    },
+            },
      incomingCycles: function () {
         //grab all cycles from today
     if (moment().format("YYYY-MM-DD hh:mm:ss.SSS") < displayHours) {
          Meteor.subscribe('cycles-recent', Parts.findOne().timestamp.toString());
      }
-     
-        return (Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()) * Parts.findOne().cavitation ;
+             return (Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()) * Parts.findOne().cavitation ;
         console.log("This is the cycles find"+Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count());}
       ,
-    
-    returnTimeStamp: function () {
+        returnTimeStamp: function () {
         //calculate the amount of time needed for the job
          console.log("This is the time stamp "+ Parts.findOne().timestamp.toString());
         
-   
-    },
+       },
     progressBar: function () {
         //calculate the amount of time needed for the job
         //This function will require converting the string to a number
@@ -58,8 +56,7 @@ Template.job.helpers({
         console.log("This is the formatted data" +moment(displayHours).format("h"));
         var percent = moment(Parts.findOne().timestamp.toString()).format("h")/moment(displayHours).format("h");
          return percent*100;
-        
-   
+         
     },
 
     changeStatus: function() {
@@ -73,7 +70,6 @@ Template.job.helpers({
   else {
     $("#status").css("background-color", "black");
   }
-
 
     },
     changeBar: function() {

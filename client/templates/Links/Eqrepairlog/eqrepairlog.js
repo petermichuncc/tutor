@@ -6,7 +6,7 @@ console.log(event);
 var post = {
       submissionnumber: $( "#machine" ).val()
      };
-console.log(text);
+
 Meteor.subscribe('submissions');
 Meteor.call('submissionsInsert', post)
  Router.go('entry'); 
