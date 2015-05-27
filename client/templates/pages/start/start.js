@@ -28,18 +28,18 @@
 
  // });
  
- Template.start.events({
-"submit .workcenterSelection": function(event){
-event.preventDefault();
-console.log(event);
-var text = $( "#someId" ).val();
-console.log(text);
-currentYear = Meteor.call('getCurrentYear');
-console.log("second hi");
-return false;
-Router.go('main'); 
-}
-});
+//  Template.start.events({
+// "submit .workcenterSelection": function(event){
+// event.preventDefault();
+// console.log(event);
+// var text = $( "#someId" ).val();
+// console.log(text);
+// currentYear = Meteor.call('getCurrentYear');
+// console.log("second hi");
+// return false;
+// Router.go('main'); 
+// }
+// });
 
  Template.start.events({
 "submit .workcenterSelection": function(event){

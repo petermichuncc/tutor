@@ -15,13 +15,14 @@
         </script>
     </head>
     <body>  
-        <h2>Week of: 1/26/2015 </h2>
+        <h2>Week of: 1/26/2015 </h2>{{>submission}}
         <div id="centered_box">
             <input type="hidden" id="updated"/>
             <input type="hidden" id="logged"/>
             <span style="float:right;" id="countdown"></span><br/>
             <form onsubmit='return checkForm()' action="results.php" method="POST" class="workcenterSelection">
-                For replog_1004:<input type='hidden' name='machine' value ='replog_1004'/>                <br/><br/>
+                
+                {{>submission}}:<input type='hidden' name='machine' value ='replog_1004'/>                <br/><br/>
                 <table>
                     <tr>
                         <td>Date: <input type='text' id='datepicker' name='date' /></td>

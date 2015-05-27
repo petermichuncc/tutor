@@ -60,8 +60,35 @@ Template.job.helpers({
          return percent*100;
         
    
-    }
+    },
 
+    changeStatus: function() {
+      //convert this if else statement to change the 
+
+      var n=1;
+
+  if (n < 2) {
+    $("#status").css("background-color", "red");
+  } 
+  else {
+    $("#status").css("background-color", "black");
+  }
+
+
+    },
+    changeBar: function() {
+      //convert this if else statement to change the 
+
+      var n=1;
+
+  if (n < 2) {
+    $("#status").css("background-color", "red");
+  } 
+  else {
+    $("#status").css("background-color", "black");
+  }
+
+}
 });
 
 

@@ -23,7 +23,8 @@
 <!-- This part of the program contacts a parts template that outputs a table containing the info about the job. -->
       
         
-<div id="status"> 
+<div id="status" class= "test"> 
+{{changeStatus}}
         Workcenter:{{>workcenter}}<br/><br/>
         <span id="label">Fetching status...</span>
      </div> 
@@ -34,7 +35,7 @@
   </div>
 </div>
         <div id="wrap">
-        
+
          {{calculateTime}} 
         {{returnTimeStamp}}
         TEST{{progressBar}}
