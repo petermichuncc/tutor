@@ -49,6 +49,17 @@ Template.job.helpers({
          console.log("This is the time stamp "+ Parts.findOne().timestamp.toString());
         
    
+    },
+    progressBar: function () {
+        //calculate the amount of time needed for the job
+        //This function will require converting the string to a number
+        //Then converting the number to minutes, then dividing the minutes 
+        //I will try to use this for the changing the progress bar
+        console.log("This is the formatted data" +moment(displayHours).format("h"));
+        var percent = moment(Parts.findOne().timestamp.toString()).format("h")/moment(displayHours).format("h");
+         return percent*100;
+        
+   
     }
 
 });
