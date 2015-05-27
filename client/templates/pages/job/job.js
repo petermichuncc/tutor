@@ -1,7 +1,8 @@
 // Helper for the parts template that feeds it data
 Meteor.subscribe('parts');
 Meteor.subscribe('PressCycles');
-  start_time = moment().format("YYYY-MM-DD hh:mm:ss.SSS");
+   start_time = moment().format("YYYY-MM-DD hh:mm:ss.SSS");
+  // start_time = Parts.find().timestamp;
   console.log("This is the current time "+ start_time);
  //var start_time = Parts.findOne().timeStamp;
 // console.log("This is the time stamp " +moment().Parts.find().timeStamp.format("YYYY-MM-DD hh:mm:ss.SSS"));
@@ -36,16 +37,17 @@ Template.job.helpers({
      incomingCycles: function () {
         //grab all cycles from today
     if (moment().format("YYYY-MM-DD hh:mm:ss.SSS") < displayHours) {
-         Meteor.subscribe('cycles-recent', start_time);
+         Meteor.subscribe('cycles-recent', Parts.findOne().timestamp.toString());
      }
+     
         return (Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()) * Parts.findOne().cavitation ;
-        console.log("This is the cycles find"+Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count());
-    },
+        console.log("This is the cycles find"+Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count());}
+      ,
     
     returnTimeStamp: function () {
         //calculate the amount of time needed for the job
-        var timeStamp = parts.findOne().timeStamp;
-        return timeStamp;
+         console.log("This is the time stamp "+ Parts.findOne().timestamp.toString());
+        
    
     }
 

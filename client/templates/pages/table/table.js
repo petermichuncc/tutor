@@ -13,12 +13,14 @@ Template.table.events({
 event.preventDefault();
 console.log(event);
 var text = $( "#someId" ).val();
+
 var post = {
       partnumber: $( "#partnumber" ).val(),
        quantity: $( "#quantity" ).val(),
        initials: $( "#initials" ).val(),
        cavitation: $( "#cavitation" ).val(),
-       workcenter: Machines.findOne().machinenumber
+       workcenter: Machines.findOne().machinenumber,
+       timestamp: moment().format("YYYY-MM-DD hh:mm:ss.SSS")
      };
 console.log("example test for parts" + post);
 console.log(text);
@@ -29,6 +31,39 @@ Router.go('job');
 return false;
 
 }
+});
+
+Template.job.helpers({
+  validateForm: function () {
+         //calculate the amount of time needed for the job
+        function validateForm() {
+    var x = document.forms["myForm"]["partnumber"].value;
+    var y = document.forms["myForm"]["initials"].value;
+    var z = document.forms["myForm"]["quantity"].value;
+    var w = document.forms["myForm"]["cavitation"].value;
+    if (x == null || x == "") {
+        alert("Please enter a part number");
+        return false;
+    }
+    if (y == null || y == "") {
+        alert("Please enter your initials");
+        return false;
+    }
+    if (z == null || z == "") {
+        alert("Please enter the quantity");
+        return false;
+    }
+    if (w == null || w == "") {
+        alert("Please enter the cavitation");
+        return false;
+    }
+//     if(!this.form.checkbox.checked)
+// {
+//     alert('Please check the checkbox to confirm doing the following tasks');
+//     return false;
+// }
+}  } 
+
 });
 
 

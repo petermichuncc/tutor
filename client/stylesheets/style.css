@@ -146,6 +146,7 @@ textarea{
 #centered_box{
     background: #666666;
   padding: 2%;
+  
     box-shadow: 5px 5px 15px #888888;
 }
 
@@ -155,6 +156,7 @@ textarea{
 }
 #repairlog_container{
   padding: 15%;
+  color: black;
   margin-left:10%;
   margin-right: 10%;
   margin-top:5%;
@@ -363,6 +365,7 @@ background: rgba(47, 47, 47, .5);
 
 #machine {
     display:block;
+    color: black;
     margin-top: 10px;
     margin-bottom: 15px;
 }

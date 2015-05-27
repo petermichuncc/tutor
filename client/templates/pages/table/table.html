@@ -9,36 +9,8 @@
 
   <div id="right">
     <div id="wrap">
-    <!--This script basically makes sure that there is data in each of the sections of the form-->
-    <script> 
-function validateForm() {
-    var x = document.forms["myForm"]["partnumber"].value;
-    var y = document.forms["myForm"]["initials"].value;
-    var z = document.forms["myForm"]["quantity"].value;
-    var w = document.forms["myForm"]["cavitation"].value;
-    if (x == null || x == "") {
-        alert("Please enter a part number");
-        return false;
-    }
-    if (y == null || y == "") {
-        alert("Please enter your initials");
-        return false;
-    }
-    if (z == null || z == "") {
-        alert("Please enter the quantity");
-        return false;
-    }
-    if (w == null || w == "") {
-        alert("Please enter the cavitation");
-        return false;
-    }
-//     if(!this.form.checkbox.checked)
-// {
-//     alert('Please check the checkbox to confirm doing the following tasks');
-//     return false;
-// }
-}
-</script> 
+    {{validateForm}}
+    
       <form name="myForm" onsubmit="return validateForm()" method="post" class="workcenterSelection">
       <table>
         <tr>
