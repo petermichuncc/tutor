@@ -17,6 +17,9 @@ Meteor.publish('cycles', function() {
 Meteor.publish('users', function() {
   return UserAccounts.find();
 });
+Meteor.publish('submissions', function() {
+  return Submissions.find();
+});
 
 
 Meteor.publish('cycles-recent', function (startTime) {

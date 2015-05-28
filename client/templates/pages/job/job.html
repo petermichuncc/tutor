@@ -1,40 +1,43 @@
 <template name="job">
 <head>
-    <title>Index</title>
-    <script src="parts.js"></script>
+    
+    <!-- <script src="parts.js"></script>-->
     <script type="text/javascript">
+// $("body").css("background-color", "green");
+$( "#status" ).css( "border", "3px solid red" );
 
-        poll or countdown if job in progress
-        if(getCookie("inprog") == "yes" && getCookie("jobcomplete") == "no"){
-        clearvar = setInterval("countdown()", 1000);
-        }
-        setInterval( "pollServer()", 3000 );
     </script>
-
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <link href="style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
 
 </head>
 
-<body>
+
 
     
-    <input type="hidden" id="logged"/>
+    
     
 <!-- This part of the program contacts a parts template that outputs a table containing the info about the job. -->
       
-        
+     
 <div id="status" class= "test"> 
 {{changeStatus}}
         Workcenter:{{>workcenter}}<br/><br/>
         <span id="label">Fetching status...</span>
-     </div> 
-<div class="progress">
+     </div>
+     {{>progresscontroller}}
+  <!-- <div class="progress">
   <div class="progress-bar progress-bar-striped active" role="progressbar"
   aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
-    %
-  </div>
-</div>
-        <div id="wrap">
+    100%
+  </div> 
+ 
+</div> --> 
+
+        <div id="wrap"> 
 
          {{calculateTime}} 
         {{returnTimeStamp}}
@@ -56,9 +59,9 @@
   
   
         
-        </div>
+         </div> 
    
-</body>
+
 </template>
 
 

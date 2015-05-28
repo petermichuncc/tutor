@@ -31,8 +31,9 @@ Template.job.helpers({
    earnedHours: function () {
     
         var earnedHoursCalc = ((Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()) * Parts.findOne().cavitation) / Parts.findOne().quantity;
+        console.log("This is the cycles  "+ (Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()));
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
-        console.log("This is the earned hours "+ earnedHoursCalc)
+        console.log("This is the earned hours "+ earnedHoursCalc);
         return earnedHoursCalc;
             },
      incomingCycles: function () {
@@ -55,35 +56,22 @@ Template.job.helpers({
         //I will try to use this for the changing the progress bar
         console.log("This is the formatted data" +moment(displayHours).format("h"));
         var percent = moment(Parts.findOne().timestamp.toString()).format("h")/moment(displayHours).format("h");
-         return percent*100;
+        percent = percent *100;
+
+         return  Math.round(percent);
          
     },
 
     changeStatus: function() {
       //convert this if else statement to change the 
 
-      var n=1;
-
-  if (n < 2) {
-    $("#status").css("background-color", "red");
-  } 
-  else {
-    $("#status").css("background-color", "black");
-  }
+      // $("#status").css("background-color", "black");
 
     },
     changeBar: function() {
       //convert this if else statement to change the 
 
-      var n=1;
-
-  if (n < 2) {
-    $("#status").css("background-color", "red");
-  } 
-  else {
-    $("#status").css("background-color", "black");
-  }
-
+      // isTrue: -> true
 }
 });
 
