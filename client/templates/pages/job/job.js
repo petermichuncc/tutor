@@ -31,9 +31,9 @@ Template.job.helpers({
    earnedHours: function () {
     
         var earnedHoursCalc = ((Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()) * Parts.findOne().cavitation) / Parts.findOne().quantity;
-        console.log("This is the cycles  "+ (Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()));
+        // console.log("This is the cycles  "+ (Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()));
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
-        console.log("This is the earned hours "+ earnedHoursCalc);
+        // console.log("This is the earned hours "+ earnedHoursCalc);
         return earnedHoursCalc;
             },
      incomingCycles: function () {
@@ -42,8 +42,8 @@ Template.job.helpers({
          Meteor.subscribe('cycles-recent', Parts.findOne().timestamp.toString());
      }
              return (Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()) * Parts.findOne().cavitation ;
-        console.log("This is the cycles find"+Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count());}
-      ,
+        // console.log("This is the cycles find"+Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count());
+      },
         returnTimeStamp: function () {
         //calculate the amount of time needed for the job
          console.log("This is the time stamp "+ Parts.findOne().timestamp.toString());
@@ -70,8 +70,12 @@ Template.job.helpers({
     },
     changeBar: function() {
       //convert this if else statement to change the 
-
-      // isTrue: -> true
+      var a=5;
+      if (a>4)
+      {
+       is100:true
+      }
+      
 }
 });
 

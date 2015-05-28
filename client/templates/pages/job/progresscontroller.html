@@ -1,8 +1,23 @@
 <template name="progresscontroller">
 
-{{#if isTrue}}
+
+{{#if is100}}
       {{>progressbar100}}
   {{else}}
+  {{#if is75}}
       {{>progressbar75}}
+  {{else}}
+  {{#if is50}}
+      {{>progressbar50}}
+      {{else}}
+  {{#if is25}}
+      {{>progressbar25}}
+      {{else}}
+  {{#if is0}}
+      {{>progressbar0}}
+      {{/if}}
+      {{/if}}
+      {{/if}}
+  {{/if}} 
   {{/if}}
   </template>
