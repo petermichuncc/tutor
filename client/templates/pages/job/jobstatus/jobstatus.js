@@ -7,7 +7,7 @@ Template.jobstatus.helpers({
 
 //I might be able to use some of the logic for the progress bar to determine the 
 //logic for the status changing
-statusyellow: true
+statusgreen: true
      
 
 

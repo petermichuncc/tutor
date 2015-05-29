@@ -14,8 +14,13 @@ Template.job.helpers({
   calculateTime: function () {
          //calculate the amount of time needed for the job
          estimatedTime = (Parts.findOne().quantity / Parts.findOne().cavitation) *"23";
-         displayHours = moment().seconds(estimatedTime).format("YYYY-MM-DD hh:mm:ss.SSS");
-         console.log("This is the display hours time"+ displayHours);
+         displayHours = moment(Parts.findOne().timestamp.toString()).seconds(estimatedTime).format("hh:mm:ss.SSS");
+         
+         
+         console.log ("This is the estimated time " + estimatedTime);
+         console.log ("This is the time stamp time" + Parts.findOne().timestamp.toString());
+         console.log("This is the display hours time "+ displayHours);
+         
          return displayHours;
 
      },
@@ -31,14 +36,14 @@ Template.job.helpers({
    earnedHours: function () {
     
         var earnedHoursCalc = ((Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()) * Parts.findOne().cavitation) / Parts.findOne().quantity;
-        // console.log("This is the cycles  "+ (Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()));
+         console.log("This is the cycles  "+ (Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()));
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
-        // console.log("This is the earned hours "+ earnedHoursCalc);
+         console.log("This is the earned hours "+ earnedHoursCalc);
         return earnedHoursCalc;
             },
      incomingCycles: function () {
         //grab all cycles from today
-    if (moment().format("YYYY-MM-DD hh:mm:ss.SSS") < displayHours) {
+    if (moment().format("hh:mm:ss.SSS") < displayHours) {
          Meteor.subscribe('cycles-recent', Parts.findOne().timestamp.toString());
      }
              return (Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()) * Parts.findOne().cavitation ;
@@ -76,7 +81,112 @@ Template.job.helpers({
        is100:true
       }
       
+},
+'is100': function(){
+ 
+     // estimatedTime = (Parts.findOne().quantity / Parts.findOne().cavitation) *"23";
+     //convert estimatedTime to minutes
+     estimatedTime = (Parts.findOne().quantity / Parts.findOne().cavitation) *"23";
+     estimatedTime = estimatedTime/60;
+     console.log ("This is the estimated time in progress function " + estimatedTime);
+         // displayHours = moment().seconds(estimatedTime).format("YYYY-MM-DD HH:mm:ss.SSS");
+         // displayHours = moment(Parts.findOne().timestamp.toString()).format("H");
+displayHours = moment(Parts.findOne().timestamp.toString()).seconds(estimatedTime).format("H");
+displayHours = displayHours*60;
+displayHours = displayHours + Number(moment(Parts.findOne().timestamp.toString()).format("m"));
+          
+          displayHours = displayHours +estimatedTime;
+          console.log("This is the display hours time in progress function "+ displayHours);
+       now = moment().format("h");
+        now = now*60;
+       now = now + Number((moment().format("m")));
+       past = moment(Parts.findOne().timestamp.toString()).format("h");
+        past = past*60;
+        past = past +Number(moment(Parts.findOne().timestamp.toString()).format("m"))
+        numerator = now - past;
+       denominator = displayHours - past;
+       
+        percent = numerator/denominator;
+         percent = percent *100;
+       
+      // percent = moment(Parts.findOne().timestamp.toString()).format("h")/moment(displayHours).format("h");
+      //     percent = percent *100;
+
+     //     percent=Math.round(percent)
+     console.log ("This is the now" + now)
+     console.log ("This is the past" + past)
+     console.log ("This is the numerator" + numerator)
+     console.log ("This is the denominator" + denominator)
+console.log("This is the percent" + percent)
+    
+    if (percent>90)
+    {
+    return true;
 }
+
+  },
+  'is90': function(){
+
+   if (percent>80)
+    {
+    return true;
+}
+  },
+'is80': function(){
+    if (percent>70)
+    {
+    return true;
+}
+  },
+  'is70': function(){
+    if (percent>60)
+    {
+    return true;
+}
+  },
+  'is60': function(){
+    if (percent>50)
+    {
+    return true;
+}
+  },
+  'is50': function(){
+    if (percent>40)
+    {
+    return true;
+}
+  },
+  'is40': function(){
+    if (percent>30)
+    {
+    return true;
+}
+  },
+  'is30': function(){
+    if (percent>20)
+    {
+    return true;
+}
+  },
+  'is20': function(){
+    if (percent>10)
+    {
+    return true;
+}
+  },
+  'is10': function(){
+    if (percent>0)
+    {
+    return true;
+}
+  },
+  'is0': function(){
+    if (percent===0)
+    {
+    return true;
+}
+  }
+
 });
 
 
