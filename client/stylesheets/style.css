@@ -187,6 +187,22 @@ textarea{
   font-size: 10px;
   padding: 1%;
 }
+#statusgreen{
+  border:#222222 1px solid;
+    overflow: hidden;
+    background: green;
+    box-shadow: 5px 5px 15px #888888;
+  font-size: 10px;
+  padding: 1%;
+}
+#statusyellow{
+  border:#222222 1px solid;
+    overflow: hidden;
+    background: yellow;
+    box-shadow: 5px 5px 15px #888888;
+  font-size: 10px;
+  padding: 1%;
+}
 option.id
 {
 color: black;
