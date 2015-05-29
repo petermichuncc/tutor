@@ -80,6 +80,29 @@ Template.job.helpers({
 });
 
 
+//Figure out the logic for breaking up the job into 24 hours.
+//after that only output 8 hour segments of the job
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // var partStats = {
 //     workcenterName: Machines.findOne().machinenumber,
 //      partNumber: Parts.findOne().partnumber,
@@ -89,6 +112,12 @@ Template.job.helpers({
 //      tech: Parts.findOne().initials,
 //      startTime: start_time
 //  };
+
+
+
+
+
+
 
 
 

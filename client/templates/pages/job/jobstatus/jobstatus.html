@@ -16,13 +16,23 @@
      <div id="statusgreen"> 
 {{changeStatus}}
         Workcenter:{{>workcenter}}<br/><br/>
-        <span id="label">Fetching status...</span>
+        <span id="label">At or above cycle</span>
      </div>
  {{else}}
+ {{#if statusyellow}}
+     <div id="statusyellow" > 
+{{changeStatus}}
+        Workcenter:{{>workcenter}}<br/><br/>
+        <span id="label">Below cycle</span>
+     </div>
+     {{else}}
+ {{#if status}}
      <div id="status" > 
 {{changeStatus}}
         Workcenter:{{>workcenter}}<br/><br/>
         <span id="label">Fetching status...</span>
      </div>
-{{/if}}
+     {{/if}}
+     {{/if}}
+    {{/if}}
 </template>
