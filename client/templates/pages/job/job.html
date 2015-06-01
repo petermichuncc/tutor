@@ -11,6 +11,7 @@
         <script src="//code.jquery.com/jquery-1.10.2.js"></script>
         <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <link href="style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
     
 
 </head>
@@ -30,9 +31,9 @@
      </div> -->
      {{>jobstatus}}
      <!-- {{>testprogress}} -->
-
+     <!-- This is the percent progress {{progressBar}} -->
      {{>progresscontroller}} 
-     {{#if is100}}
+     <!-- {{#if is100}}
       {{>progressbar100}}
       {{else}}
   {{#if is90}}
@@ -74,7 +75,7 @@
       {{/if}}
       {{/if}}
   {{/if}} 
-  {{/if}} 
+  {{/if}}  -->
     <!-- {{>progress progress=.5}} -->
      
   <!-- <div class="progress">
@@ -100,7 +101,7 @@
     {{#each parts}}
       <tr><td>24</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles}}</td><td>{{earnedHours}} </td><td>Green </td><td WIDTH="350">None</td></tr>
       <tr><td>1</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles1}}</td><td>{{earnedHours1}} </td><td>Green </td><td WIDTH="350">None</td></tr>  
-      <tr><td>2</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles}}</td><td>{{earnedHours}} </td><td>Green </td><td WIDTH="350">None</td></tr>  
+      <tr><td>2</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles2}}</td><td>{{earnedHours2}} </td><td>Green </td><td WIDTH="350">None</td></tr>  
       <tr><td>3</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles}}</td><td>{{earnedHours}} </td><td>Green </td><td WIDTH="350">None</td></tr>  
       <tr><td>4</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles}}</td><td>{{earnedHours}} </td><td>Green </td><td WIDTH="350">None</td></tr>  
       <tr><td>5</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles}}</td><td>{{earnedHours}} </td><td>Green </td><td WIDTH="350">None</td></tr>  

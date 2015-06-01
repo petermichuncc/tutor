@@ -7,7 +7,7 @@ Template.jobstatus.helpers({
 
 //I might be able to use some of the logic for the progress bar to determine the 
 //logic for the status changing
-'statusgreen': function(){
+statusgreen: function(){
  
      // estimatedTime = (Parts.findOne().quantity / Parts.findOne().cavitation) *"23";
      //convert estimatedTime to minutes
@@ -53,9 +53,9 @@ console.log("This is the percent in the job status file" + percent)
 }
 
   },
-  'status': function(){
+  status: function(){
 
-   if (percent.get()===0)
+   if (percent.get()<0)
     {
     return true;
 }

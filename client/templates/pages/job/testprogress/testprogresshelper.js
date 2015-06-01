@@ -49,6 +49,7 @@ console.log("This is the percent" + percent)
 }
 
   }
+
  
 }
 )

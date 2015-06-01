@@ -1,7 +1,7 @@
 // Helper for the parts template that feeds it data
 Meteor.subscribe('parts');
 Meteor.subscribe('PressCycles');
-   start_time = moment().hour(0).format("YYYY-MM-DD hh:mm:ss.SSS"); //This is the 
+   start_time = moment().hour(23).format("2015-05-31 H:mm:ss.SSS"); //This is the 
   // start_time = Parts.find().timestamp;
   console.log("This is the start time from 12:00 am i think "+ start_time);
  //var start_time = Parts.findOne().timeStamp;
@@ -36,9 +36,9 @@ Template.job.helpers({
    earnedHours: function () {
     
         var earnedHoursCalc = ((Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()) * Parts.findOne().cavitation) / Parts.findOne().quantity;
-         console.log("This is the cycles  "+ (Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()));
+         
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
-         console.log("This is the earned hours "+ earnedHoursCalc);
+         
         return earnedHoursCalc;
             },
      incomingCycles: function () {
@@ -50,16 +50,36 @@ Template.job.helpers({
         // console.log("This is the cycles find"+Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count());
       },
       earnedHours1: function () {
+    endTime=moment().hour(0).format("YYYY-MM-DD hh:mm:ss.SSS");
     if (moment().format("hh:mm:ss.SSS") < displayHours) {
-         Meteor.subscribe('cycles-recent', Parts.findOne().timestamp.toString());
+
+         Meteor.subscribe('cycles-recent', start_time);
       }
         var earnedHoursCalc = ((Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()) * Parts.findOne().cavitation) / Parts.findOne().quantity;
-         console.log("This is the cycles  "+ (Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()));
-        earnedHoursCalc = earnedHoursCalc.toFixed(2);
-         console.log("This is the earned hours "+ earnedHoursCalc);
+        
+         
         return earnedHoursCalc;
             },
      incomingCycles1: function () {
+        //grab all cycles from today
+     if (moment().format("hh:mm:ss.SSS") < displayHours) {
+         Meteor.subscribe('cycles-recent', start_time);
+      }
+             return (Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()) * Parts.findOne().cavitation ;
+        // console.log("This is the cycles find"+Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count());
+      },
+      earnedHours2: function () {
+    if (moment().format("hh:mm:ss.SSS") < displayHours) {
+      newStart = moment().hour(0).format("YYYY-MM-DD hh:mm:ss.SSS");
+         Meteor.subscribe('cycles-recent', start_time);
+      }
+        var earnedHoursCalc = ((Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()) * Parts.findOne().cavitation) / Parts.findOne().quantity;
+         
+        earnedHoursCalc = earnedHoursCalc.toFixed(2);
+         
+        return earnedHoursCalc;
+            },
+     incomingCycles2: function () {
         //grab all cycles from today
      if (moment().format("hh:mm:ss.SSS") < displayHours) {
          Meteor.subscribe('cycles-recent', Parts.findOne().timestamp.toString());
@@ -84,6 +104,7 @@ Template.job.helpers({
          return  Math.round(percent);
          
     },
+    
 
     changeStatus: function() {
       //convert this if else statement to change the 
