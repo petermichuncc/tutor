@@ -1,14 +1,7 @@
-Template.jobstatus.helpers({
-//I need the logic here for the if else statement that
-//decides essentially when to put the work center into green(good)
-//or to put it into yellow
-//so basically if I don't get cycles within x minutes put the machine into yellow
-//if the machine hasn't gotten any cyles at all leave it in transparent.
+Template.progress.helpers({
 
-//I might be able to use some of the logic for the progress bar to determine the 
-//logic for the status changing
-'statusgreen': function(){
- 
+'is100': function(){
+ NProgress.start();
      // estimatedTime = (Parts.findOne().quantity / Parts.findOne().cavitation) *"23";
      //convert estimatedTime to minutes
      estimatedTime = (Parts.findOne().quantity / Parts.findOne().cavitation) *"23";
@@ -44,35 +37,19 @@ displayHours = displayHours + Number(moment(Parts.findOne().timestamp.toString()
       //     percent = percent *100;
 
      //     percent=Math.round(percent)
+     console.log ("This is the now" + now)
+     console.log ("This is the past" + past)
+     console.log ("This is the numerator" + numerator)
+     console.log ("This is the denominator" + denominator)
+console.log("This is the percent" + percent)
     
-console.log("This is the percent in the job status file" + percent)
-    
-    if (percent.get()>0)
-    {
-    return true
-}
-
-  },
-  'status': function(){
-
-   if (percent.get()===0)
-    {
+    if (percent.get()>90)
+    {NProgress.inc(0.1);
     return true;
 }
 
-     
-
-
-
-
-}})
-
-
-
-
-
-
-
-
-
+  }
+ 
+}
+)
 

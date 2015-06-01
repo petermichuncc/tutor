@@ -1,9 +1,9 @@
 // Helper for the parts template that feeds it data
 Meteor.subscribe('parts');
 Meteor.subscribe('PressCycles');
-   start_time = moment().format("YYYY-MM-DD hh:mm:ss.SSS");
+   start_time = moment().hour(0).format("YYYY-MM-DD hh:mm:ss.SSS"); //This is the 
   // start_time = Parts.find().timestamp;
-  console.log("This is the current time "+ start_time);
+  console.log("This is the start time from 12:00 am i think "+ start_time);
  //var start_time = Parts.findOne().timeStamp;
 // console.log("This is the time stamp " +moment().Parts.find().timeStamp.format("YYYY-MM-DD hh:mm:ss.SSS"));
 
@@ -43,9 +43,27 @@ Template.job.helpers({
             },
      incomingCycles: function () {
         //grab all cycles from today
+     if (moment().format("hh:mm:ss.SSS") < displayHours) {
+         Meteor.subscribe('cycles-recent', Parts.findOne().timestamp.toString());
+      }
+             return (Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()) * Parts.findOne().cavitation ;
+        // console.log("This is the cycles find"+Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count());
+      },
+      earnedHours1: function () {
     if (moment().format("hh:mm:ss.SSS") < displayHours) {
          Meteor.subscribe('cycles-recent', Parts.findOne().timestamp.toString());
-     }
+      }
+        var earnedHoursCalc = ((Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()) * Parts.findOne().cavitation) / Parts.findOne().quantity;
+         console.log("This is the cycles  "+ (Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()));
+        earnedHoursCalc = earnedHoursCalc.toFixed(2);
+         console.log("This is the earned hours "+ earnedHoursCalc);
+        return earnedHoursCalc;
+            },
+     incomingCycles1: function () {
+        //grab all cycles from today
+     if (moment().format("hh:mm:ss.SSS") < displayHours) {
+         Meteor.subscribe('cycles-recent', Parts.findOne().timestamp.toString());
+      }
              return (Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()) * Parts.findOne().cavitation ;
         // console.log("This is the cycles find"+Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count());
       },
@@ -82,7 +100,7 @@ Template.job.helpers({
       }
       
 },
-'is100': function(){
+ is100: function(){
  
      // estimatedTime = (Parts.findOne().quantity / Parts.findOne().cavitation) *"23";
      //convert estimatedTime to minutes
@@ -106,8 +124,14 @@ displayHours = displayHours + Number(moment(Parts.findOne().timestamp.toString()
         numerator = now - past;
        denominator = displayHours - past;
        
-        percent = numerator/denominator;
-         percent = percent *100;
+       percent = new ReactiveVar();
+       percent.set((numerator/denominator)*100);
+       percent.get();
+       console.log("this is percent" + percent)
+       console.log("this is percent get" + percent.get())
+
+        // percent = numerator/denominator;
+        //  percent = percent *100;
        
       // percent = moment(Parts.findOne().timestamp.toString()).format("h")/moment(displayHours).format("h");
       //     percent = percent *100;
@@ -119,69 +143,69 @@ displayHours = displayHours + Number(moment(Parts.findOne().timestamp.toString()
      console.log ("This is the denominator" + denominator)
 console.log("This is the percent" + percent)
     
-    if (percent>90)
+    if (percent.get()>90)
     {
     return true;
 }
 
   },
-  'is90': function(){
+  is90: function(){
 
-   if (percent>80)
+   if (percent.get()>80)
     {
     return true;
 }
   },
-'is80': function(){
-    if (percent>70)
+is80: function(){
+    if (percent.get()>70)
     {
     return true;
 }
   },
-  'is70': function(){
-    if (percent>60)
+  is70: function(){
+    if (percent.get()>60)
     {
     return true;
 }
   },
-  'is60': function(){
-    if (percent>50)
+  is60: function(){
+    if (percent.get()>50)
     {
     return true;
 }
   },
-  'is50': function(){
-    if (percent>40)
+  is50: function(){
+    if (percent.get()>40)
     {
     return true;
 }
   },
-  'is40': function(){
-    if (percent>30)
+  is40: function(){
+    if (percent.get()>30)
     {
     return true;
 }
   },
-  'is30': function(){
-    if (percent>20)
+  is30: function(){
+    if (percent.get()>20)
     {
     return true;
 }
   },
-  'is20': function(){
-    if (percent>10)
+  is20: function(){
+    if (percent.get()>10)
     {
     return true;
 }
   },
-  'is10': function(){
-    if (percent>0)
+  is10: function(){
+    if (percent.get()>0)
     {
     return true;
 }
   },
-  'is0': function(){
-    if (percent===0)
+  is0: function(){
+    if (percent.get()===0)
     {
     return true;
 }

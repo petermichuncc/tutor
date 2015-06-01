@@ -15,3 +15,5 @@ aldeed:collection2
 aldeed:autoform
 momentjs:moment
 accounts-ui
+mrt:nprogress
+reactive-var

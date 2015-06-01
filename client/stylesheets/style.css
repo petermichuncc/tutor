@@ -17,20 +17,30 @@ table{
 
   color:black;
 }
+#parts
+{
+/*
+ border-collapse: collapse;
+  border-spacing: 0;*/
+border-spacing: 0;
+}
 table.parts
 {
-align: "left";
-width:"2000";
 
+width:"3000";
+ border-collapse: collapse;
+  border-spacing: 0;
 
 
 }
 table th{ 
-  padding: 2%;
+  border-collapse: collapse;
+  border-spacing: 0;
         font-size: 15px;
 }
 table td{
-  padding: 2%;
+  border-collapse: collapse;
+  border-spacing: 0;;
 }
 
 table.display{
@@ -175,9 +185,7 @@ textarea{
   transition: opacity 400ms ease-in;
   pointer-events: none;
 }
-#status.green {
 
-  background: green;}
   
 #status{
   border:#222222 1px solid;

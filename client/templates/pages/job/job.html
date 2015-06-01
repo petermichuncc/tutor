@@ -11,7 +11,7 @@
         <script src="//code.jquery.com/jquery-1.10.2.js"></script>
         <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <link href="style.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
+    
 
 </head>
 
@@ -29,7 +29,53 @@
         <span id="label">Fetching status...</span>
      </div> -->
      {{>jobstatus}}
-    {{>progresscontroller}} 
+     <!-- {{>testprogress}} -->
+
+     {{>progresscontroller}} 
+     {{#if is100}}
+      {{>progressbar100}}
+      {{else}}
+  {{#if is90}}
+      {{>progressbar90}}
+      {{else}}
+  {{#if is80}}
+      {{>progressbar80}}
+  {{else}}
+  {{#if is70}}
+      {{>progressbar70}}
+      {{else}}
+  {{#if is60}}
+      {{>progressbar60}}
+  {{else}}
+  {{#if is50}}
+      {{>progressbar50}}
+      {{else}}
+  {{#if is40}}
+      {{>progressbar40}}
+      {{else}}
+  {{#if is30}}
+      {{>progressbar30}}
+  {{else}}
+  {{#if is20}}
+      {{>progressbar20}}
+      {{else}}
+  {{#if is10}}
+      {{>progressbar10}}
+  {{else}}
+  {{#if is0}}
+      {{>progressbar0}}
+      {{/if}}
+      {{/if}}
+      {{/if}}
+      {{/if}}
+      {{/if}}
+      {{/if}}
+      {{/if}}
+      {{/if}}
+      {{/if}}
+  {{/if}} 
+  {{/if}} 
+    <!-- {{>progress progress=.5}} -->
      
   <!-- <div class="progress">
   <div class="progress-bar progress-bar-striped active" role="progressbar"
@@ -47,13 +93,20 @@
         <br/>
             Last idle period: --<br/>
             Last changeover time: --
-           <table id="parts">
+           <table class="parts" width ="3000" cellpadding="0" border="0" align="center" cellspacing="0">
            
  
-    <th>Hour  </th><th>Part #</th><th>Planned</th><th>Actual</th><th>earnedHours</th><th>Status</th><th WIDTH="350">Reason</th>
+    <th>Hour  </th><th>Part #</th><th>Planned</th><th>Actual</th><th>EarnedHours</th><th>Status</th><th WIDTH="350">Reason</th>
     {{#each parts}}
-
-      <tr><td>STUB</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles}}</td><td>{{earnedHours}} </td><td>STUB </td><td>STUB</td></tr>  
+      <tr><td>24</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles}}</td><td>{{earnedHours}} </td><td>Green </td><td WIDTH="350">None</td></tr>
+      <tr><td>1</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles1}}</td><td>{{earnedHours1}} </td><td>Green </td><td WIDTH="350">None</td></tr>  
+      <tr><td>2</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles}}</td><td>{{earnedHours}} </td><td>Green </td><td WIDTH="350">None</td></tr>  
+      <tr><td>3</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles}}</td><td>{{earnedHours}} </td><td>Green </td><td WIDTH="350">None</td></tr>  
+      <tr><td>4</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles}}</td><td>{{earnedHours}} </td><td>Green </td><td WIDTH="350">None</td></tr>  
+      <tr><td>5</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles}}</td><td>{{earnedHours}} </td><td>Green </td><td WIDTH="350">None</td></tr>  
+      <tr><td>6</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles}}</td><td>{{earnedHours}} </td><td>Green </td><td WIDTH="350">None</td></tr>  
+      <tr><td>7</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles}}</td><td>{{earnedHours}} </td><td>Green </td><td WIDTH="350">None</td></tr>  
+      <tr><td>8</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles}}</td><td>{{earnedHours}} </td><td>Green </td><td WIDTH="350">None</td></tr>    
   
   {{/each}}
 
