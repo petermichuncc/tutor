@@ -43,7 +43,7 @@ Template.job.helpers({
      return result;
    },
    earnedHours: function () {
-    Meteor.subscribe('cycles-recent', Parts.findOne().timestamp.toString());
+    
         var earnedHoursCalc = ((Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()) * Parts.findOne().cavitation) / Parts.findOne().quantity;
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
@@ -52,14 +52,14 @@ Template.job.helpers({
             },
      incomingCycles: function () {
         //grab all cycles from today
+      if(test < displayHours){
+         Meteor.subscribe('cycles-recent', moment());
+         }
+    //find how comparisons are made between time stamps
+    //I need to figure out the time stamp that is in
+return Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}},{CycleTimeStamp: { $gte: moment()}}).count() * Parts.findOne().cavitation ;
       
-         Meteor.subscribe('cycles-recent', Parts.findOne().timestamp.toString());
-         
-    
-          var cycles = (Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()) * Parts.findOne().cavitation ;
-     
-            return cycles;
-        // console.log("This is the cycles find"+Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count());
+        
       },
       //Cycles.find({CycleTimeStamp: { $gte: startTime}})
       //this will retrieve all cyles greater than or equal to this start time
@@ -68,7 +68,7 @@ Template.job.helpers({
     //endTime=moment().hour(0).format("YYYY-MM-DD hh:mm:ss.SSS");
     
 
-         Meteor.subscribe('cycles-recent', Parts.findOne().timestamp.toString()); 
+         
        
         // var earnedHoursCalc = ((Cycles.find({PressNumber: '1'},{CycleTimeStamp: { $lte: test}}).count()) * Parts.findOne().cavitation) / Parts.findOne().quantity;
         // while (test<displayHours){
@@ -83,7 +83,7 @@ Template.job.helpers({
             },
      incomingCycles1: function () {
         //grab all cycles from today
-     Meteor.subscribe('cycles-recent', Parts.findOne().timestamp.toString());
+    
          
       
              return (Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()) * Parts.findOne().cavitation ;
@@ -92,7 +92,7 @@ Template.job.helpers({
       earnedHours2: function () {
     
       // newStart = moment().hour(0).format("YYYY-MM-DD hh:mm:ss.SSS");
-        Meteor.subscribe('cycles-recent', Parts.findOne().timestamp.toString()); 
+        
       
         var earnedHoursCalc = ((Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}, {CycleTimeStamp: { $gte: hour2_time}}).count()) * Parts.findOne().cavitation) / Parts.findOne().quantity;
          
@@ -102,7 +102,7 @@ Template.job.helpers({
             },
      incomingCycles2: function () {
         //grab all cycles from today
-     Meteor.subscribe('cycles-recent', Parts.findOne().timestamp.toString());
+     
         
       
              return (Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()) * Parts.findOne().cavitation ;
