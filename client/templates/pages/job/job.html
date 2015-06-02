@@ -32,51 +32,8 @@
      {{>jobstatus}}
      <!-- {{>testprogress}} -->
      <!-- This is the percent progress {{progressBar}} -->
-     {{>progresscontroller}} 
-     <!-- {{#if is100}}
-      {{>progressbar100}}
-      {{else}}
-  {{#if is90}}
-      {{>progressbar90}}
-      {{else}}
-  {{#if is80}}
-      {{>progressbar80}}
-  {{else}}
-  {{#if is70}}
-      {{>progressbar70}}
-      {{else}}
-  {{#if is60}}
-      {{>progressbar60}}
-  {{else}}
-  {{#if is50}}
-      {{>progressbar50}}
-      {{else}}
-  {{#if is40}}
-      {{>progressbar40}}
-      {{else}}
-  {{#if is30}}
-      {{>progressbar30}}
-  {{else}}
-  {{#if is20}}
-      {{>progressbar20}}
-      {{else}}
-  {{#if is10}}
-      {{>progressbar10}}
-  {{else}}
-  {{#if is0}}
-      {{>progressbar0}}
-      {{/if}}
-      {{/if}}
-      {{/if}}
-      {{/if}}
-      {{/if}}
-      {{/if}}
-      {{/if}}
-      {{/if}}
-      {{/if}}
-  {{/if}} 
-  {{/if}}  -->
-    <!-- {{>progress progress=.5}} -->
+     {{>progresscontroller}}
+     <!-- {{>progressbar}} -->
      
   <!-- <div class="progress">
   <div class="progress-bar progress-bar-striped active" role="progressbar"
@@ -99,15 +56,15 @@
  
     <th>Hour  </th><th>Part #</th><th>Planned</th><th>Actual</th><th>EarnedHours</th><th>Status</th><th WIDTH="350">Reason</th>
     {{#each parts}}
-      <tr><td>24</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles}}</td><td>{{earnedHours}} </td><td>Green </td><td WIDTH="350">None</td></tr>
+     <tr><td>Total</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles}}</td><td>{{earnedHours}} </td><td>Green </td><td WIDTH="350">None</td></tr>
       <tr><td>1</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles1}}</td><td>{{earnedHours1}} </td><td>Green </td><td WIDTH="350">None</td></tr>  
       <tr><td>2</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles2}}</td><td>{{earnedHours2}} </td><td>Green </td><td WIDTH="350">None</td></tr>  
-      <tr><td>3</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles}}</td><td>{{earnedHours}} </td><td>Green </td><td WIDTH="350">None</td></tr>  
+      <!--<tr><td>3</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles}}</td><td>{{earnedHours}} </td><td>Green </td><td WIDTH="350">None</td></tr>  
       <tr><td>4</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles}}</td><td>{{earnedHours}} </td><td>Green </td><td WIDTH="350">None</td></tr>  
       <tr><td>5</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles}}</td><td>{{earnedHours}} </td><td>Green </td><td WIDTH="350">None</td></tr>  
       <tr><td>6</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles}}</td><td>{{earnedHours}} </td><td>Green </td><td WIDTH="350">None</td></tr>  
       <tr><td>7</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles}}</td><td>{{earnedHours}} </td><td>Green </td><td WIDTH="350">None</td></tr>  
-      <tr><td>8</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles}}</td><td>{{earnedHours}} </td><td>Green </td><td WIDTH="350">None</td></tr>    
+      <tr><td>8</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles}}</td><td>{{earnedHours}} </td><td>Green </td><td WIDTH="350">None</td></tr>     -->
   
   {{/each}}
 

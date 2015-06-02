@@ -1,7 +1,7 @@
 // register event on form, not submit button
 Meteor.subscribe('machines');
 Meteor.subscribe('entries');
-
+// Meteor.subscribe('cycles');
 // Template.table.events({
 //   'submit form': function () {
 //     Router.go('/main.html');

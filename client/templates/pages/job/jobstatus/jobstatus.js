@@ -55,7 +55,7 @@ console.log("This is the percent in the job status file" + percent)
   },
   status: function(){
 
-   if (percent.get()<0)
+   if (percent.get()<=0)
     {
     return true;
 }

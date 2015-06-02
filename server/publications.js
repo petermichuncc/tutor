@@ -11,12 +11,10 @@ Meteor.publish('machines', function() {
 Meteor.publish('parts', function() {
   return Parts.find();
 });
-Meteor.publish('cycles', function() {
+Meteor.publish('Presscycles', function() {
   return Cycles.find();
 });
-Meteor.publish('users', function() {
-  return UserAccounts.find();
-});
+
 Meteor.publish('submissions', function() {
   return Submissions.find();
 });
