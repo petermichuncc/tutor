@@ -3,7 +3,7 @@ Meteor.subscribe('parts');
 
    start_time = moment().hour(23).format("2015-06-01 H:mm:ss.SSS");
    hour2_time= moment().hour(24).format("2015-06-01 H:mm:ss.SSS");
-   test = moment().format("2015-06-01 H:mm:ss.SSS");
+   test = moment().format("H:mm:ss.SSS");
 console.log("this is the test amount"+ test);
     //This is the 
   // start_time = Parts.find().timestamp;
@@ -22,12 +22,12 @@ Template.job.helpers({
 
          console.log("Estimated minutes" + estimatedminutes)
          estimatedseconds=estimatedTime%60;
-         displayHours = moment(Parts.findOne().timestamp.toString()).add(estimatedminutes, 'm').add(estimatedseconds, 's').format("hh:mm:ss.SSS");
+         displayHours = moment(Parts.findOne().timestamp.toString()).add(estimatedminutes, 'm').add(estimatedseconds, 's').format("H:mm:ss.SSS");
          
          
          
          console.log ("This is the estimated time " + estimatedTime);
-         console.log ("This is the current time" + moment().format("hh:mm:ss.SSS"));
+         console.log ("This is the current time" + moment().format("H:mm:ss.SSS"));
          console.log("This is the display hours time "+ displayHours);
          
          return displayHours;
@@ -43,7 +43,7 @@ Template.job.helpers({
      return result;
    },
    earnedHours: function () {
-    
+    Meteor.subscribe('cycles-recent', Parts.findOne().timestamp.toString());
         var earnedHoursCalc = ((Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()) * Parts.findOne().cavitation) / Parts.findOne().quantity;
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
@@ -68,31 +68,32 @@ Template.job.helpers({
     //endTime=moment().hour(0).format("YYYY-MM-DD hh:mm:ss.SSS");
     
 
-         Meteor.subscribe('cycles-recent', start_time);
-       while (test<displayHours){
+         Meteor.subscribe('cycles-recent', Parts.findOne().timestamp.toString()); 
+       
         // var earnedHoursCalc = ((Cycles.find({PressNumber: '1'},{CycleTimeStamp: { $lte: test}}).count()) * Parts.findOne().cavitation) / Parts.findOne().quantity;
-       var earnedHoursCalc = ((Cycles.find({PressNumber: '1'},{CycleTimeStamp: { $lte: test}}).count()) * Parts.findOne().cavitation) / Parts.findOne().quantity;
-       }
-        while (test<displayHours){
-        console.log ("this is the earned hours since now" + (Cycles.find({PressNumber: '1'},{CycleTimeStamp: { $gte: test}}).count()) * (Parts.findOne().cavitation / Parts.findOne().quantity))
-        }
+        // while (test<displayHours){
+        var earnedHoursCalc = ((Cycles.find({PressNumber: '1'},{CycleTimeStamp: { $lte: test}}).count()) * Parts.findOne().cavitation) / Parts.findOne().quantity;
+        
+
+        // }
         // console.log ("this is the earned hours since now" + (Cycles.find({PressNumber: '1'},{CycleTimeStamp: { $gte: test}}).count()) * (Parts.findOne().cavitation / Parts.findOne().quantity))
+        
          
         return earnedHoursCalc;
             },
      incomingCycles1: function () {
         //grab all cycles from today
-     
+     Meteor.subscribe('cycles-recent', Parts.findOne().timestamp.toString());
          
       
              return (Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()) * Parts.findOne().cavitation ;
         // console.log("This is the cycles find"+Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count());
       },
       earnedHours2: function () {
-    if (moment().format("hh:mm:ss.SSS") < displayHours) {
-      newStart = moment().hour(0).format("YYYY-MM-DD hh:mm:ss.SSS");
-         
-      }
+    
+      // newStart = moment().hour(0).format("YYYY-MM-DD hh:mm:ss.SSS");
+        Meteor.subscribe('cycles-recent', Parts.findOne().timestamp.toString()); 
+      
         var earnedHoursCalc = ((Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}, {CycleTimeStamp: { $gte: hour2_time}}).count()) * Parts.findOne().cavitation) / Parts.findOne().quantity;
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
@@ -101,7 +102,7 @@ Template.job.helpers({
             },
      incomingCycles2: function () {
         //grab all cycles from today
-     
+     Meteor.subscribe('cycles-recent', Parts.findOne().timestamp.toString());
         
       
              return (Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()) * Parts.findOne().cavitation ;
