@@ -11,32 +11,48 @@ statusgreen: function(){
  
      // estimatedTime = (Parts.findOne().quantity / Parts.findOne().cavitation) *"23";
      //convert estimatedTime to minutes
-     estimatedTime = (Parts.findOne().quantity / Parts.findOne().cavitation) *"23";
-     estimatedTime = estimatedTime/60;
-     console.log ("This is the estimated time in progress function " + estimatedTime);
-         // displayHours = moment().seconds(estimatedTime).format("YYYY-MM-DD HH:mm:ss.SSS");
-         // displayHours = moment(Parts.findOne().timestamp.toString()).format("H");
-displayHours = moment(Parts.findOne().timestamp.toString()).seconds(estimatedTime).format("H");
-displayHours = displayHours*60;
-displayHours = displayHours + Number(moment(Parts.findOne().timestamp.toString()).format("m"));
-          
-          displayHours = displayHours +estimatedTime;
-          console.log("This is the display hours time in progress function "+ displayHours);
-       now = moment().format("h");
-        now = now*60;
-       now = now + Number((moment().format("m")));
-       past = moment(Parts.findOne().timestamp.toString()).format("h");
-        past = past*60;
-        past = past +Number(moment(Parts.findOne().timestamp.toString()).format("m"))
-        numerator = now - past;
-       denominator = displayHours - past;
-       
-       percent = new ReactiveVar();
-       percent.set((numerator/denominator)*100);
-       percent.get();
-       console.log("this is percent" + percent)
-       console.log("this is percent get" + percent.get())
+      
+//potential reactive code in meteor
+    //  self.now = new ReactiveVar(moment());
+    // Meteor.setInterval(function() {
+    //   self.now.set(moment());
+    // }, 1000);//every second
+     now = Number(mo.now.get().format("H"));
+         now = now*60;
+       now = now + Number((mo.now.get().format("m")));
+       console.log("This is the minutes now" + now);
+estimatedTime = Number((Parts.findOne().quantity / Parts.findOne().cavitation) *"23");
+      estimatedTimeMinutes = estimatedTime/60;//This is the additional estimated time in minutes
+      estimatedTimeSeconds= estimatedTime%60;//This is the additional estimated time in seconds
+       //displayHours needs to be still, so it has time stamp from the collection
+  //displayHours has the estimatedTime added to it      
+ displayHours = Number(moment(Parts.findOne().timestamp.toString()).format("H"));
+  displayHours = displayHours*60; //This converts the hours to minutes
+//This code will add minutes from the time stamp to the calculated minutes from the hours component
+ displayHours = displayHours + Number(moment(Parts.findOne().timestamp.toString()).format("m"))
+//This code will add the estimated time to complete to the minutes
+ displayHours = displayHours + estimatedTimeMinutes //This adds minutes from estimated time
+           //Remove the minutes in the time stamp from both the numerator and denominator for the percent
 
+  past= Number(moment(Parts.findOne().timestamp.toString()).format("H"));
+  past = past*60;
+  past = past + Number(moment(Parts.findOne().timestamp.toString()).format("m"))
+  
+  numerator=now-past;
+  denominator=displayHours-past;
+  
+ percent = numerator/denominator
+ percent = percent*100;
+ percent = parseInt(percent);
+ if (percent >=100)
+ {
+  percent = 100
+ }
+
+ 
+
+  
+       
         // percent = numerator/denominator;
         //  percent = percent *100;
        
@@ -47,7 +63,7 @@ displayHours = displayHours + Number(moment(Parts.findOne().timestamp.toString()
     
 console.log("This is the percent in the job status file" + percent)
     
-    if (percent.get()>0)
+    if (percent>0)
     {
     return true
 }
@@ -55,7 +71,7 @@ console.log("This is the percent in the job status file" + percent)
   },
   status: function(){
 
-   if (percent.get()<=0)
+   if (percent<=0)
     {
     return true;
 }
