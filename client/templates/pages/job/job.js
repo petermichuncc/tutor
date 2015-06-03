@@ -26,10 +26,7 @@ Template.job.helpers({
          
          
          
-         console.log ("This is the estimated time " + estimatedTime);
-         console.log ("This is the current time" + moment().format("H:mm:ss.SSS"));
-         console.log("This is the display hours time "+ displayHours);
-         console.log ("This is the time stamp from cycles" + Cycles.find({PressNumber: '1'}).CycleTimeStamp)
+         
          return displayHours;
 
      },
@@ -43,7 +40,8 @@ Template.job.helpers({
      return result;
    },
    earnedHours: function () {
-    
+    console.log ("this is the time im trying to subscribe to" +moment(Parts.findOne().timestamp.toString()).format("YYYY-MM-DD H:mm:ss.SSS"))
+    Meteor.subscribe('cycles-recent', moment(Parts.findOne().timestamp.toString()).format("YYYY-MM-DD H:mm:ss.SSS"))
         var earnedHoursCalc = ((Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()) * Parts.findOne().cavitation) / Parts.findOne().quantity;
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
@@ -52,8 +50,7 @@ Template.job.helpers({
             },
      incomingCycles: function () {
         //grab all cycles from today
-      
-         Meteor.subscribe('cycles-recent', moment());
+Meteor.subscribe('cycles-recent', moment(Parts.findOne().timestamp.toString()).format("YYYY-MM-DD H:mm:ss.SSS"));         
        
     //find how comparisons are made between time stamps
     //I need to figure out the time stamp that is in
@@ -64,55 +61,28 @@ return Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}},{CycleTimeSt
       //Cycles.find({CycleTimeStamp: { $gte: startTime}})
       //this will retrieve all cyles greater than or equal to this start time
       //so this will be 
-      earnedHours1: function () {
-    //endTime=moment().hour(0).format("YYYY-MM-DD hh:mm:ss.SSS");
+     earnedHours15: function () {
+     console.log ("this is the time im trying to subscribe to" +moment(Parts.findOne().timestamp.toString()).format("YYYY-MM-DD H:mm:ss.SSS"))
     
-
-         
-       
-        // var earnedHoursCalc = ((Cycles.find({PressNumber: '1'},{CycleTimeStamp: { $lte: test}}).count()) * Parts.findOne().cavitation) / Parts.findOne().quantity;
-        // while (test<displayHours){
-        var earnedHoursCalc = ((Cycles.find({PressNumber: '1'},{CycleTimeStamp: { $lte: test}}).count()) * Parts.findOne().cavitation) / Parts.findOne().quantity;
-        
-
-        // }
-        // console.log ("this is the earned hours since now" + (Cycles.find({PressNumber: '1'},{CycleTimeStamp: { $gte: test}}).count()) * (Parts.findOne().cavitation / Parts.findOne().quantity))
-        
-         
-        return earnedHoursCalc;
-            },
-     incomingCycles1: function () {
-        //grab all cycles from today
-    
-         
-      
-             return (Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()) * Parts.findOne().cavitation ;
-        // console.log("This is the cycles find"+Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count());
-      },
-      earnedHours2: function () {
-    
-      // newStart = moment().hour(0).format("YYYY-MM-DD hh:mm:ss.SSS");
-        
-      
-        var earnedHoursCalc = ((Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}, {CycleTimeStamp: { $gte: hour2_time}}).count()) * Parts.findOne().cavitation) / Parts.findOne().quantity;
+        var earnedHoursCalc = ((Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()) * Parts.findOne().cavitation) / Parts.findOne().quantity;
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
          
         return earnedHoursCalc;
             },
-     incomingCycles2: function () {
-        //grab all cycles from today
-     
+     incomingCycles15: function () {
+          //grab all cycles from today
         
+       
+    //find how comparisons are made between time stamps
+    //I need to figure out the time stamp that is in
+return Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}},{CycleTimeStamp: { $gte: moment(Parts.findOne().timestamp.toString()).format("YYYY-MM-DD H:mm:ss.SSS")}}).count() * Parts.findOne().cavitation ;
       
-             return (Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()) * Parts.findOne().cavitation ;
-        // console.log("This is the cycles find"+Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count());
-      },
-        returnTimeStamp: function () {
-        //calculate the amount of time needed for the job
-         console.log("This is the time stamp "+ Parts.findOne().timestamp.toString());
         
-       },
+      },
+      //Cycles.find({CycleTimeStamp: { $gte: startTime}})
+      //this will retrieve all cyles greater than or equal to this start time
+      //so this will be 
     progressBar: function () {
         //calculate the amount of time needed for the job
         //This function will require converting the string to a number

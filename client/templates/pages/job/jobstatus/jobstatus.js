@@ -20,7 +20,7 @@ statusgreen: function(){
      now = Number(mo.now.get().format("H"));
          now = now*60;
        now = now + Number((mo.now.get().format("m")));
-       console.log("This is the minutes now" + now);
+       
 estimatedTime = Number((Parts.findOne().quantity / Parts.findOne().cavitation) *"23");
       estimatedTimeMinutes = estimatedTime/60;//This is the additional estimated time in minutes
       estimatedTimeSeconds= estimatedTime%60;//This is the additional estimated time in seconds
@@ -49,7 +49,7 @@ estimatedTime = Number((Parts.findOne().quantity / Parts.findOne().cavitation) *
   percent = 100
  }
 
- 
+
 
   
        

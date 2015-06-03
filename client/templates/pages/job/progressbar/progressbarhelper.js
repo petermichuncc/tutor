@@ -1,14 +1,12 @@
 Template.progressbar.helpers({
 
  percent: function(){
- 
-   
-//potential reactive code in meteor
-    //  self.now = new ReactiveVar(moment());
-    // Meteor.setInterval(function() {
-    //   self.now.set(moment());
-    // }, 1000);//every second
-     now = Number(mo.now.get().format("H"));
+      //I may edit the code to use seconds instead of minutes for obtaining the percent.
+      //This will make the program more fine tuned
+      //
+now = Number(mo.now.get().format("H"));
+console.log("This is the now hours" +Number(mo.now.get().format("H")) )
+
          now = now*60;
        now = now + Number((mo.now.get().format("m")));
        console.log("This is the minutes now" + now);
@@ -19,7 +17,10 @@ estimatedTime = Number((Parts.findOne().quantity / Parts.findOne().cavitation) *
        //displayHours needs to be still, so it has time stamp from the collection
   //displayHours has the estimatedTime added to it      
  displayHours = Number(moment(Parts.findOne().timestamp.toString()).format("H"));
+ 
+ console.log("This is the displayHours hour amount" + displayHours)
   displayHours = displayHours*60; //This converts the hours to minutes
+  console.log("This is the displayHours minute amount" + displayHours)
 //This code will add minutes from the time stamp to the calculated minutes from the hours component
  displayHours = displayHours + Number(moment(Parts.findOne().timestamp.toString()).format("m"))
 //This code will add the estimated time to complete to the minutes
@@ -29,12 +30,13 @@ console.log("This is the display hours before estimated time added" + displayHou
            //Remove the minutes in the time stamp from both the numerator and denominator for the percent
 
   past= Number(moment(Parts.findOne().timestamp.toString()).format("H"));
+  
   past = past*60;
   past = past + Number(moment(Parts.findOne().timestamp.toString()).format("m"))
   
   numerator=now-past;
   denominator=displayHours-past;
-  
+  console.log("Numerator " + numerator + " denominator " + denominator)
  percent = numerator/denominator
  percent = percent*100;
  percent = parseInt(percent);
