@@ -19,8 +19,19 @@ Meteor.publish('submissions', function() {
   return Submissions.find();
 });
 
+// Meteor.publish('cycles-recent', function (startTime) {
+
+// return Cycles.find({CycleTimeStamp: {$gte: startTime}});
+// });
 
 Meteor.publish('cycles-recent', function (startTime) {
 
-return Cycles.find({CycleTimeStamp: { $gte: startTime}});
+return Cycles.find({CycleTimeStamp: {$gte: startTime}});
 });
+
+// Meteor.publish('cycles-recent', function (startTime, endTime) {
+
+// return Cycles.find({CycleTimeStamp: { $lt: startTime, $gte: endTime}});
+// });
+
+//{submitted: {$gte: new Date('2015-02-23'), $lt: new Date('2015-02-04')}}

@@ -1,4 +1,3 @@
-// Helper for the parts template that feeds it data
 Meteor.subscribe('parts');
 
    start_time = moment().hour(23).format("2015-06-01 H:mm:ss.SSS");
@@ -40,9 +39,11 @@ Template.job.helpers({
      return result;
    },
    earnedHours: function () {
-    console.log ("this is the time im trying to subscribe to" +moment(Parts.findOne().timestamp.toString()).format("YYYY-MM-DD H:mm:ss.SSS"))
-    Meteor.subscribe('cycles-recent', moment(Parts.findOne().timestamp.toString()).format("YYYY-MM-DD H:mm:ss.SSS"))
-        var earnedHoursCalc = ((Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()) * Parts.findOne().cavitation) / Parts.findOne().quantity;
+    console.log ("this is the time im trying to subscribe to" +moment(Parts.findOne().timestamp.toString()).format("YYYY-MM-DD 11:mm:ss.SSS"))
+     Meteor.subscribe('cycles-recent', moment(Parts.findOne().timestamp.toString()).format("YYYY-MM-DD 11:mm:ss.SSS"))
+    //Meteor.subscribe('Presscycles')
+    //The Cycles find only looks at the first thing you send in to it.
+        var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment(Parts.findOne().timestamp.toString()).format("YYYY-MM-DD 12:mm:ss.SSS"), $lt: moment(Parts.findOne().timestamp.toString()).format("YYYY-MM-DD 13:mm:ss.SSS")}}).count() ;
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
          
@@ -50,18 +51,20 @@ Template.job.helpers({
             },
      incomingCycles: function () {
         //grab all cycles from today
-Meteor.subscribe('cycles-recent', moment(Parts.findOne().timestamp.toString()).format("YYYY-MM-DD H:mm:ss.SSS"));         
+      // Meteor.subscribe('cycles-recent', moment(Parts.findOne().timestamp.toString()).format("YYYY-MM-DD H:mm:ss.SSS"))
        
     //find how comparisons are made between time stamps
     //I need to figure out the time stamp that is in
-return Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}},{CycleTimeStamp: { $gte: moment()}}).count() * Parts.findOne().cavitation ;
-      
+// return Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count() * Parts.findOne().cavitation ;
+// for some reasons the cycles find function only cares about the first argument that it sees.
+    return Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment(Parts.findOne().timestamp.toString()).format("YYYY-MM-DD 12:mm:ss.SSS")}}).count() ;
+  
         
       },
       //Cycles.find({CycleTimeStamp: { $gte: startTime}})
       //this will retrieve all cyles greater than or equal to this start time
       //so this will be 
-     earnedHours15: function () {
+     earnedHours1: function () {
      console.log ("this is the time im trying to subscribe to" +moment(Parts.findOne().timestamp.toString()).format("YYYY-MM-DD H:mm:ss.SSS"))
     
         var earnedHoursCalc = ((Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count()) * Parts.findOne().cavitation) / Parts.findOne().quantity;
@@ -70,7 +73,7 @@ return Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}},{CycleTimeSt
          
         return earnedHoursCalc;
             },
-     incomingCycles15: function () {
+     incomingCycles1: function () {
           //grab all cycles from today
         
        
