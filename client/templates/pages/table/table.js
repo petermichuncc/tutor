@@ -42,7 +42,7 @@ console.log(text);
 Meteor.subscribe('parts');
      Meteor.call('partsInsert', post)
 console.log("second hi");
-Router.go('job'); 
+Router.go('shift3'); 
 return false;
 
 }

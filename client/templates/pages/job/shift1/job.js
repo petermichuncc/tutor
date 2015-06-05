@@ -8,7 +8,8 @@ console.log("This the start of today" +moment().format("YYYY-MM-DD 00:00:00.000"
 Template.job.helpers({
   calculateTime: function () {
          //calculate the amount of time needed for the job
-         estimatedTime = (Parts.findOne().quantity / Parts.findOne().cavitation) *"23";
+         count = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment(Parts.findOne().timestamp.toString()).subtract(60,'seconds').format("YYYY-MM-DD H:mm:ss.SSS")}}).count()
+         estimatedTime = (Number(Parts.findOne().quantity) - Number(count))  / Number(Parts.findOne().cavitation);
          
          estimatedminutes=parseInt(estimatedTime/60);
 

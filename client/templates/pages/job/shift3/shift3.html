@@ -1,0 +1,134 @@
+<template name="shift3">
+<head>
+    
+    <!-- <script src="parts.js"></script>-->
+    <script type="text/javascript">
+// $("body").css("background-color", "green");
+// $( "#status" ).css( "border", "3px solid red" );
+
+    </script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    
+
+</head>
+
+
+
+    
+    
+    
+<!-- This part of the program contacts a parts template that outputs a table containing the info about the job. -->
+      
+     
+<!-- <div id="status" class= "test"> 
+{{changeStatus}}
+        Workcenter:{{>workcenter}}<br/><br/>
+        <span id="label">Fetching status...</span>
+     </div> -->
+     {{>jobstatus}}
+     <!-- {{>testprogress}} -->
+     <!-- This is the percent progress {{progressBar}} -->
+     <!-- {{>progresscontroller}} -->
+      <!-- {{>progressbar}}  -->
+      {{>countdownbar}}
+     
+  <!-- <div class="progress">
+  <div class="progress-bar progress-bar-striped active" role="progressbar"
+  aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+    100%
+  </div> 
+ 
+</div> --> 
+
+        <div id="wrap"> 
+        Percent: {{percent}}
+         Time left: {{calculateTime}} 
+        
+        {{returnTimeStamp}}
+        
+        <br/>
+            Last idle period: --<br/>
+            Last changeover time: --
+           <table class="parts" width ="3000" cellpadding="0" border="0" align="center" cellspacing="0">
+           
+ 
+    <th>Hour  </th><th>Part #</th><th>Planned</th><th>Actual</th><th>EarnedHours</th><th>Status</th><th WIDTH="350">Reason</th>
+    {{#each parts}}
+     <!-- <tr><td>Total</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles}}</td><td>{{earnedHours}} </td><td>Green </td><td WIDTH="350">None</td></tr>  -->
+      <tr><td>1</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles1}}</td><td>{{earnedHours1}} </td><td>Green </td><td WIDTH="350">None</td></tr>  
+      <tr><td>2</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles2}}</td><td>{{earnedHours2}} </td><td>Green </td><td WIDTH="350">None</td></tr>   
+      <tr><td>3</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles3}}</td><td>{{earnedHours3}} </td><td>Green </td><td WIDTH="350">None</td></tr>  
+      <tr><td>4</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles4}}</td><td>{{earnedHours4}} </td><td>Green </td><td WIDTH="350">None</td></tr>  
+      <tr><td>5</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles5}}</td><td>{{earnedHours5}} </td><td>Green </td><td WIDTH="350">None</td></tr>  
+      <tr><td>6</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles6}}</td><td>{{earnedHours6}} </td><td>Green </td><td WIDTH="350">None</td></tr>  
+      <tr><td>7</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles7}}</td><td>{{earnedHours7}} </td><td>Green </td><td WIDTH="350">None</td></tr>  
+      <tr><td>8</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles8}}</td><td>{{earnedHours8}} </td><td>Green </td><td WIDTH="350">None</td></tr>    
+  
+  
+  {{/each}}
+
+   </table>
+  
+  
+        
+         </div> 
+   
+
+</template>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <template name="job">
+  
+  <!--<table width="90%">-->
+    <!--<tr><th>Index Key</th><th>Press Number</th><th>Auto Status</th><th>Cycle Time Stamp</th></tr>-->
+  <!--{{#each incomingCycles}}-->
+    <!--<tr><td>{{IndexKey}}</td><td>{{PressNumber}}</td><td>{{AutoStatus}}</td> <td>{{CycleTimeStamp}}</td></tr>-->
+  <!--{{/each}}-->
+  <!--</table>-->
+<!-- <body>
+ <div id="status">
+        Workcenter:{{>workcenter}}<br/><br/>
+        <span id="label">Fetching status...</span>
+    </div>
+
+    <progress id="prog"></progress>
+    <span id="countdown" class="progresslabel"></span>
+    <div id="wrap">
+           <table id="parts">
+           
+
+    <th>Hour  </th><th>Part #</th><th>Catalog</th><th>Planned</th><th>Actual</th><th WIDTH="350">Reason</th>
+    {{#each parts}}
+
+      <tr><td>{{quantity}}</td> <td>{{partnumber}} </td> <td>{{Catalog}} </td><td>{{Planned}} </td><td>{{Actual}} </td></tr>
+    {{/each}}
+   
+  
+  </table>
+
+      <br/>
+            Last idle period: --<br/>
+            Last changeover time: --
+        </div>
+</body>
+</template>
+ --> 
