@@ -12,11 +12,19 @@
         <span id="label">Fetching status...</span>
      </div>
  -->
-{{#if statusgreen}}
+ {{#if statusgreen}}
      <div id="statusgreen"> 
 {{changeStatus}}
         Workcenter:{{>workcenter}}<br/><br/>
         <span id="label">At or above cycle</span>
+     </div>
+  
+     {{else}}
+{{#if status}}
+     <div id="status"> 
+{{changeStatus}}
+        Workcenter:{{>workcenter}}<br/><br/>
+        <span id="label">Fetching status...</span>
      </div>
  {{else}}
  {{#if statusyellow}}
@@ -25,13 +33,9 @@
         Workcenter:{{>workcenter}}<br/><br/>
         <span id="label">Below cycle</span>
      </div>
-     {{else}}
- {{#if status}}
-     <div id="status"> 
-{{changeStatus}}
-        Workcenter:{{>workcenter}}<br/><br/>
-        <span id="label">Fetching status...</span>
-     </div>
+     
+
+
      {{/if}}
      {{/if}}
     {{/if}}

@@ -1,6 +1,6 @@
 Meteor.subscribe('parts');
 
-console.log(start_time);
+
 // console.log("This is your cavitation" +Parts.findOne().cavitation);
 console.log("This is yesterday at 11:00 " + moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"))
 
@@ -9,6 +9,7 @@ Template.job.helpers({
   calculateTime: function () {
          //calculate the amount of time needed for the job
          estimatedTime = (Parts.findOne().quantity / Parts.findOne().cavitation) *"23";
+         
          estimatedminutes=parseInt(estimatedTime/60);
 
          console.log("Estimated minutes" + estimatedminutes)

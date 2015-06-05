@@ -1,8 +1,8 @@
 Template.progressbar.helpers({
 
  percent: function(){
-      //I may edit the code to use seconds instead of minutes for obtaining the percent.
-      //This will make the program more fine tuned
+      
+      //This percent bar is connected with 
       //
 now = Number(mo.now.get().format("H"));
 
