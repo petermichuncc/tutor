@@ -67,9 +67,9 @@ seconds = secondsLeft%60
       //Cycles.find({CycleTimeStamp: { $gte: startTime}})
       //this will retrieve all cyles greater than or equal to this start time
       //so this will be 
-     earnedHours1: function () {
+     earnedHours17: function () {
      
-    Meteor.subscribe('cycles-recent', moment().format("YYYY-MM-04 23:00:00.000"))
+    Meteor.subscribe('cycles-recent', moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"))
     //Meteor.subscribe('Presscycles')
     //The Cycles find only looks at the first thing you send in to it.
         var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"), $lt: moment().format("YYYY-MM-DD 00:00:00.000")}}).count() * (Parts.findOne().cavitation / Parts.findOne().quantity) ;
@@ -78,7 +78,7 @@ seconds = secondsLeft%60
          
         return earnedHoursCalc;
             },
-     incomingCycles1: function () {
+     incomingCycles17: function () {
             //grab all cycles from today
       // Meteor.subscribe('cycles-recent', moment(Parts.findOne().timestamp.toString()).format("YYYY-MM-DD H:mm:ss.SSS"))
        
@@ -91,7 +91,7 @@ seconds = secondsLeft%60
         
         
       },
-      earnedHours2: function () {
+      earnedHours18: function () {
      
     //Meteor.subscribe('Presscycles')
     //The Cycles find only looks at the first thing you send in to it.
@@ -101,7 +101,7 @@ seconds = secondsLeft%60
          
         return earnedHoursCalc;
             },
-     incomingCycles2: function () {
+     incomingCycles18: function () {
             //grab all cycles from today
       // Meteor.subscribe('cycles-recent', moment(Parts.findOne().timestamp.toString()).format("YYYY-MM-DD H:mm:ss.SSS"))
        
@@ -114,7 +114,7 @@ seconds = secondsLeft%60
         
         
       },
-      earnedHours3: function () {
+      earnedHours19: function () {
      
     //Meteor.subscribe('Presscycles')
     //The Cycles find only looks at the first thing you send in to it.
@@ -124,7 +124,7 @@ seconds = secondsLeft%60
          
         return earnedHoursCalc;
             },
-     incomingCycles3: function () {
+     incomingCycles19: function () {
             //grab all cycles from today
       // Meteor.subscribe('cycles-recent', moment(Parts.findOne().timestamp.toString()).format("YYYY-MM-DD H:mm:ss.SSS"))
        
@@ -137,7 +137,7 @@ seconds = secondsLeft%60
         
         
       },
-      earnedHours4: function () {
+      earnedHours20: function () {
      
     //Meteor.subscribe('Presscycles')
     //The Cycles find only looks at the first thing you send in to it.
@@ -147,7 +147,7 @@ seconds = secondsLeft%60
          
         return earnedHoursCalc;
             },
-     incomingCycles4: function () {
+     incomingCycles20: function () {
             //grab all cycles from today
       // Meteor.subscribe('cycles-recent', moment(Parts.findOne().timestamp.toString()).format("YYYY-MM-DD H:mm:ss.SSS"))
        
@@ -160,7 +160,7 @@ seconds = secondsLeft%60
         
         
       },
-      earnedHours5: function () {
+      earnedHours21: function () {
      
     //Meteor.subscribe('Presscycles')
     //The Cycles find only looks at the first thing you send in to it.
@@ -170,7 +170,7 @@ seconds = secondsLeft%60
          
         return earnedHoursCalc;
             },
-     incomingCycles5: function () {
+     incomingCycles21: function () {
             //grab all cycles from today
       // Meteor.subscribe('cycles-recent', moment(Parts.findOne().timestamp.toString()).format("YYYY-MM-DD H:mm:ss.SSS"))
        
@@ -183,7 +183,7 @@ seconds = secondsLeft%60
         
         
       },
-      earnedHours6: function () {
+      earnedHours22: function () {
      
     //Meteor.subscribe('Presscycles')
     //The Cycles find only looks at the first thing you send in to it.
@@ -193,7 +193,7 @@ seconds = secondsLeft%60
          
         return earnedHoursCalc;
             },
-     incomingCycles6: function () {
+     incomingCycles22: function () {
             //grab all cycles from today
       // Meteor.subscribe('cycles-recent', moment(Parts.findOne().timestamp.toString()).format("YYYY-MM-DD H:mm:ss.SSS"))
        
@@ -206,7 +206,7 @@ seconds = secondsLeft%60
         
         
       },
-      earnedHours7: function () {
+      earnedHours23: function () {
      
     //Meteor.subscribe('Presscycles')
     //The Cycles find only looks at the first thing you send in to it.
@@ -216,7 +216,7 @@ seconds = secondsLeft%60
          
         return earnedHoursCalc;
             },
-     incomingCycles7: function () {
+     incomingCycles23: function () {
             //grab all cycles from today
       // Meteor.subscribe('cycles-recent', moment(Parts.findOne().timestamp.toString()).format("YYYY-MM-DD H:mm:ss.SSS"))
        
@@ -229,7 +229,7 @@ seconds = secondsLeft%60
         
         
       },
-      earnedHours8: function () {
+      earnedHours24: function () {
      
     //Meteor.subscribe('Presscycles')
     //The Cycles find only looks at the first thing you send in to it.
@@ -239,7 +239,7 @@ seconds = secondsLeft%60
          
         return earnedHoursCalc;
             },
-     incomingCycles8: function () {
+     incomingCycles24: function () {
             //grab all cycles from today
       // Meteor.subscribe('cycles-recent', moment(Parts.findOne().timestamp.toString()).format("YYYY-MM-DD H:mm:ss.SSS"))
        

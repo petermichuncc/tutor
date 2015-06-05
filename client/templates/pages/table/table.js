@@ -22,7 +22,11 @@ Meteor.subscribe('entries');
 // }
 // });
 
-
+//I need an if statement here that determines which job page
+//to go to based on the time of day
+//So maybe it will look at the moment().format("H") of the current day
+//convert this to a number.  Then go to the right page based on this
+//value 
 Template.table.events({
 "submit .workcenterSelection": function(event){
 event.preventDefault();
