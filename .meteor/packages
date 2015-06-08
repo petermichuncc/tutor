@@ -11,7 +11,6 @@ ian:accounts-ui-bootstrap-3
 accounts-password
 aldeed:collection2
 aldeed:autoform
-accounts-ui
 mrt:nprogress
 reactive-var
 tmeasday:publish-counts
