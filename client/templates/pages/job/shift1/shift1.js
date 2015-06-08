@@ -2,10 +2,8 @@ Meteor.subscribe('parts');
 
 
 // console.log("This is your cavitation" +Parts.findOne().cavitation);
-console.log("This is yesterday at 11:00 " + moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"))
-
-console.log("This the start of today" +moment().format("YYYY-MM-DD 00:00:00.000") )
 Template.shift1.helpers({
+
   calculateTime: function () {
          //calculate the amount of time needed for the job
          count = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment(Parts.findOne().timestamp.toString()).subtract(60,'seconds').format("YYYY-MM-DD H:mm:ss.SSS")}}).count()
@@ -246,36 +244,172 @@ Template.shift1.helpers({
       //Cycles.find({CycleTimeStamp: { $gte: startTime}})
       //this will retrieve all cyles greater than or equal to this start time
       //so this will be 
-    progressBar: function () {
-        //calculate the amount of time needed for the job
-        //This function will require converting the string to a number
-        //Then converting the number to minutes, then dividing the minutes 
-        //I will try to use this for the changing the progress bar
-        console.log("This is the formatted data" +moment(displayHours).format("h"));
-        var percent = moment(Parts.findOne().timestamp.toString()).format("h")/moment(displayHours).format("h");
-        percent = percent *100;
-
-         return  Math.round(percent);
-         
-    },
+    
     
 
-    changeStatus: function() {
-      //convert this if else statement to change the 
+    changeStatus1: function() {
+      
+     var earnedHoursCalc = Number(Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 07:00:00.000"), $lt: moment().format("YYYY-MM-DD 08:00:00.000")}}).count() * (Parts.findOne().cavitation / Parts.findOne().quantity));
+         
+        earnedHoursCalc = earnedHoursCalc.toFixed(2);
+        console.log ("This is the earnedHoursCal in change status 1" + earnedHoursCalc)
+       if (earnedHoursCalc >=1)
+      {
+        return "Green"
+      }
 
-      // $("#status").css("background-color", "black");
+      else if (earnedHoursCalc <1)
+      {
+
+        return "Yellow"
+      }
+
+
 
     },
-    changeBar: function() {
-      //convert this if else statement to change the 
-      var a=5;
-      if (a>4)
-      {
-       is100:true
-      }
-      
-},
 
+    changeStatus2: function() {
+      var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 08:00:00.000"), $lt: moment().format("YYYY-MM-DD 09:00:00.000")}}).count() * (Parts.findOne().cavitation / Parts.findOne().quantity);
+         
+        earnedHoursCalc = earnedHoursCalc.toFixed(2);
+
+       if (earnedHoursCalc >=1)
+      {
+        return "Green"
+      }
+
+      else
+      {
+
+        return "Yellow"
+      }
+
+
+
+    },
+
+    changeStatus3: function() {
+      
+      var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 09:00:00.000"), $lt: moment().format("YYYY-MM-DD 10:00:00.000")}}).count() * (Parts.findOne().cavitation / Parts.findOne().quantity);
+         
+        earnedHoursCalc = earnedHoursCalc.toFixed(2);
+
+       if (earnedHoursCalc >=1)
+      {
+        return "Green"
+      }
+
+      else
+      {
+
+        return "Yellow"
+      }
+
+
+
+    },
+
+    changeStatus4: function() {
+      
+      var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 10:00:00.000"), $lt: moment().format("YYYY-MM-DD 11:00:00.000")}}).count() * (Parts.findOne().cavitation / Parts.findOne().quantity);
+         
+        earnedHoursCalc = earnedHoursCalc.toFixed(2);
+
+       if (earnedHoursCalc >=1)
+      {
+        return "Green"
+      }
+
+      else
+      {
+
+        return "Yellow"
+      }
+
+
+
+    },
+
+    changeStatus5: function() {
+      
+     var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 11:00:00.000"), $lt: moment().format("YYYY-MM-DD 12:00:00.000")}}).count() * (Parts.findOne().cavitation / Parts.findOne().quantity);
+         
+        earnedHoursCalc = earnedHoursCalc.toFixed(2);
+
+       if (earnedHoursCalc >=1)
+      {
+        return "Green"
+      }
+
+      else
+      {
+
+        return "Yellow"
+      }
+
+      
+
+
+    },
+
+    changeStatus6: function() {
+      var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 12:00:00.000"), $lt: moment().format("YYYY-MM-DD 13:00:00.000")}}).count() * (Parts.findOne().cavitation / Parts.findOne().quantity);
+         
+        earnedHoursCalc = earnedHoursCalc.toFixed(2);
+
+       if (earnedHoursCalc >=1)
+      {
+        return "Green"
+      }
+
+      else
+      {
+
+        return "Yellow"
+      }
+
+
+
+    },
+
+    changeStatus7: function() {
+      
+      var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 13:00:00.000"), $lt: moment().format("YYYY-MM-DD 14:00:00.000")}}).count() * (Parts.findOne().cavitation / Parts.findOne().quantity);
+         
+        earnedHoursCalc = earnedHoursCalc.toFixed(2);
+
+       if (earnedHoursCalc >=1)
+      {
+        return "Green"
+      }
+
+      else
+      {
+
+        return "Yellow"
+      }
+
+
+
+    },
+
+    changeStatus8: function() {
+      
+      var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 14:00:00.000"), $lt: moment().format("YYYY-MM-DD 15:00:00.000")}}).count() * (Parts.findOne().cavitation / Parts.findOne().quantity);
+         
+        earnedHoursCalc = earnedHoursCalc.toFixed(2);
+
+       if (earnedHoursCalc >=1)
+      {
+        return "Green"
+      }
+
+      else
+      {
+
+        return "Yellow"
+      }
+}
  
 });
 

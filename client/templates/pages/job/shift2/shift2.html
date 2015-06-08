@@ -58,14 +58,14 @@
     <th>Hour  </th><th>Part #</th><th>Planned</th><th>Actual</th><th>EarnedHours</th><th>Status</th><th WIDTH="350">Reason</th>
     {{#each parts}}
      <!-- <tr><td>Total</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles}}</td><td>{{earnedHours}} </td><td>Green </td><td WIDTH="350">None</td></tr>  -->
-      <tr><td>9</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles9}}</td><td>{{earnedHours9}} </td><td>Green </td><td WIDTH="350">None</td></tr>  
-      <tr><td>10</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles10}}</td><td>{{earnedHours10}} </td><td>Green </td><td WIDTH="350">None</td></tr>   
-      <tr><td>11</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles11}}</td><td>{{earnedHours11}} </td><td>Green </td><td WIDTH="350">None</td></tr>  
-      <tr><td>12</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles12}}</td><td>{{earnedHours12}} </td><td>Green </td><td WIDTH="350">None</td></tr>  
-      <tr><td>13</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles13}}</td><td>{{earnedHours13}} </td><td>Green </td><td WIDTH="350">None</td></tr>  
-      <tr><td>14</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles14}}</td><td>{{earnedHours14}} </td><td>Green </td><td WIDTH="350">None</td></tr>  
-      <tr><td>15</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles15}}</td><td>{{earnedHours15}} </td><td>Green </td><td WIDTH="350">None</td></tr>  
-      <tr><td>16</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles16}}</td><td>{{earnedHours16}} </td><td>Green </td><td WIDTH="350">None</td></tr>    
+      <tr><td>9</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles9}}</td><td>{{earnedHours9}} </td><td>{{changeStatus9}} </td><td WIDTH="350">None</td></tr>  
+      <tr><td>10</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles10}}</td><td>{{earnedHours10}} </td><td>{{changeStatus10}} </td><td WIDTH="350">None</td></tr>   
+      <tr><td>11</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles11}}</td><td>{{earnedHours11}} </td><td>{{changeStatus11}} </td><td WIDTH="350">None</td></tr>  
+      <tr><td>12</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles12}}</td><td>{{earnedHours12}} </td><td>{{changeStatus12}} </td><td WIDTH="350">None</td></tr>  
+      <tr><td>13</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles13}}</td><td>{{earnedHours13}} </td><td>{{changeStatus13}} </td><td WIDTH="350">None</td></tr>  
+      <tr><td>14</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles14}}</td><td>{{earnedHours14}} </td><td>{{changeStatus14}} </td><td WIDTH="350">None</td></tr>  
+      <tr><td>15</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles15}}</td><td>{{earnedHours15}} </td><td>{{changeStatus15}} </td><td WIDTH="350">None</td></tr>  
+      <tr><td>16</td> <td>{{partnumber}} </td> <td>{{quantity}} </td><td>{{incomingCycles16}}</td><td>{{earnedHours16}} </td><td>{{changeStatus16}} </td><td WIDTH="350">None</td></tr>    
   
   
   {{/each}}
@@ -75,7 +75,13 @@
   
         
          </div> 
-   
+    <form action="{{pathFor 'shift1'}}">
+   <span style="float:left;">
+  <button class="btn btn-default " type="submit">Shift 1</button> </span> </form> 
+  <form action="{{pathFor 'shift2'}}"><span style="float:left;">
+  <button class="btn btn-default " type="submit">Shift 2</button> </span> </form>
+  <form action="{{pathFor 'shift3'}}">
+  <button class="btn btn-default " type="submit">Shift 3</button> </form>
 
 </template>
 
