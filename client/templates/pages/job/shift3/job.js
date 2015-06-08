@@ -43,7 +43,7 @@ Template.job.helpers({
    },
    earnedHours: function () {
     console.log("This is june 07 at 21" + moment().subtract(1, 'days').format("YYYY-MM-DD 21:00:00.000"))
-    Meteor.subscribe('cycles-recent', moment().subtract(1, 'days').format("YYYY-MM-04 21:00:00.000"))
+    Meteor.subscribe('cycles-recent', moment().subtract(1, 'days').format("YYYY-MM-DD 21:00:00.000"))
     //Meteor.subscribe('Presscycles')
     //The Cycles find only looks at the first thing you send in to it.
         var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-04 22:00:00.000"), $lt: moment().format("YYYY-MM-04 23:mm:ss.SSS")}}).count() * (Parts.findOne().cavitation / Parts.findOne().quantity) ;
@@ -60,7 +60,7 @@ Template.job.helpers({
     //I need to figure out the time stamp that is in
 // return Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count() * Parts.findOne().cavitation ;
 // for some reasons the cycles find function only cares about the first argument that it sees.
-    return Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-04 22:00:00.000"), $lt: moment().format("YYYY-MM-04 23:mm:ss.SSS")}}).count() * Parts.findOne().cavitation;
+    return Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-08 mm:00:00.000"), $lt: moment().format("YYYY-MM-08 23:mm:ss.SSS")}}).count() * Parts.findOne().cavitation;
   
         
       },
