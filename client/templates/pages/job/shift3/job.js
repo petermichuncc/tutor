@@ -4,32 +4,32 @@ Meteor.subscribe('parts');
 // console.log("This is your cavitation" +Parts.findOne().cavitation);
 console.log("This is yesterday at 11:00 " + moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"))
 
-console.log("This the start of today" +moment().format("YYYY-MM-DD 00:00:00.000") )
+
 Template.job.helpers({
   calculateTime: function () {
          //calculate the amount of time needed for the job
-         count = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment(Parts.findOne().timestamp.toString()).subtract(60,'seconds').format("YYYY-MM-DD H:mm:ss.SSS")}}).count()
-         estimatedTime = (Number(Parts.findOne().quantity) - Number(count))  / Number(Parts.findOne().cavitation);
+//          count = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment(Parts.findOne().timestamp.toString()).subtract(60,'seconds').format("YYYY-MM-DD H:mm:ss.SSS")}}).count()
+//          estimatedTime = (Number(Parts.findOne().quantity) - Number(count))  / Number(Parts.findOne().cavitation);
 
-//I need to find a way to convert the estimated time to seconds.
-//I will multiply estimatedTime by the time/cycle to get the seconds for how 
-//long the project will take until it is finished.
-secondsLeft= estimatedTime * 10;   //This ten is a place holder for the time/cycle
-//I will need to calculate the time/cycle at some point and have it updated constantly
+// //I need to find a way to convert the estimated time to seconds.
+// //I will multiply estimatedTime by the time/cycle to get the seconds for how 
+// //long the project will take until it is finished.
+// secondsLeft= estimatedTime * 10;   //This ten is a place holder for the time/cycle
+// //I will need to calculate the time/cycle at some point and have it updated constantly
 
-//Then I need to convert the seconds into minutes and hours
-//Then output this to the job page
-minutes= secondsLeft/60
-seconds = secondsLeft%60
-         estimatedminutes=parseInt(estimatedTime/60);
-         console.log("Estimated minutes" + estimatedminutes)
-         estimatedseconds=estimatedTime%60;
-         displayHours = moment(Parts.findOne().timestamp.toString()).add(estimatedminutes, 'm').add(estimatedseconds, 's').format("H:mm:ss.SSS");
+// //Then I need to convert the seconds into minutes and hours
+// //Then output this to the job page
+// minutes= secondsLeft/60
+// seconds = secondsLeft%60
+//          estimatedminutes=parseInt(estimatedTime/60);
+//          console.log("Estimated minutes" + estimatedminutes)
+//          estimatedseconds=estimatedTime%60;
+//          displayHours = moment(Parts.findOne().timestamp.toString()).add(estimatedminutes, 'm').add(estimatedseconds, 's').format("H:mm:ss.SSS");
          
          
          
          
-         return displayHours;
+//          return displayHours;
 
      },
   parts: function() {
@@ -42,11 +42,11 @@ seconds = secondsLeft%60
      return result;
    },
    earnedHours: function () {
-    console.log ("this is the time im trying to subscribe to" +moment(Parts.findOne().timestamp.toString()).format("YYYY-MM-DD 11:mm:ss.SSS"))
-     
+    console.log("This is june 07 at 21" + moment().subtract(1, 'days').format("YYYY-MM-DD 21:00:00.000"))
+    Meteor.subscribe('cycles-recent', moment().subtract(1, 'days').format("YYYY-MM-04 21:00:00.000"))
     //Meteor.subscribe('Presscycles')
     //The Cycles find only looks at the first thing you send in to it.
-        var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment(Parts.findOne().timestamp.toString()).format("YYYY-MM-04 23:mm:ss.SSS"), $lt: moment(Parts.findOne().timestamp.toString()).format("YYYY-MM-DD 13:mm:ss.SSS")}}).count() * (Parts.findOne().cavitation / Parts.findOne().quantity) ;
+        var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-04 22:00:00.000"), $lt: moment().format("YYYY-MM-04 23:mm:ss.SSS")}}).count() * (Parts.findOne().cavitation / Parts.findOne().quantity) ;
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
          
@@ -60,7 +60,7 @@ seconds = secondsLeft%60
     //I need to figure out the time stamp that is in
 // return Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count() * Parts.findOne().cavitation ;
 // for some reasons the cycles find function only cares about the first argument that it sees.
-    return Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment(Parts.findOne().timestamp.toString()).format("YYYY-MM-03 23:mm:ss.SSS"), $lt: moment(Parts.findOne().timestamp.toString()).format("YYYY-MM-DD 13:mm:ss.SSS")}}).count() * Parts.findOne().cavitation;
+    return Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-04 22:00:00.000"), $lt: moment().format("YYYY-MM-04 23:mm:ss.SSS")}}).count() * Parts.findOne().cavitation;
   
         
       },
@@ -68,11 +68,11 @@ seconds = secondsLeft%60
       //this will retrieve all cyles greater than or equal to this start time
       //so this will be 
      earnedHours1: function () {
-     
-    Meteor.subscribe('cycles-recent', moment().format("YYYY-MM-04 23:00:00.000"))
-    //Meteor.subscribe('Presscycles')
+
+    // Meteor.subscribe('cycles-recent', moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"))
+    
     //The Cycles find only looks at the first thing you send in to it.
-        var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"), $lt: moment().format("YYYY-MM-DD 00:00:00.000")}}).count() * (Parts.findOne().cavitation / Parts.findOne().quantity) ;
+        var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-04 22:00:00.000"), $lt: moment().format("YYYY-MM-04 23:00:00.000")}}).count() * (Parts.findOne().cavitation / Parts.findOne().quantity) ;
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
          
@@ -86,7 +86,7 @@ seconds = secondsLeft%60
     //I need to figure out the time stamp that is in
 // return Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count() * Parts.findOne().cavitation ;
 // for some reasons the cycles find function only cares about the first argument that it sees.
-    return Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"), $lt: moment().format("YYYY-MM-DD 00:00:00.000")}}).count() * Parts.findOne().cavitation;
+    return Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-04 22:00:00.000"), $lt: moment().format("YYYY-MM-04 23:00:00.000")}}).count() * Parts.findOne().cavitation;
   
         
         

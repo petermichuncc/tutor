@@ -46,7 +46,23 @@ console.log(text);
 Meteor.subscribe('parts');
      Meteor.call('partsInsert', post)
 console.log("second hi");
-Router.go('shift3'); 
+//Here is the logic to determine the page to go to based on the time of day
+
+if (moment().format("H")>15 && moment().format("H") <=23)
+{
+ Router.go('shift2');
+}
+if (moment().format("H")>=7 && moment().format("H") <=15)
+{
+ Router.go('shift1');
+}
+else
+{
+	Router.go('shift3');
+} 
+
+
+ 
 return false;
 
 }
