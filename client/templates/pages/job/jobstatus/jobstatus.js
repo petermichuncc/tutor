@@ -17,7 +17,7 @@ count=0
 
 
 statusgreen: function(){
- Meteor.subscribe('cycles-recent', moment().format("YYYY-MM-04 23:00:00.000"))
+ 
  count = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment(Parts.findOne().timestamp.toString()).subtract(60,'seconds').format("YYYY-MM-DD H:mm:ss.SSS")}}).count()
  
 //      now = Number(mo.now.get().format("H"));

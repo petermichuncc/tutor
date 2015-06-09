@@ -1,6 +1,7 @@
 // register event on form, not submit button
 Meteor.subscribe('machines');
 Meteor.subscribe('entries');
+
 // Template.start.events({
 // "submit .workcenterSelection": function(event){
 // event.preventDefault();
@@ -39,9 +40,10 @@ var post = {
        initials: $( "#initials" ).val(),
        cavitation: $( "#cavitation" ).val(),
        workcenter: Machines.findOne().machinenumber,
-        timestamp: moment().format("YYYY-MM-DD H:mm:ss.SSS")
+        timestamp: moment().format("YYYY-MM-DD H:mm:ss.SSS"),
+         hour: moment().format("H")
      };
-console.log("example test for parts" + post);
+
 console.log(text);
 Meteor.subscribe('parts');
      Meteor.call('partsInsert', post)

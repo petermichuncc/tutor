@@ -2,9 +2,7 @@
 Meteor.publish('entries', function() {
   return Entries.find();
 });
-Meteor.publish('posts', function() {
-  return Posts.find();
-});
+
 Meteor.publish('machines', function() {
   return Machines.find();
 });
