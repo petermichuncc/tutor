@@ -32,24 +32,16 @@ Template.job.helpers({
 //          return displayHours;
 
      },
-  parts: function() {
-    return Parts.find();
-   },
-   columns: function() {
-     // the context is a part
-     var result = _.values(this.data);
-     result.unshift(this.text);
-     return result;
-   },
+  
    earnedHours: function () {
     
      
      
-    // Meteor.subscribe('cycles-recent', moment().subtract.(3,'days').format("YYYY-MM-DD H:mm:ss.SSS"))
+     Meteor.subscribe('cycles-recent', moment().subtract(3, 'days').format("YYYY-MM-DD HH:MM:ss.SSS"))
     console.log("Here is the earned hours" + Cycles.find({CycleTimeStamp: {$gte: moment().format("YYYY-MM-09 00:00:00.000"),$lt: moment().format("YYYY-MM-09 01:00:00.000")}}).count())
     //Meteor.subscribe('Presscycles')
     //The Cycles find only looks at the first thing you send in to it.
-        var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-09 00:00:00.000"),$lt: moment().format("YYYY-MM-09 01:00:00.000")}}).count() * (Parts.findOne().cavitation / Parts.findOne().quantity) ;
+        var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-09 00:00:00.000"),$lt: moment().format("YYYY-MM-09 01:00:00.000")}}).count() * (Parts.findOne({hour: '13'}).cavitation / Parts.findOne({hour: '13'}).quantity) ;
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
          
@@ -271,6 +263,26 @@ Template.job.helpers({
          return  Math.round(percent);
          
     },
+    changeStatus: function() {
+      
+     var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-09 00:00:00.000"), $lt: moment().format("YYYY-MM-09 01:00:00.000")}}).count() * (Parts.findOne().cavitation / Parts.findOne().quantity);
+         
+        earnedHoursCalc = earnedHoursCalc.toFixed(2);
+
+       if (earnedHoursCalc >1)
+      {
+        return "Green"
+      }
+
+      else
+      {
+
+        return "Yellow"
+      }
+
+
+
+    },
 
     changeStatus1: function() {
       
@@ -435,10 +447,33 @@ Template.job.helpers({
         return "Yellow"
       }
 
-      
+      },
+    part: function() {
+   var part =Parts.findOne({hour: '13'})
 
 
-    }
+   return part.partnumber
+   },
+   quantity: function() {
+   var part =Parts.findOne({hour: '13'})
+
+
+   return part.quantity
+   },
+   
+   part1: function ()
+   {
+
+    return Parts.findOne({hour: '23'})
+
+
+   },
+   quantity1: function() {
+   var part =Parts.findOne({hour: '23'})
+
+
+   return part.quantity
+   },
     
 
    
