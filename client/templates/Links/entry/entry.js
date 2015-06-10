@@ -1,6 +1,6 @@
 Template.entry.events({
 "submit .workcenterSelection": function(event){
-event.preventDefault();
+event.defaultPrevented;
 console.log(event);
 var text = $( "#someId" ).val();
 

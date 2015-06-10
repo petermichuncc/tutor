@@ -265,12 +265,12 @@ Template.shift2.helpers({
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
 
-       if (earnedHoursCalc >=1)
+      if (earnedHoursCalc >=1&&Parts.findOne({hour: '15'}))
       {
         return "Green"
       }
 
-      else
+      else if (earnedHoursCalc <1&&Parts.findOne({hour: '15'}))
       {
 
         return "Yellow"
@@ -285,12 +285,12 @@ Template.shift2.helpers({
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
 
-       if (earnedHoursCalc >=1)
+      if (earnedHoursCalc >=1&&Parts.findOne({hour: '16'}))
       {
         return "Green"
       }
 
-      else
+      else if (earnedHoursCalc <1&&Parts.findOne({hour: '16'}))
       {
 
         return "Yellow"
@@ -306,17 +306,16 @@ Template.shift2.helpers({
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
 
-       if (earnedHoursCalc >=1)
+       if (earnedHoursCalc >=1&&Parts.findOne({hour: '17'}))
       {
         return "Green"
       }
 
-      else
+      else if (earnedHoursCalc <1&&Parts.findOne({hour: '17'}))
       {
 
         return "Yellow"
       }
-
 
 
     },
@@ -327,12 +326,12 @@ Template.shift2.helpers({
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
 
-       if (earnedHoursCalc >=1)
+      if (earnedHoursCalc >=1&&Parts.findOne({hour: '18'}))
       {
         return "Green"
       }
 
-      else
+      else if (earnedHoursCalc <1&&Parts.findOne({hour: '18'}))
       {
 
         return "Yellow"
@@ -348,18 +347,16 @@ Template.shift2.helpers({
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
 
-       if (earnedHoursCalc >=1)
+      if (earnedHoursCalc >=1&&Parts.findOne({hour: '19'}))
       {
         return "Green"
       }
 
-      else
+      else if (earnedHoursCalc <1&&Parts.findOne({hour: '19'}))
       {
 
         return "Yellow"
       }
-
-      
 
 
     },
@@ -369,12 +366,12 @@ Template.shift2.helpers({
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
 
-       if (earnedHoursCalc >=1)
+       if (earnedHoursCalc >=1&&Parts.findOne({hour: '20'}))
       {
         return "Green"
       }
 
-      else
+      else if (earnedHoursCalc <1&&Parts.findOne({hour: '20'}))
       {
 
         return "Yellow"
@@ -390,12 +387,12 @@ Template.shift2.helpers({
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
 
-       if (earnedHoursCalc >=1)
+      if (earnedHoursCalc >=1&&Parts.findOne({hour: '21'}))
       {
         return "Green"
       }
 
-      else
+      else if (earnedHoursCalc <1&&Parts.findOne({hour: '21'}))
       {
 
         return "Yellow"
@@ -411,12 +408,12 @@ Template.shift2.helpers({
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
 
-       if (earnedHoursCalc >=1)
+       if (earnedHoursCalc >=1&&Parts.findOne({hour: '22'}))
       {
         return "Green"
       }
 
-      else
+      else if (earnedHoursCalc <1&&Parts.findOne({hour: '22'}))
       {
 
         return "Yellow"
@@ -440,8 +437,10 @@ Template.shift2.helpers({
    part1: function ()
    {
 
-    return Parts.findOne({hour: '15'})
+   var part =Parts.findOne({hour: '15'})
 
+
+   return part.partnumber
 
    },
    quantity1: function() {
@@ -453,8 +452,10 @@ Template.shift2.helpers({
     part2: function ()
    {
 
-    return Parts.findOne({hour: '16'})
+   var part =Parts.findOne({hour: '16'})
 
+
+   return part.partnumber
 
    },
    quantity2: function() {
@@ -465,8 +466,10 @@ Template.shift2.helpers({
    },part3: function ()
    {
 
-    return Parts.findOne({hour: '17'})
+   var part =Parts.findOne({hour: '17'})
 
+
+   return part.partnumber
 
    },
    quantity3: function() {
@@ -477,8 +480,10 @@ Template.shift2.helpers({
    },part4: function ()
    {
 
-    return Parts.findOne({hour: '18'})
+    var part =Parts.findOne({hour: '18'})
 
+
+   return part.partnumber
 
    },
    quantity4: function() {
@@ -489,8 +494,10 @@ Template.shift2.helpers({
    },part5: function ()
    {
 
-    return Parts.findOne({hour: '19'})
+   var part =Parts.findOne({hour: '19'})
 
+
+   return part.partnumber
 
    },
    quantity5: function() {
@@ -500,9 +507,10 @@ Template.shift2.helpers({
    return part.quantity
    },part6: function ()
    {
+var part =Parts.findOne({hour: '20'})
 
-    return Parts.findOne({hour: '20'})
 
+   return part.partnumber
 
    },
    quantity6: function() {
@@ -513,8 +521,10 @@ Template.shift2.helpers({
    },part7: function ()
    {
 
-    return Parts.findOne({hour: '21'})
+    var part =Parts.findOne({hour: '21'})
 
+
+   return part.partnumber
 
    },
    quantity7: function() {
@@ -524,9 +534,10 @@ Template.shift2.helpers({
    return part.quantity
    },part8: function ()
    {
+var part =Parts.findOne({hour: '22'})
 
-    return Parts.findOne({hour: '22'})
 
+   return part.partnumber
 
    },
    quantity8: function() {

@@ -1,6 +1,6 @@
 Template.eqrepairlog.events({
 "submit .workcenterSelection": function(event){
-event.preventDefault();
+event.defaultPrevented;
 console.log(event);
 
 var post = {

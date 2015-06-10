@@ -1,46 +1,42 @@
 
 
-
+ Meteor.subscribe('cycles-recent', moment().subtract(3, 'days').format("YYYY-MM-DD HH:MM:ss.SSS"))
 Template.countdownbar.helpers({
 
  percent: function(){
-      
+     
       //This percent bar is connected with the earned hours function.
       //Basically the estimated time to completion counts down to zero
       //The 
-      Meteor.subscribe('cycles-recent', moment().subtract(1, 'days').format("YYYY-MM-DD HH:MM:ss.SSS"))
-      count = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment(Parts.findOne().timestamp.toString()).subtract(60,'seconds').format("YYYY-MM-DD H:mm:ss.SSS")}}).count()
+      
+      count = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: mo.now.get(Parts.findOne().timestamp.toString()).subtract(25,'seconds').format("YYYY-MM-DD H:mm:ss.SSS")}}).count()
          estimatedTime = (Number(Parts.findOne().quantity) - Number(count))  / Number(Parts.findOne().cavitation);
 
-console.log ("this is the amount of cycles since time stamp" + Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: mo.now.get(Parts.findOne().timestamp.toString()).format("YYYY-MM-DD H:mm:ss.SSS")}}).count())
+// console.log ("this is the amount of cycles since time stamp" + Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: mo.now.get(Parts.findOne().timestamp.toString()).format("YYYY-MM-DD H:mm:ss.SSS")}}).count())
 
-secondsLeft= estimatedTime * 10;   //This ten is a place holder for the time/cycle
+secondsLeft = estimatedTime * 10;   //This ten is a place holder for the time/cycle
 //I will need to calculate the time/cycle at some point and have it updated constantly
-max = Number(Parts.findOne().quantity) //This is the maximum number of parts to be created.  The goal essentially
-max = max * 10 //This will standardize the maximum to be on a similar ratio to the secondsLeft
- 
 
-percent=secondsLeft/max;
+//total seconds is equal to  planned/cavitation
+totalseconds= Number(Parts.findOne().quantity) / Number(Parts.findOne().cavitation);
+totalseconds = totalseconds*10
+console.log("This is the total seconds the job will take" + totalseconds)
+console.log("This is the seconds left the job will take" + secondsLeft)
+if (secondsLeft<=0)
 
-percent = percent *100
+{
 
+  secondsLeft=0;
+}
+
+percent=secondsLeft/totalseconds;
+percent=percent*100;
 
   
         return percent;
-      },
-
-  max: function(){
-      
-      //max will be the parts planned
-
-      max = Number(Parts.findOne().quantity)
-
-
-
+      }
 
   
-        return max;
-      }
   })
 
 

@@ -30,7 +30,7 @@ Meteor.subscribe('entries');
 //value 
 Template.table.events({
 "submit .workcenterSelection": function(event){
-event.preventDefault();
+event.defaultPrevented;
 console.log(event);
 var text = $( "#someId" ).val();
 
@@ -40,8 +40,8 @@ var post = {
        initials: $( "#initials" ).val(),
        cavitation: $( "#cavitation" ).val(),
        workcenter: Machines.findOne().machinenumber,
-        timestamp: moment().format("YYYY-MM-DD H:mm:ss.SSS"),
-         hour: moment().format("H")
+        timestamp: moment().format("YYYY-MM-DD HH:mm:ss.SSS"),
+         hour: moment().format("HH")
      };
 
 console.log(text);
