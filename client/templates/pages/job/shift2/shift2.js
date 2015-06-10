@@ -422,7 +422,121 @@ Template.shift2.helpers({
         return "Yellow"
       }
 
- }
+ },
+
+  part: function() {
+   var part =Parts.findOne({hour: '13'})
+
+
+   return part.partnumber
+   },
+   quantity: function() {
+   var part =Parts.findOne({hour: '13'})
+
+
+   return part.quantity
+   },
+   
+   part1: function ()
+   {
+
+    return Parts.findOne({hour: '15'})
+
+
+   },
+   quantity1: function() {
+   var part =Parts.findOne({hour: '15'})
+
+
+   return part.quantity
+   },
+    part2: function ()
+   {
+
+    return Parts.findOne({hour: '16'})
+
+
+   },
+   quantity2: function() {
+   var part =Parts.findOne({hour: '16'})
+
+
+   return part.quantity
+   },part3: function ()
+   {
+
+    return Parts.findOne({hour: '17'})
+
+
+   },
+   quantity3: function() {
+   var part =Parts.findOne({hour: '17'})
+
+
+   return part.quantity
+   },part4: function ()
+   {
+
+    return Parts.findOne({hour: '18'})
+
+
+   },
+   quantity4: function() {
+   var part =Parts.findOne({hour: '18'})
+
+
+   return part.quantity
+   },part5: function ()
+   {
+
+    return Parts.findOne({hour: '19'})
+
+
+   },
+   quantity5: function() {
+   var part =Parts.findOne({hour: '19'})
+
+
+   return part.quantity
+   },part6: function ()
+   {
+
+    return Parts.findOne({hour: '20'})
+
+
+   },
+   quantity6: function() {
+   var part =Parts.findOne({hour: '20'})
+
+
+   return part.quantity
+   },part7: function ()
+   {
+
+    return Parts.findOne({hour: '21'})
+
+
+   },
+   quantity7: function() {
+   var part =Parts.findOne({hour: '21'})
+
+
+   return part.quantity
+   },part8: function ()
+   {
+
+    return Parts.findOne({hour: '22'})
+
+
+   },
+   quantity8: function() {
+   var part =Parts.findOne({hour: '22'})
+
+
+   return part.quantity
+   }
+
+   
 });
 
 

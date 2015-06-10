@@ -442,6 +442,120 @@ seconds = secondsLeft%60
 
       
 },
+ part: function() {
+   var part =Parts.findOne({hour: '13'})
+
+
+   return part.partnumber
+   },
+   quantity: function() {
+   var part =Parts.findOne({hour: '13'})
+
+
+   return part.quantity
+   },
+   
+   part1: function ()
+   {
+
+    return Parts.findOne({hour: '23'})
+
+
+   },
+   quantity1: function() {
+   var part =Parts.findOne({hour: '23'})
+
+
+   return part.quantity
+   },
+    part2: function ()
+   {
+
+    return Parts.findOne({hour: '00'})
+
+
+   },
+   quantity2: function() {
+   var part =Parts.findOne({hour: '00'})
+
+
+   return part.quantity
+   },part3: function ()
+   {
+
+    return Parts.findOne({hour: '01'})
+
+
+   },
+   quantity3: function() {
+   var part =Parts.findOne({hour: '01'})
+
+
+   return part.quantity
+   },part4: function ()
+   {
+
+    return Parts.findOne({hour: '02'})
+
+
+   },
+   quantity4: function() {
+   var part =Parts.findOne({hour: '02'})
+
+
+   return part.quantity
+   },part5: function ()
+   {
+
+    return Parts.findOne({hour: '03'})
+
+
+   },
+   quantity5: function() {
+   var part =Parts.findOne({hour: '03'})
+
+
+   return part.quantity
+   },part6: function ()
+   {
+
+    return Parts.findOne({hour: '04'})
+
+
+   },
+   quantity6: function() {
+   var part =Parts.findOne({hour: '04'})
+
+
+   return part.quantity
+   },part7: function ()
+   {
+
+    return Parts.findOne({hour: '05'})
+
+
+   },
+   quantity7: function() {
+   var part =Parts.findOne({hour: '05'})
+
+
+   return part.quantity
+   },part8: function ()
+   {
+
+    return Parts.findOne({hour: '06'})
+
+
+   },
+   quantity8: function() {
+   var part =Parts.findOne({hour: '06'})
+
+
+   return part.quantity
+   }
+
+   
+      
 
  
 });
