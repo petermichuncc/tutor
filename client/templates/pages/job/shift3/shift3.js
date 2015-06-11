@@ -8,34 +8,44 @@ console.log("This the start of today" +moment().format("YYYY-MM-DD 00:00:00.000"
 Template.shift3.helpers({
   calculateTime: function () {
          //calculate the amount of time needed for the job
-         count = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment(Parts.findOne().timestamp.toString()).subtract(60,'seconds').format("YYYY-MM-DD H:mm:ss.SSS")}}).count()
-         estimatedTime = (Number(Parts.findOne().quantity) - Number(count))  / Number(Parts.findOne().cavitation);
+         //I could find the current hour using moment
+         //Then put that hour into the calculateTime function
+         //I could create if else statements based on the current hour
+         var now = moment().format("HH");
+         // now=Number(now)
 
-//I need to find a way to convert the estimated time to seconds.
-//I will multiply estimatedTime by the time/cycle to get the seconds for how 
-//long the project will take until it is finished.
-secondsLeft= estimatedTime * 10;   //This ten is a place holder for the time/cycle
-//I will need to calculate the time/cycle at some point and have it updated constantly
-
-//Then I need to convert the seconds into minutes and hours
-//Then output this to the job page
-minutes= secondsLeft/60
-seconds = secondsLeft%60
+         // if (now === 14)
+         // {
+ count = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment(Parts.findOne({hour: now }).timestamp.toString()).subtract(25,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
+         estimatedTime = (Number(Parts.findOne({hour: now }).quantity) - Number(count))  / Number(Parts.findOne({hour: now }).cavitation);
+         estimatedTime=estimatedTime * 10; //This 10 is a place holder for the time per cycle
          estimatedminutes=parseInt(estimatedTime/60);
+if (estimatedminutes <=0)
+{
+
+  estimatedminutes=0;
+}
          console.log("Estimated minutes" + estimatedminutes)
-         estimatedseconds=estimatedTime%60;
-         displayHours = moment(Parts.findOne().timestamp.toString()).add(estimatedminutes, 'm').add(estimatedseconds, 's').format("H:mm:ss.SSS");
          
+
+         
+         
+         displayHours = estimatedminutes.toString().concat(" minutes left")
          
          
          
          return displayHours;
 
+
+
+
+         // }
+
+         
+        
+
      },
-  insert: function(){
-
-
-  },
+  
   parts: function() {
     return Parts.find();
    },
@@ -72,28 +82,27 @@ seconds = secondsLeft%60
       //this will retrieve all cyles greater than or equal to this start time
       //so this will be 
      earnedHours17: function () {
-     
-    // Meteor.subscribe('cycles-recent', moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"))
 
+    // Meteor.subscribe('cycles-recent', moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"))
+    
     //The Cycles find only looks at the first thing you send in to it.
-        var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 08:00:00.000"),$lt: moment().format("YYYY-MM-DD 09:00:00.000")}}).count() * (Parts.findOne({hour: '08'}).cavitation / Parts.findOne({hour: '08'}).quantity) ;
+        var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"), $lt: moment().format("YYYY-MM-DD 00:00:00.000")}}).count() * (Parts.findOne({hour: '23'}).cavitation / Parts.findOne({hour: '23'}).quantity) ;
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
          
         return earnedHoursCalc;
             },
      incomingCycles17: function () {
-            //grab all cycles from today
-      // Meteor.subscribe('cycles-recent', moment(Parts.findOne().timestamp.toString()).format("YYYY-MM-DD H:mm:ss.SSS"))
+        //grab all cycles from today
+      
        
     //find how comparisons are made between time stamps
     //I need to figure out the time stamp that is in
 // return Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count() * Parts.findOne().cavitation ;
 // for some reasons the cycles find function only cares about the first argument that it sees.
-    // return Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"), $lt: moment().format("YYYY-MM-DD 00:00:00.000")}}).count() * Parts.findOne({hour:'23'}).cavitation;
+
+    return Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"), $lt: moment().format("YYYY-MM-DD 00:00:00.000")}}).count() * Parts.findOne({hour: '23'}).cavitation;
   
-      return Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 08:00:00.000"), $lt: moment().format("YYYY-MM-DD 09:00:00.000")}}).count() * Parts.findOne().cavitation;
-     
         
       },
       earnedHours18: function () {
@@ -277,7 +286,7 @@ seconds = secondsLeft%60
      var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 08:00:00.000"), $lt: moment().format("YYYY-MM-DD 09:00:00.000")}}).count() * (Parts.findOne({hour: '08'}).cavitation / Parts.findOne({hour: '08'}).quantity);
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
-
+        earnedHoursCalc= Number(earnedHoursCalc)
       if (earnedHoursCalc >=1&&Parts.findOne({hour: '08'}))
       {
         return "Green"
@@ -298,7 +307,7 @@ seconds = secondsLeft%60
      var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"), $lt: moment().format("YYYY-MM-DD 00:00:00.000")}}).count() * (Parts.findOne({hour: '23'}).cavitation / Parts.findOne({hour: '23'}).quantity) ;
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
-
+        earnedHoursCalc= Number(earnedHoursCalc)
        if (earnedHoursCalc >=1&&Parts.findOne({hour: '23'}))
       {
         return "Green"
@@ -318,7 +327,7 @@ seconds = secondsLeft%60
      var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 00:00:00.000"), $lt: moment().format("YYYY-MM-DD 01:00:00.000")}}).count() * (Parts.findOne({hour: '00'}).cavitation / Parts.findOne({hour: '00'}).quantity);
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
-
+        earnedHoursCalc= Number(earnedHoursCalc)
        if (earnedHoursCalc >=1&&Parts.findOne({hour: '00'}))
       {
         return "Green"
@@ -339,7 +348,7 @@ seconds = secondsLeft%60
       var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 01:00:00.000"), $lt: moment().format("YYYY-MM-DD 02:00:00.000")}}).count() * (Parts.findOne({hour: '01'}).cavitation / Parts.findOne({hour: '01'}).quantity);
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
-
+        earnedHoursCalc= Number(earnedHoursCalc)
       if (earnedHoursCalc >=1&&Parts.findOne({hour: '01'}))
       {
         return "Green"
@@ -360,7 +369,7 @@ seconds = secondsLeft%60
       var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 02:00:00.000"), $lt: moment().format("YYYY-MM-DD 03:00:00.000")}}).count() * (Parts.findOne({hour: '02'}).cavitation / Parts.findOne({hour: '02'}).quantity);
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
-
+        earnedHoursCalc= Number(earnedHoursCalc)
       if (earnedHoursCalc >=1&&Parts.findOne({hour: '02'}))
       {
         return "Green"
@@ -381,7 +390,7 @@ seconds = secondsLeft%60
      var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 03:00:00.000"), $lt: moment().format("YYYY-MM-DD 04:00:00.000")}}).count() * (Parts.findOne({hour: '03'}).cavitation / Parts.findOne({hour: '03'}).quantity);
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
-
+        earnedHoursCalc= Number(earnedHoursCalc)
        if (earnedHoursCalc >=1&&Parts.findOne({hour: '03'}))
       {
         return "Green"
@@ -401,7 +410,7 @@ seconds = secondsLeft%60
       var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 04:00:00.000"), $lt: moment().format("YYYY-MM-DD 05:00:00.000")}}).count() * (Parts.findOne({hour: '04'}).cavitation / Parts.findOne({hour: '04'}).quantity);
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
-
+        earnedHoursCalc= Number(earnedHoursCalc)
        if (earnedHoursCalc >=1&&Parts.findOne({hour: '04'}))
       {
         return "Green"
@@ -422,7 +431,7 @@ seconds = secondsLeft%60
       var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 05:00:00.000"), $lt: moment().format("YYYY-MM-DD 06:00:00.000")}}).count() * (Parts.findOne({hour: '05'}).cavitation / Parts.findOne({hour: '05'}).quantity);
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
-
+        earnedHoursCalc= Number(earnedHoursCalc)
 if (earnedHoursCalc >=1&&Parts.findOne({hour: '05'}))
       {
         return "Green"
@@ -444,7 +453,7 @@ if (earnedHoursCalc >=1&&Parts.findOne({hour: '05'}))
       var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 06:00:00.000"), $lt: moment().format("YYYY-MM-DD 07:00:00.000")}}).count() * (Parts.findOne({hour: '06'}).cavitation / Parts.findOne({hour: '06'}).quantity);
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
-
+        earnedHoursCalc= Number(earnedHoursCalc)
      if (earnedHoursCalc >=1&&Parts.findOne({hour: '06'}))
       {
         return "Green"
@@ -462,7 +471,7 @@ if (earnedHoursCalc >=1&&Parts.findOne({hour: '05'}))
  part: function() {
    
    var part =Parts.findOne({hour: '13'})
-
+   part = Number(part)
 
    return part.partnumber
    },
@@ -477,7 +486,9 @@ if (earnedHoursCalc >=1&&Parts.findOne({hour: '05'}))
    {
 
 var part =Parts.findOne({hour: '23'})
-if(part.partnumber >=0)
+
+
+if(Number(part.partnumber) >=0)
 {
    
 
@@ -485,33 +496,29 @@ if(part.partnumber >=0)
     return part.partnumber
 }
 
-else {
 
-return "0"
-
-  }
 
    },
    quantity1: function() {
    var part =Parts.findOne({hour: '23'})
-   if(part.quantity>=0)
+   
+
+   if(Number(part.partnumber)>=0)
    {
    
 
 
    return part.quantity
  }
- else
- {
 
-  return "0"
- }
    },
     part2: function ()
    {
 
   var part =Parts.findOne({hour: '00'})
-if(part.partnumber >=0)
+  
+
+if(Number(part.partnumber) >=0)
 {
    
 
@@ -519,32 +526,29 @@ if(part.partnumber >=0)
     return part.partnumber
 }
 
-else {
 
-return "0"
-
-  }
+ 
 
    },
    quantity2: function() {
    var part =Parts.findOne({hour: '00'})
-   if(part.quantity>=0)
+   
+
+   if(Number(part.partnumber)>=0)
    {
    
 
 
    return part.quantity
  }
- else
- {
-
-  return "0"
- }
+ 
    },part3: function ()
    {
 
   var part =Parts.findOne({hour: '01'})
-if(part.partnumber >=0)
+  
+
+if(Number(part.partnumber) >=0)
 {
    
 
@@ -552,33 +556,29 @@ if(part.partnumber >=0)
     return part.partnumber
 }
 
-else {
 
-return "0"
-
-  }
 
 
    },
    quantity3: function() {
   var part =Parts.findOne({hour: '01'})
-   if(part.quantity>=0)
+ 
+
+   if(Number(part.partnumber)>=0)
    {
    
 
 
    return part.quantity
  }
- else
- {
 
-  return "0"
- }
    },part4: function ()
    {
 
     var part =Parts.findOne({hour: '02'})
-if(part.partnumber >=0)
+    
+
+if(Number(part.quantity) >=0)
 {
    
 
@@ -595,23 +595,23 @@ return "0"
    },
    quantity4: function() {
   var part =Parts.findOne({hour: '02'})
-   if(part.quantity>=0)
+ 
+
+   if(Number(part.quantity)>=0)
    {
    
 
 
    return part.quantity
  }
- else
- {
-
-  return "0"
- }
+ 
    },part5: function ()
    {
 
         var part =Parts.findOne({hour: '03'})
-if(part.partnumber >0)
+        
+
+if(Number(part.quantity) >0)
 {
    
 
@@ -619,32 +619,28 @@ if(part.partnumber >0)
     return part.partnumber
 }
 
-else {
 
-return "0"
-
-  }
 
    },
    quantity5: function() {
     var part =Parts.findOne({hour: '03'})
-   if(part.quantity>0)
+    
+
+   if(Number(part.quantity)>0)
    {
    
 
 
    return part.quantity
  }
- else
- {
-
-  return "0"
- }
+ 
    },part6: function ()
    {
 
    var part =Parts.findOne({hour: '04'})
-if(part.partnumber >0)
+   
+
+if(Number(part.quantity) >0)
 {
    
 
@@ -652,32 +648,28 @@ if(part.partnumber >0)
     return part.partnumber
 }
 
-else {
 
-return "0"
-
-  }
 
    },
    quantity6: function() {
     var part =Parts.findOne({hour: '04'})
-   if(part.quantity>0)
+    
+
+   if(Number(part.quantity)>0)
    {
    
 
 
    return part.quantity
  }
- else
- {
-
-  return "0"
- }
+ 
    },part7: function ()
    {
 
     var part =Parts.findOne({hour: '05'})
-if(part.partnumber >0)
+    
+
+if(Number(part.quantity) >0)
 {
    
 
@@ -685,32 +677,28 @@ if(part.partnumber >0)
     return part.partnumber
 }
 
-else {
 
-return "0"
-
-  }
 
 
    },
    quantity7: function() {
   var part =Parts.findOne({hour: '05'})
-   if(part.quantity>0)
+  
+
+   if(Number(part.quantity)>0)
    {
    
 
 
    return part.quantity
  }
- else
- {
 
-  return "0"
- }
    },part8: function ()
    {
     var part =Parts.findOne({hour: '06'})
-if(part.partnumber >0)
+    
+
+if(Number(part.quantity) >0)
 {
    
 
@@ -718,27 +706,21 @@ if(part.partnumber >0)
     return part.partnumber
 }
 
-else {
 
-return "0"
-
-  }
 
    },
    quantity8: function() {
   var part =Parts.findOne({hour: '06'})
-   if(part.quantity>0)
+ 
+
+   if(Number(part.quantity)>0)
    {
    
 
 
    return part.quantity
  }
- else
- {
-
-  return "0"
- }
+ 
    }
 
    
