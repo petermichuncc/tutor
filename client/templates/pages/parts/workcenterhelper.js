@@ -3,7 +3,7 @@
 Template.workcenter.helpers({
     
     machines: function () {
-    var machine = Machines.findOne();
+    var machine = Cycles.find();
     // console.log(machine);
 
     return Machines.find()
