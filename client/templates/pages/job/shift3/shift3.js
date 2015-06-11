@@ -1,4 +1,4 @@
-Meteor.subscribe('cycles-recent', moment().subtract(3, 'days').format("YYYY-MM-DD HH:MM:ss.SSS"))
+Meteor.subscribe('cycles-recent', moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"))
 
 
 // console.log("This is your cavitation" +Parts.findOne().cavitation);
