@@ -89,6 +89,30 @@ else
    hour8: function () {
     return "8"
    },
+   hour1p: function () {
+     // return "1"
+   },
+   hour2p: function () {
+    return "2"
+   },
+   hour3p: function () {
+    return "3"
+   },
+   hour4p: function () {
+    return "4"
+   },
+   hour5p: function () {
+    return "5"
+   },
+   hour6p: function () {
+    return "6"
+   },
+   hour7p: function () {
+    return "7"
+   },
+   hour8p: function () {
+    return "8"
+   },
    earnedHours: function () {
     
      Meteor.subscribe('parts'); 
@@ -152,6 +176,34 @@ else
       {
     return Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"), $lt: moment().format("YYYY-MM-DD 00:00:00.000")}}).count() * Parts.findOne({hour: '23'}).cavitation;
   }
+        
+      },
+      earnedHoursp: function () {
+
+    // Meteor.subscribe('cycles-recent', moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"))
+    
+    //The Cycles find only looks at the first thing you send in to it.
+      //    if (typeof Parts.findOne({hour: '23'}) === 'object')
+      // {
+      //   var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"), $lt: moment().format("YYYY-MM-DD 00:00:00.000")}}).count() * (Parts.findOne({hour: '23'}).cavitation / Parts.findOne({hour: '23'}).quantity) ;
+         
+      //   earnedHoursCalc = earnedHoursCalc.toFixed(2);
+         
+      //   return earnedHoursCalc;
+      // }
+            },
+     incomingCyclesp: function () {
+        //grab all cycles from today
+      
+       
+    //find how comparisons are made between time stamps
+    //I need to figure out the time stamp that is in
+// return Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count() * Parts.findOne().cavitation ;
+// for some reasons the cycles find function only cares about the first argument that it sees.
+ // if (typeof Parts.findOne({hour: '23'}) === 'object')
+ //      {
+ //    return Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"), $lt: moment().format("YYYY-MM-DD 00:00:00.000")}}).count() * Parts.findOne({hour: '23'}).cavitation;
+ //  }
         
       },
       earnedHours2: function () {
@@ -372,6 +424,26 @@ else
 
 
     },
+    changeStatus1p: function() {
+      
+     // var earnedHoursCalc = Number(Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"), $lt: moment().format("YYYY-MM-DD 00:00:00.000")}}).count() * (Parts.findOne().cavitation / Parts.findOne().quantity));
+         
+     //    earnedHoursCalc = earnedHoursCalc.toFixed(2);
+     //    earnedHoursCalc= Number(earnedHoursCalc)
+     //   if (earnedHoursCalc >=1&& Parts.findOne({hour: '23'}))
+     //  {
+     //    return "Green"
+     //  }
+
+     //  else if (earnedHoursCalc <1&& Parts.findOne({hour: '23'}))
+     //  {
+
+     //    return "Yellow"
+     //  }
+
+
+
+    },
 
     changeStatus2: function() {
       var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 08:00:00.000"), $lt: moment().format("YYYY-MM-DD 09:00:00.000")}}).count() * (Parts.findOne().cavitation / Parts.findOne().quantity);
@@ -577,6 +649,36 @@ if(typeof Parts.findOne({hour: '23'}) === 'object')
 
    return part.quantity
  }
+ 
+   },
+   part1p: function ()
+   {
+
+// var part =Parts.findOne({hour: '23'})
+
+
+// if(typeof Parts.findOne({hour: '23'}) === 'object')
+// {
+   
+
+
+//     return part.partnumber
+// }
+
+
+
+   },
+   quantity1p: function() {
+ //   var part =Parts.findOne({hour: '23'})
+   
+
+ //   if(typeof Parts.findOne({hour: '23'}) === 'object')
+ //   {
+   
+
+
+ //   return part.quantity
+ // }
  
    },
     part2: function ()
