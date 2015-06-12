@@ -8,36 +8,40 @@
 Template.job.helpers({
     
   calculateTime: function () {
-         //calculate the amount of time needed for the job
-         //I could find the current hour using moment
-         //Then put that hour into the calculateTime function
-         //I could create if else statements based on the current hour
-         var now = moment().format("HH");
-         // now=Number(now)
+         
 
-         // if (now === 14)
-         // {
+//I need to have submitted jobs calculate time using the collection for that submitted job
+//until the estimated minutes are up then use the next submitted job if there is one
+//
+//take the hour of the current time stamp
+//I could have only one job saved at at time then it is erased
+//or I could have an additional collection that is used only as an hour recorder
+//for the current job.  Once a new job is submitted this hour recorder is erased
+//I think that is the best option
+         var now = moment().format("HH");
+         
  count = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment(Parts.findOne({hour: now }).timestamp.toString()).subtract(25,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
          estimatedTime = (Number(Parts.findOne({hour: now }).quantity) - Number(count))  / Number(Parts.findOne({hour: now }).cavitation);
          estimatedTime=estimatedTime * 10; //This 10 is a place holder for the time per cycle
          estimatedminutes=parseInt(estimatedTime/60);
+         
 if (estimatedminutes <=0)
 {
 
   estimatedminutes=0;
 }
-         console.log("Estimated minutes" + estimatedminutes)
+         console.log("Estimated minutes to add to current time" + estimatedminutes)
          
           //The way this logic is setup I may need to just have a completion time setup
           //I could also list the number of cycles to go
           //Then list the minutes left??
          
          
-         displayHours = estimatedminutes.toString().concat(" minutes left")
          
          
          
-         return displayHours;
+         
+         return estimatedminutes;
 
 
 

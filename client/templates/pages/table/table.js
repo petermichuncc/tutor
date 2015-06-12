@@ -43,7 +43,12 @@ var post = {
         timestamp: moment().format("YYYY-MM-DD HH:mm:ss.SSS"),
          hour: moment().format("HH")
      };
+var hour = {
+      hour: moment().format("HH")
+     };
 
+Meteor.subscribe('hours');
+     Meteor.call('hoursInsert', hour)
 console.log(text);
 Meteor.subscribe('parts');
      Meteor.call('partsInsert', post)

@@ -7,35 +7,40 @@ console.log("This is yesterday at 11:00 " + moment().subtract(1, 'days').format(
 console.log("This the start of today" +moment().format("YYYY-MM-DD 00:00:00.000") )
 Template.shift2.helpers({
  calculateTime: function () {
-         //calculate the amount of time needed for the job
-         //I could find the current hour using moment
-         //Then put that hour into the calculateTime function
-         //I could create if else statements based on the current hour
+         
          var now = moment().format("HH");
          // now=Number(now)
 
          // if (now === 14)
          // {
+          //only recalculate if there is a new job
+          //That is what this if statement is doing essentially
+          //I need 
+          if (typeof Parts.findOne({hour: now}) === 'object')
+          {
  count = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment(Parts.findOne({hour: now }).timestamp.toString()).subtract(25,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
          estimatedTime = (Number(Parts.findOne({hour: now }).quantity) - Number(count))  / Number(Parts.findOne({hour: now }).cavitation);
          estimatedTime=estimatedTime * 10; //This 10 is a place holder for the time per cycle
          estimatedminutes=parseInt(estimatedTime/60);
+         
 if (estimatedminutes <=0)
 {
 
   estimatedminutes=0;
 }
-         console.log("Estimated minutes" + estimatedminutes)
+         console.log("Estimated minutes to add to current time" + estimatedminutes)
          
-
-         
-         
-         displayHours = estimatedminutes.toString().concat(" minutes left")
-         
+          //The way this logic is setup I may need to just have a completion time setup
+          //I could also list the number of cycles to go
+          //Then list the minutes left??
          
          
-         return displayHours;
-
+         
+         
+         
+         
+         return estimatedminutes;
+}
 
 
 

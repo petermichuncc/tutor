@@ -5,15 +5,18 @@ Meteor.subscribe('parts');
 Template.shift1.helpers({
 
   calculateTime: function () {
-         //calculate the amount of time needed for the job
-         //I could find the current hour using moment
-         //Then put that hour into the calculateTime function
-         //I could create if else statements based on the current hour
-         var now = moment().format("HH");
-         // now=Number(now)
-
-         // if (now === 14)
+         
+          var now = Parts.find().fetch().pop();//This is the last entered parts document
+         console.log("This is a test")
+         console.log("this is the current submitted job hour" + now.hour)
+         now=now.hour
+          
          // {
+          //only recalculate if there is a new job
+          //That is what this if statement is doing essentially
+          //I need 
+          if (typeof Parts.findOne({hour: now}) === 'object')
+          {
  count = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment(Parts.findOne({hour: now }).timestamp.toString()).subtract(25,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
          estimatedTime = (Number(Parts.findOne({hour: now }).quantity) - Number(count))  / Number(Parts.findOne({hour: now }).cavitation);
          estimatedTime=estimatedTime * 10; //This 10 is a place holder for the time per cycle
@@ -24,17 +27,19 @@ if (estimatedminutes <=0)
 
   estimatedminutes=0;
 }
-         console.log("Estimated minutes" + estimatedminutes)
+         console.log("Estimated minutes to add to current time" + estimatedminutes)
          
-
-         
-         
-         displayHours = estimatedminutes.toString().concat(" minutes left")
-         
+          //The way this logic is setup I may need to just have a completion time setup
+          //I could also list the number of cycles to go
+          //Then list the minutes left??
          
          
-         return displayHours;
-
+         
+         
+         
+         
+         return estimatedminutes;
+}
 
 
 
@@ -271,12 +276,12 @@ if (estimatedminutes <=0)
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
         earnedHoursCalc= Number(earnedHoursCalc)
         console.log ("This is the earnedHoursCal in change status 1" + earnedHoursCalc)
-       if (earnedHoursCalc >=1&& Parts.findOne({hour: '7'}))
+       if (earnedHoursCalc >=1&& Parts.findOne({hour: '07'}))
       {
         return "Green"
       }
 
-      else if (earnedHoursCalc <1&& Parts.findOne({hour: '7'}))
+      else if (earnedHoursCalc <1&& Parts.findOne({hour: '07'}))
       {
 
         return "Yellow"

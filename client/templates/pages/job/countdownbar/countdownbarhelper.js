@@ -1,41 +1,63 @@
 
 
- Meteor.subscribe('cycles-recent', moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"))
+ 
 Template.countdownbar.helpers({
 
  percent: function(){
-     
-      //This percent bar is connected with the earned hours function.
-      //Basically the estimated time to completion counts down to zero
-      //The 
+    Meteor.subscribe('cycles-recent', moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"))
+    Meteor.subscribe('hours')
+         
+         //var now = Parts.findOne(); this is the first entered parts document
+         var now = Parts.find().fetch().pop();//This is the last entered parts document
+         console.log("This is a test")
+         console.log("this is the current submitted job hour" + now.hour)
+         now=now.hour
+          
+
+         
+          // only recalculate if there is a new job
+          // That is what this if statement is doing essentially
+          // I need 
+          
+  count = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment(Parts.findOne({hour: now }).timestamp.toString()).subtract(25,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
+          estimatedTime = (Number(Parts.findOne({hour: now }).quantity) - Number(count))  / Number(Parts.findOne({hour: now }).cavitation);
+          estimatedTime=estimatedTime * 10; //This 10 is a place holder for the time per cycle
+         estimatedminutes=parseInt(estimatedTime/60);
+         
+          totaltime= Number(Parts.findOne({hour: now }).quantity)/Number(Parts.findOne({hour: now }).cavitation)
+          totaltime = totaltime*10;
+         totaltime= parseInt(totaltime/60);
+
+ if (estimatedminutes <=0)
+ {
+
+   estimatedminutes=0;
+ }
+          console.log("Estimated minutes to add to current time" + estimatedminutes)
+         
+           //The way this logic is setup I may need to just have a completion time setup
+           //I could also list the number of cycles to go
+           //Then list the minutes left??
+         
+         
+         percent=estimatedminutes/totaltime;
+          percent=percent*100;
+          percent=parseInt(percent)
+          if (percent<=0)
+          {
+
+           percent=0;
+          }
+
+
+         
+          return percent;
+         
+        
+
+    
       
-      count = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment(Parts.findOne().timestamp.toString()).subtract(25,'seconds').format("YYYY-MM-DD H:mm:ss.SSS")}}).count()
-         estimatedTime = (Number(Parts.findOne().quantity) - Number(count))  / Number(Parts.findOne().cavitation);
-
-// console.log ("this is the amount of cycles since time stamp" + Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: mo.now.get(Parts.findOne().timestamp.toString()).format("YYYY-MM-DD H:mm:ss.SSS")}}).count())
-
-secondsLeft = estimatedTime * 10;   //This ten is a place holder for the time/cycle (assuming the cyles are every 10 seconds)
-//I will need to calculate the time/cycle at some point and have it updated constantly
-
-//total seconds is equal to  planned/cavitation
-totalseconds= Number(Parts.findOne().quantity) / Number(Parts.findOne().cavitation);
-totalseconds = totalseconds*10
-// console.log("This is the total seconds the job will take" + totalseconds)
-// console.log("This is the seconds left the job will take" + secondsLeft)
-if (secondsLeft<=0)
-
-{
-
-  secondsLeft=0;
 }
-
-percent=secondsLeft/totalseconds;
-percent=percent*100;
-
-  
-        return percent;
-      }
-
   
   })
 
