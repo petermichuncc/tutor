@@ -14,7 +14,7 @@ Template.countdownbar.helpers({
 
 // console.log ("this is the amount of cycles since time stamp" + Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: mo.now.get(Parts.findOne().timestamp.toString()).format("YYYY-MM-DD H:mm:ss.SSS")}}).count())
 
-secondsLeft = estimatedTime * 10;   //This ten is a place holder for the time/cycle
+secondsLeft = estimatedTime * 10;   //This ten is a place holder for the time/cycle (assuming the cyles are every 10 seconds)
 //I will need to calculate the time/cycle at some point and have it updated constantly
 
 //total seconds is equal to  planned/cavitation

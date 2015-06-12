@@ -8,29 +8,44 @@
 Template.job.helpers({
     
   calculateTime: function () {
-    
          //calculate the amount of time needed for the job
-//          count = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment(Parts.findOne().timestamp.toString()).subtract(60,'seconds').format("YYYY-MM-DD H:mm:ss.SSS")}}).count()
-//          estimatedTime = (Number(Parts.findOne().quantity) - Number(count))  / Number(Parts.findOne().cavitation);
+         //I could find the current hour using moment
+         //Then put that hour into the calculateTime function
+         //I could create if else statements based on the current hour
+         var now = moment().format("HH");
+         // now=Number(now)
 
-// //I need to find a way to convert the estimated time to seconds.
-// //I will multiply estimatedTime by the time/cycle to get the seconds for how 
-// //long the project will take until it is finished.
-// secondsLeft= estimatedTime * 10;   //This ten is a place holder for the time/cycle
-// //I will need to calculate the time/cycle at some point and have it updated constantly
+         // if (now === 14)
+         // {
+ count = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment(Parts.findOne({hour: now }).timestamp.toString()).subtract(25,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
+         estimatedTime = (Number(Parts.findOne({hour: now }).quantity) - Number(count))  / Number(Parts.findOne({hour: now }).cavitation);
+         estimatedTime=estimatedTime * 10; //This 10 is a place holder for the time per cycle
+         estimatedminutes=parseInt(estimatedTime/60);
+if (estimatedminutes <=0)
+{
 
-// //Then I need to convert the seconds into minutes and hours
-// //Then output this to the job page
-// minutes= secondsLeft/60
-// seconds = secondsLeft%60
-//          estimatedminutes=parseInt(estimatedTime/60);
-//          console.log("Estimated minutes" + estimatedminutes)
-//          estimatedseconds=estimatedTime%60;
-//          displayHours = moment(Parts.findOne().timestamp.toString()).add(estimatedminutes, 'm').add(estimatedseconds, 's').format("H:mm:ss.SSS");
+  estimatedminutes=0;
+}
+         console.log("Estimated minutes" + estimatedminutes)
+         
+          //The way this logic is setup I may need to just have a completion time setup
+          //I could also list the number of cycles to go
+          //Then list the minutes left??
+         
+         
+         displayHours = estimatedminutes.toString().concat(" minutes left")
+         
+         
+         
+         return displayHours;
+
+
+
+
+         // }
+
          
         
-         
-//          return displayHours;
 
      },
   
@@ -266,24 +281,25 @@ Template.job.helpers({
          
     },
     changeStatus: function() {
-      
+      //add if statements like these to get rid of the error messages that pop up on each page.
+      if (typeof Parts.findOne({hour: '08'}) === 'object')
+      {
      var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 08:00:00.000"), $lt: moment().format("YYYY-MM-DD 09:00:00.000")}}).count() * (Parts.findOne({hour: '08'}).cavitation / Parts.findOne({hour: '08'}).quantity);
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
         earnedHoursCalc= Number(earnedHoursCalc)
-       if (earnedHoursCalc >1)
+       if (earnedHoursCalc >1&& typeof Parts.findOne({hour: '08'}) === 'object')
       {
         return "Green"
       }
 
-      else
+      else if (earnedHoursCalc <1&& typeof Parts.findOne({hour: '08'}) === 'object')
       {
 
         return "Yellow"
       }
 
-
-
+}
     },
 
      changeStatus1: function() {
@@ -452,18 +468,35 @@ Template.job.helpers({
         return "Yellow"
       }
 },
-     part: function() {
+     part: function ()
+   {
+
+var part =Parts.findOne({hour: '08'})
+
+
+if(typeof Parts.findOne({hour: '08'}) === 'object')
+{
    
-   var part =Parts.findOne({hour: '08'})
 
 
-   return part.partnumber
+    return part.partnumber
+}
+
+
+
    },
    quantity: function() {
    var part =Parts.findOne({hour: '08'})
+   
+
+   if(typeof Parts.findOne({hour: '08'}) === 'object')
+   {
+   
 
 
    return part.quantity
+ }
+ 
    },
    
    part1: function ()
