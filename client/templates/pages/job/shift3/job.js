@@ -18,7 +18,10 @@ Template.job.helpers({
 //or I could have an additional collection that is used only as an hour recorder
 //for the current job.  Once a new job is submitted this hour recorder is erased
 //I think that is the best option
-         var now = moment().format("HH");
+          var now = Parts.find().fetch().pop();//This is the last entered parts document
+         console.log("This is a test")
+         console.log("this is the current submitted job hour" + now.hour)
+         now=now.hour
          
  count = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment(Parts.findOne({hour: now }).timestamp.toString()).subtract(25,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
          estimatedTime = (Number(Parts.findOne({hour: now }).quantity) - Number(count))  / Number(Parts.findOne({hour: now }).cavitation);
@@ -36,14 +39,21 @@ if (estimatedminutes <=0)
           //I could also list the number of cycles to go
           //Then list the minutes left??
          
-         
-         
-         
-         
-         
-         return estimatedminutes;
+       estimatedhours = estimatedminutes/60;
+       estimatedhours = parseInt(estimatedhours)
+       estimatedminutes=estimatedminutes%60;
 
+         
+         
+       if (estimatedhours===1)
+         {
+         return estimatedhours.toString().concat(" hour left and ",estimatedminutes," minutes left");
 
+}
+else 
+{
+  return estimatedhours.toString().concat(" hours left and ",estimatedminutes," minutes left");
+}
 
 
          // }
@@ -52,33 +62,65 @@ if (estimatedminutes <=0)
         
 
      },
-  
+   hour: function () {
+    return "Total"
+   },
+   hour1: function () {
+    return "1"
+   },
+   hour2: function () {
+    return "2"
+   },
+   hour3: function () {
+    return "3"
+   },
+   hour4: function () {
+    return "4"
+   },
+   hour5: function () {
+    return "5"
+   },
+   hour6: function () {
+    return "6"
+   },
+   hour7: function () {
+    return "7"
+   },
+   hour8: function () {
+    return "8"
+   },
    earnedHours: function () {
     
      Meteor.subscribe('parts'); 
+     Meteor.subscribe('machines');
       Meteor.subscribe('cycles-recent', moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"))
-     
-     
-    console.log("Here is the earned hours" + Cycles.find({CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 08:00:00.000"),$lt: moment().format("YYYY-MM-DD 09:00:00.000")}}).count())
+     num= Machines.find().fetch().pop();
+     num=num.machinenumber
+    console.log("Here is the earned hours" + Cycles.find({CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 14:00:00.000"),$lt: moment().format("YYYY-MM-DD 15:00:00.000")}}).count())
     //Meteor.subscribe('Presscycles')
     //The Cycles find only looks at the first thing you send in to it.
-        var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 08:00:00.000"),$lt: moment().format("YYYY-MM-DD 09:00:00.000")}}).count() * (Parts.findOne({hour: '08'}).cavitation / Parts.findOne({hour: '08'}).quantity) ;
+         if (typeof Parts.findOne({hour: '14'}) === 'object')
+      {
+        var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 14:00:00.000"),$lt: moment().format("YYYY-MM-DD 15:00:00.000")}}).count() * (Parts.findOne({hour: '11'}).cavitation / Parts.findOne({hour: '11'}).quantity) ;
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
          
         return earnedHoursCalc;
+      }
             },
      incomingCycles: function () {
         //grab all cycles from today
       
-       
+       num= Machines.find().fetch().pop();
+     num=num.machinenumber
     //find how comparisons are made between time stamps
     //I need to figure out the time stamp that is in
 // return Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count() * Parts.findOne().cavitation ;
 // for some reasons the cycles find function only cares about the first argument that it sees.
-
-    return Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 08:00:00.000"), $lt: moment().format("YYYY-MM-DD 09:00:00.000")}}).count() * Parts.findOne().cavitation;
-  
+ if (typeof Parts.findOne({hour: '14'}) === 'object')
+      {
+    return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 14:00:00.000"), $lt: moment().format("YYYY-MM-DD 15:00:00.000")}}).count() * Parts.findOne({hour: '11'}).cavitation;
+  }
         
       },
       //Cycles.find({CycleTimeStamp: { $gte: startTime}})
@@ -89,11 +131,14 @@ if (estimatedminutes <=0)
     // Meteor.subscribe('cycles-recent', moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"))
     
     //The Cycles find only looks at the first thing you send in to it.
-        var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"), $lt: moment().format("YYYY-MM-DD 00:00:00.000")}}).count() * (Parts.findOne({hour: '23'}).cavitation / Parts.findOne({hour: '23'}).quantity) ;
+         if (typeof Parts.findOne({hour: '23'}) === 'object')
+      {
+        var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"), $lt: moment().format("YYYY-MM-DD 00:00:00.000")}}).count() * (Parts.findOne({hour: '23'}).cavitation / Parts.findOne({hour: '23'}).quantity) ;
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
          
         return earnedHoursCalc;
+      }
             },
      incomingCycles1: function () {
         //grab all cycles from today
@@ -103,9 +148,10 @@ if (estimatedminutes <=0)
     //I need to figure out the time stamp that is in
 // return Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count() * Parts.findOne().cavitation ;
 // for some reasons the cycles find function only cares about the first argument that it sees.
-
+ if (typeof Parts.findOne({hour: '23'}) === 'object')
+      {
     return Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"), $lt: moment().format("YYYY-MM-DD 00:00:00.000")}}).count() * Parts.findOne({hour: '23'}).cavitation;
-  
+  }
         
       },
       earnedHours2: function () {

@@ -8,17 +8,22 @@ console.log("This the start of today" +moment().format("YYYY-MM-DD 00:00:00.000"
 Template.shift3.helpers({
   calculateTime: function () {
          
-         var now = moment().format("HH");
-         // now=Number(now)
 
-         // if (now === 14)
-         // {
-          //only recalculate if there is a new job
-          //That is what this if statement is doing essentially
-          //I need 
-          if (typeof Parts.findOne({hour: now}) === 'object')
-          {
- count = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment(Parts.findOne({hour: now }).timestamp.toString()).subtract(25,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
+//I need to have submitted jobs calculate time using the collection for that submitted job
+//until the estimated minutes are up then use the next submitted job if there is one
+//
+//take the hour of the current time stamp
+//I could have only one job saved at at time then it is erased
+//or I could have an additional collection that is used only as an hour recorder
+//for the current job.  Once a new job is submitted this hour recorder is erased
+//I think that is the best option
+          var now = Parts.find().fetch().pop();//This is the last entered parts document
+         console.log("This is a test")
+         console.log("this is the current submitted job hour" + now.hour)
+         now=now.hour
+         num= Machines.find().fetch().pop();
+     num=num.machinenumber
+ count = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(Parts.findOne({hour: now }).timestamp.toString()).subtract(25,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
          estimatedTime = (Number(Parts.findOne({hour: now }).quantity) - Number(count))  / Number(Parts.findOne({hour: now }).cavitation);
          estimatedTime=estimatedTime * 10; //This 10 is a place holder for the time per cycle
          estimatedminutes=parseInt(estimatedTime/60);
@@ -34,14 +39,21 @@ if (estimatedminutes <=0)
           //I could also list the number of cycles to go
           //Then list the minutes left??
          
-         
-         
-         
-         
-         
-         return estimatedminutes;
-}
+       estimatedhours = estimatedminutes/60;
+       estimatedhours = parseInt(estimatedhours)
+       estimatedminutes=estimatedminutes%60;
 
+         
+         
+       if (estimatedhours===1)
+         {
+         return estimatedhours.toString().concat(" hour left and ",estimatedminutes," minutes left");
+
+}
+else 
+{
+  return estimatedhours.toString().concat(" hours left and ",estimatedminutes," minutes left");
+}
 
 
          // }
@@ -54,18 +66,15 @@ if (estimatedminutes <=0)
   parts: function() {
     return Parts.find();
    },
-   columns: function() {
-     // the context is a part
-     var result = _.values(this.data);
-     result.unshift(this.text);
-     return result;
-   },
+   
    earnedHours: function () {
     
     console.log("Here is the earned hours" + Cycles.find({CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 08:00:00.000"),$lt: moment().format("YYYY-MM-DD 09:00:00.000")}}).count())
     //Meteor.subscribe('Presscycles')
     //The Cycles find only looks at the first thing you send in to it.
-        var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 08:00:00.000"),$lt: moment().format("YYYY-MM-DD 09:00:00.000")}}).count() * (Parts.findOne({hour: '08'}).cavitation / Parts.findOne({hour: '08'}).quantity) ;
+       num= Machines.find().fetch().pop();
+     num=num.machinenumber
+        var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 08:00:00.000"),$lt: moment().format("YYYY-MM-DD 09:00:00.000")}}).count() * (Parts.findOne({hour: '08'}).cavitation / Parts.findOne({hour: '08'}).quantity) ;
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
          
@@ -79,8 +88,9 @@ if (estimatedminutes <=0)
     //I need to figure out the time stamp that is in
 // return Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count() * Parts.findOne().cavitation ;
 // for some reasons the cycles find function only cares about the first argument that it sees.
-
-    return Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 08:00:00.000"), $lt: moment().format("YYYY-MM-DD 09:00:00.000")}}).count() * Parts.findOne().cavitation;
+num= Machines.find().fetch().pop();
+     num=num.machinenumber
+    return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 08:00:00.000"), $lt: moment().format("YYYY-MM-DD 09:00:00.000")}}).count() * Parts.findOne().cavitation;
   
       },
       //Cycles.find({CycleTimeStamp: { $gte: startTime}})
@@ -91,7 +101,9 @@ if (estimatedminutes <=0)
     // Meteor.subscribe('cycles-recent', moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"))
     
     //The Cycles find only looks at the first thing you send in to it.
-        var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"), $lt: moment().format("YYYY-MM-DD 00:00:00.000")}}).count() * (Parts.findOne({hour: '23'}).cavitation / Parts.findOne({hour: '23'}).quantity) ;
+    num= Machines.find().fetch().pop();
+     num=num.machinenumber
+        var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"), $lt: moment().format("YYYY-MM-DD 00:00:00.000")}}).count() * (Parts.findOne({hour: '23'}).cavitation / Parts.findOne({hour: '23'}).quantity) ;
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
          
@@ -105,8 +117,9 @@ if (estimatedminutes <=0)
     //I need to figure out the time stamp that is in
 // return Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count() * Parts.findOne().cavitation ;
 // for some reasons the cycles find function only cares about the first argument that it sees.
-
-    return Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"), $lt: moment().format("YYYY-MM-DD 00:00:00.000")}}).count() * Parts.findOne({hour: '23'}).cavitation;
+num= Machines.find().fetch().pop();
+     num=num.machinenumber
+    return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"), $lt: moment().format("YYYY-MM-DD 00:00:00.000")}}).count() * Parts.findOne({hour: '23'}).cavitation;
   
         
       },
@@ -114,7 +127,9 @@ if (estimatedminutes <=0)
      
     //Meteor.subscribe('Presscycles')
     //The Cycles find only looks at the first thing you send in to it.
-        var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 00:00:00.000"),$lt: moment().format("YYYY-MM-DD 01:00:00.000")}}).count() * (Parts.findOne({hour:'00'}).cavitation / Parts.findOne({hour:'00'}).quantity) ;
+    num= Machines.find().fetch().pop();
+     num=num.machinenumber
+        var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 00:00:00.000"),$lt: moment().format("YYYY-MM-DD 01:00:00.000")}}).count() * (Parts.findOne({hour:'00'}).cavitation / Parts.findOne({hour:'00'}).quantity) ;
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
          
@@ -128,7 +143,9 @@ if (estimatedminutes <=0)
     //I need to figure out the time stamp that is in
 // return Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count() * Parts.findOne().cavitation ;
 // for some reasons the cycles find function only cares about the first argument that it sees.
-    return Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 00:00:00.000"),$lt: moment().format("YYYY-MM-DD 01:00:00.000")}}).count() * Parts.findOne({hour:'00'}).cavitation;
+num= Machines.find().fetch().pop();
+     num=num.machinenumber
+    return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 00:00:00.000"),$lt: moment().format("YYYY-MM-DD 01:00:00.000")}}).count() * Parts.findOne({hour:'00'}).cavitation;
   
         
         
@@ -137,7 +154,9 @@ if (estimatedminutes <=0)
      
     //Meteor.subscribe('Presscycles')
     //The Cycles find only looks at the first thing you send in to it.
-        var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 01:00:00.000"), $lt: moment().format("YYYY-MM-DD 02:00:00.000")}}).count() * (Parts.findOne({hour:'01'}).cavitation / Parts.findOne({hour:'01'}).quantity);
+    num= Machines.find().fetch().pop();
+     num=num.machinenumber
+        var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 01:00:00.000"), $lt: moment().format("YYYY-MM-DD 02:00:00.000")}}).count() * (Parts.findOne({hour:'01'}).cavitation / Parts.findOne({hour:'01'}).quantity);
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
          
@@ -151,7 +170,9 @@ if (estimatedminutes <=0)
     //I need to figure out the time stamp that is in
 // return Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count() * Parts.findOne().cavitation ;
 // for some reasons the cycles find function only cares about the first argument that it sees.
-    return Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 01:00:00.000"), $lt: moment().format("YYYY-MM-DD 02:00:00.000")}}).count() * Parts.findOne({hour:'01'}).cavitation;
+num= Machines.find().fetch().pop();
+     num=num.machinenumber
+    return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 01:00:00.000"), $lt: moment().format("YYYY-MM-DD 02:00:00.000")}}).count() * Parts.findOne({hour:'01'}).cavitation;
   
         
         
@@ -160,7 +181,9 @@ if (estimatedminutes <=0)
      
     //Meteor.subscribe('Presscycles')
     //The Cycles find only looks at the first thing you send in to it.
-        var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 02:00:00.000"), $lt: moment().format("YYYY-MM-DD 03:00:00.000")}}).count() * (Parts.findOne({hour:'02'}).cavitation / Parts.findOne({hour:'02'}).quantity);
+    num= Machines.find().fetch().pop();
+     num=num.machinenumber
+        var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 02:00:00.000"), $lt: moment().format("YYYY-MM-DD 03:00:00.000")}}).count() * (Parts.findOne({hour:'02'}).cavitation / Parts.findOne({hour:'02'}).quantity);
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
          
@@ -174,7 +197,9 @@ if (estimatedminutes <=0)
     //I need to figure out the time stamp that is in
 // return Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count() * Parts.findOne().cavitation ;
 // for some reasons the cycles find function only cares about the first argument that it sees.
-    return Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 02:00:00.000"), $lt: moment().format("YYYY-MM-DD 03:00:00.000")}}).count() * Parts.findOne({hour:'02'}).cavitation;
+num= Machines.find().fetch().pop();
+     num=num.machinenumber
+    return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 02:00:00.000"), $lt: moment().format("YYYY-MM-DD 03:00:00.000")}}).count() * Parts.findOne({hour:'02'}).cavitation;
   
         
         
@@ -183,7 +208,9 @@ if (estimatedminutes <=0)
      
     //Meteor.subscribe('Presscycles')
     //The Cycles find only looks at the first thing you send in to it.
-        var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 03:00:00.000"), $lt: moment().format("YYYY-MM-DD 04:00:00.000")}}).count() * (Parts.findOne({hour:'03'}).cavitation / Parts.findOne({hour:'03'}).quantity);
+    num= Machines.find().fetch().pop();
+     num=num.machinenumber
+        var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 03:00:00.000"), $lt: moment().format("YYYY-MM-DD 04:00:00.000")}}).count() * (Parts.findOne({hour:'03'}).cavitation / Parts.findOne({hour:'03'}).quantity);
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
          
@@ -197,7 +224,9 @@ if (estimatedminutes <=0)
     //I need to figure out the time stamp that is in
 // return Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count() * Parts.findOne().cavitation ;
 // for some reasons the cycles find function only cares about the first argument that it sees.
-    return Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 03:00:00.000"), $lt: moment().format("YYYY-MM-DD 04:00:00.000")}}).count() * Parts.findOne({hour:'03'}).cavitation;
+num= Machines.find().fetch().pop();
+     num=num.machinenumber
+    return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 03:00:00.000"), $lt: moment().format("YYYY-MM-DD 04:00:00.000")}}).count() * Parts.findOne({hour:'03'}).cavitation;
   
         
         
@@ -206,7 +235,9 @@ if (estimatedminutes <=0)
      
     //Meteor.subscribe('Presscycles')
     //The Cycles find only looks at the first thing you send in to it.
-        var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 04:00:00.000"), $lt: moment().format("YYYY-MM-DD 05:00:00.000")}}).count() * (Parts.findOne({hour:'04'}).cavitation / Parts.findOne({hour:'04'}).quantity);
+    num= Machines.find().fetch().pop();
+     num=num.machinenumber
+        var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 04:00:00.000"), $lt: moment().format("YYYY-MM-DD 05:00:00.000")}}).count() * (Parts.findOne({hour:'04'}).cavitation / Parts.findOne({hour:'04'}).quantity);
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
          
@@ -220,7 +251,9 @@ if (estimatedminutes <=0)
     //I need to figure out the time stamp that is in
 // return Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count() * Parts.findOne().cavitation ;
 // for some reasons the cycles find function only cares about the first argument that it sees.
-    return Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 04:00:00.000"), $lt: moment().format("YYYY-MM-DD 05:00:00.000")}}).count() * Parts.findOne({hour:'04'}).cavitation;
+num= Machines.find().fetch().pop();
+     num=num.machinenumber
+    return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 04:00:00.000"), $lt: moment().format("YYYY-MM-DD 05:00:00.000")}}).count() * Parts.findOne({hour:'04'}).cavitation;
   
         
         
@@ -229,7 +262,9 @@ if (estimatedminutes <=0)
      
     //Meteor.subscribe('Presscycles')
     //The Cycles find only looks at the first thing you send in to it.
-        var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 05:00:00.000"), $lt: moment().format("YYYY-MM-DD 06:00:00.000")}}).count() * (Parts.findOne({hour:'05'}).cavitation / Parts.findOne({hour:'05'}).quantity);
+    num= Machines.find().fetch().pop();
+     num=num.machinenumber
+        var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 05:00:00.000"), $lt: moment().format("YYYY-MM-DD 06:00:00.000")}}).count() * (Parts.findOne({hour:'05'}).cavitation / Parts.findOne({hour:'05'}).quantity);
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
          
@@ -243,7 +278,9 @@ if (estimatedminutes <=0)
     //I need to figure out the time stamp that is in
 // return Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count() * Parts.findOne().cavitation ;
 // for some reasons the cycles find function only cares about the first argument that it sees.
-    return Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 05:00:00.000"), $lt: moment().format("YYYY-MM-DD 06:00:00.000")}}).count() * Parts.findOne({hour:'05'}).cavitation;
+num= Machines.find().fetch().pop();
+     num=num.machinenumber
+    return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 05:00:00.000"), $lt: moment().format("YYYY-MM-DD 06:00:00.000")}}).count() * Parts.findOne({hour:'05'}).cavitation;
   
         
         
@@ -252,7 +289,9 @@ if (estimatedminutes <=0)
      
     //Meteor.subscribe('Presscycles')
     //The Cycles find only looks at the first thing you send in to it.
-        var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 06:00:00.000"), $lt: moment().format("YYYY-MM-DD 07:00:00.000")}}).count() * (Parts.findOne({hour:'06'}).cavitation / Parts.findOne({hour:'06'}).quantity);
+    num= Machines.find().fetch().pop();
+     num=num.machinenumber
+        var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 06:00:00.000"), $lt: moment().format("YYYY-MM-DD 07:00:00.000")}}).count() * (Parts.findOne({hour:'06'}).cavitation / Parts.findOne({hour:'06'}).quantity);
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
          
@@ -266,7 +305,9 @@ if (estimatedminutes <=0)
     //I need to figure out the time stamp that is in
 // return Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count() * Parts.findOne().cavitation ;
 // for some reasons the cycles find function only cares about the first argument that it sees.
-    return Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 06:00:00.000"), $lt: moment().format("YYYY-MM-DD 07:00:00.000")}}).count() * Parts.findOne({hour:'06'}).cavitation;
+num= Machines.find().fetch().pop();
+     num=num.machinenumber
+    return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 06:00:00.000"), $lt: moment().format("YYYY-MM-DD 07:00:00.000")}}).count() * Parts.findOne({hour:'06'}).cavitation;
   
         
         
@@ -274,21 +315,11 @@ if (estimatedminutes <=0)
       //Cycles.find({CycleTimeStamp: { $gte: startTime}})
       //this will retrieve all cyles greater than or equal to this start time
       //so this will be 
-    progressBar: function () {
-        //calculate the amount of time needed for the job
-        //This function will require converting the string to a number
-        //Then converting the number to minutes, then dividing the minutes 
-        //I will try to use this for the changing the progress bar
-        console.log("This is the formatted data" +moment(displayHours).format("h"));
-        var percent = moment(Parts.findOne().timestamp.toString()).format("h")/moment(displayHours).format("h");
-        percent = percent *100;
-
-         return  Math.round(percent);
-         
-    },
+    
      changeStatus: function() {
-      
-     var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 08:00:00.000"), $lt: moment().format("YYYY-MM-DD 09:00:00.000")}}).count() * (Parts.findOne({hour: '08'}).cavitation / Parts.findOne({hour: '08'}).quantity);
+      num= Machines.find().fetch().pop();
+     num=num.machinenumber
+     var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 08:00:00.000"), $lt: moment().format("YYYY-MM-DD 09:00:00.000")}}).count() * (Parts.findOne({hour: '08'}).cavitation / Parts.findOne({hour: '08'}).quantity);
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
         earnedHoursCalc= Number(earnedHoursCalc)
@@ -308,8 +339,9 @@ if (estimatedminutes <=0)
     },
 
     changeStatus17: function() {
-      
-     var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"), $lt: moment().format("YYYY-MM-DD 00:00:00.000")}}).count() * (Parts.findOne({hour: '23'}).cavitation / Parts.findOne({hour: '23'}).quantity) ;
+      num= Machines.find().fetch().pop();
+     num=num.machinenumber
+     var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"), $lt: moment().format("YYYY-MM-DD 00:00:00.000")}}).count() * (Parts.findOne({hour: '23'}).cavitation / Parts.findOne({hour: '23'}).quantity) ;
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
         earnedHoursCalc= Number(earnedHoursCalc)
@@ -329,7 +361,9 @@ if (estimatedminutes <=0)
     },
 
     changeStatus18: function() {
-     var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 00:00:00.000"), $lt: moment().format("YYYY-MM-DD 01:00:00.000")}}).count() * (Parts.findOne({hour: '00'}).cavitation / Parts.findOne({hour: '00'}).quantity);
+     num= Machines.find().fetch().pop();
+     num=num.machinenumber
+     var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 00:00:00.000"), $lt: moment().format("YYYY-MM-DD 01:00:00.000")}}).count() * (Parts.findOne({hour: '00'}).cavitation / Parts.findOne({hour: '00'}).quantity);
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
         earnedHoursCalc= Number(earnedHoursCalc)
@@ -349,8 +383,9 @@ if (estimatedminutes <=0)
     },
 
     changeStatus19: function() {
-      
-      var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 01:00:00.000"), $lt: moment().format("YYYY-MM-DD 02:00:00.000")}}).count() * (Parts.findOne({hour: '01'}).cavitation / Parts.findOne({hour: '01'}).quantity);
+      num= Machines.find().fetch().pop();
+     num=num.machinenumber
+      var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 01:00:00.000"), $lt: moment().format("YYYY-MM-DD 02:00:00.000")}}).count() * (Parts.findOne({hour: '01'}).cavitation / Parts.findOne({hour: '01'}).quantity);
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
         earnedHoursCalc= Number(earnedHoursCalc)
@@ -370,8 +405,9 @@ if (estimatedminutes <=0)
     },
 
     changeStatus20: function() {
-      
-      var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 02:00:00.000"), $lt: moment().format("YYYY-MM-DD 03:00:00.000")}}).count() * (Parts.findOne({hour: '02'}).cavitation / Parts.findOne({hour: '02'}).quantity);
+      num= Machines.find().fetch().pop();
+     num=num.machinenumber
+      var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 02:00:00.000"), $lt: moment().format("YYYY-MM-DD 03:00:00.000")}}).count() * (Parts.findOne({hour: '02'}).cavitation / Parts.findOne({hour: '02'}).quantity);
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
         earnedHoursCalc= Number(earnedHoursCalc)
@@ -391,8 +427,9 @@ if (estimatedminutes <=0)
     },
 
     changeStatus21: function() {
-      
-     var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 03:00:00.000"), $lt: moment().format("YYYY-MM-DD 04:00:00.000")}}).count() * (Parts.findOne({hour: '03'}).cavitation / Parts.findOne({hour: '03'}).quantity);
+      num= Machines.find().fetch().pop();
+     num=num.machinenumber
+     var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 03:00:00.000"), $lt: moment().format("YYYY-MM-DD 04:00:00.000")}}).count() * (Parts.findOne({hour: '03'}).cavitation / Parts.findOne({hour: '03'}).quantity);
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
         earnedHoursCalc= Number(earnedHoursCalc)
@@ -412,7 +449,9 @@ if (estimatedminutes <=0)
     },
 
     changeStatus22: function() {
-      var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 04:00:00.000"), $lt: moment().format("YYYY-MM-DD 05:00:00.000")}}).count() * (Parts.findOne({hour: '04'}).cavitation / Parts.findOne({hour: '04'}).quantity);
+      num= Machines.find().fetch().pop();
+     num=num.machinenumber
+      var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 04:00:00.000"), $lt: moment().format("YYYY-MM-DD 05:00:00.000")}}).count() * (Parts.findOne({hour: '04'}).cavitation / Parts.findOne({hour: '04'}).quantity);
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
         earnedHoursCalc= Number(earnedHoursCalc)
@@ -432,8 +471,9 @@ if (estimatedminutes <=0)
     },
 
     changeStatus23: function() {
-      
-      var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 05:00:00.000"), $lt: moment().format("YYYY-MM-DD 06:00:00.000")}}).count() * (Parts.findOne({hour: '05'}).cavitation / Parts.findOne({hour: '05'}).quantity);
+      num= Machines.find().fetch().pop();
+     num=num.machinenumber
+      var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 05:00:00.000"), $lt: moment().format("YYYY-MM-DD 06:00:00.000")}}).count() * (Parts.findOne({hour: '05'}).cavitation / Parts.findOne({hour: '05'}).quantity);
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
         earnedHoursCalc= Number(earnedHoursCalc)
@@ -454,8 +494,9 @@ if (earnedHoursCalc >=1&&Parts.findOne({hour: '05'}))
     },
 
     changeStatus24: function() {
-      
-      var earnedHoursCalc = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 06:00:00.000"), $lt: moment().format("YYYY-MM-DD 07:00:00.000")}}).count() * (Parts.findOne({hour: '06'}).cavitation / Parts.findOne({hour: '06'}).quantity);
+      num= Machines.find().fetch().pop();
+     num=num.machinenumber
+      var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 06:00:00.000"), $lt: moment().format("YYYY-MM-DD 07:00:00.000")}}).count() * (Parts.findOne({hour: '06'}).cavitation / Parts.findOne({hour: '06'}).quantity);
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
         earnedHoursCalc= Number(earnedHoursCalc)
