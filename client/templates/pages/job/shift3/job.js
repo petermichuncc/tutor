@@ -60,7 +60,7 @@ else
 
          
         
-
+//I need a way to output multiple lines to
      },
    hour: function () {
     return "Total"
@@ -90,6 +90,10 @@ else
     return "8"
    },
    hour1p: function () {
+     //under what condition should i use and additional row?
+     //if there is
+
+
      // return "1"
    },
    hour2p: function () {
@@ -131,6 +135,17 @@ else
          
         return earnedHoursCalc;
       }
+
+      else
+      {
+
+ var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 14:00:00.000"),$lt: moment().format("YYYY-MM-DD 15:00:00.000")}}).count() ;
+         
+        earnedHoursCalc = earnedHoursCalc.toFixed(2);
+         
+        return earnedHoursCalc;
+
+      }
             },
      incomingCycles: function () {
         //grab all cycles from today
@@ -143,8 +158,14 @@ else
 // for some reasons the cycles find function only cares about the first argument that it sees.
  if (typeof Parts.findOne({hour: '14'}) === 'object')
       {
-    return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 14:00:00.000"), $lt: moment().format("YYYY-MM-DD 15:00:00.000")}}).count() * Parts.findOne({hour: '11'}).cavitation;
+    return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 14:00:00.000"), $lt: moment().format("YYYY-MM-DD 15:00:00.000")}}).count() * Parts.findOne({hour: '14'}).cavitation;
   }
+  else
+      {
+
+ return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 14:00:00.000"), $lt: moment().format("YYYY-MM-DD 15:00:00.000")}}).count()
+
+      }
         
       },
       //Cycles.find({CycleTimeStamp: { $gte: startTime}})
@@ -153,11 +174,13 @@ else
      earnedHours1: function () {
 
     // Meteor.subscribe('cycles-recent', moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"))
-    
-    //The Cycles find only looks at the first thing you send in to it.
+    //this code should start the from time stamp of the job occuring in this particular hour range
+    //this hour range is from 11pmyesterday to midnight yesterday
+    hour= Parts.find().fetch().pop();
+     hour=num.hour  //this is the hour of the submitted job 
          if (typeof Parts.findOne({hour: '23'}) === 'object')
       {
-        var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"), $lt: moment().format("YYYY-MM-DD 00:00:00.000")}}).count() * (Parts.findOne({hour: '23'}).cavitation / Parts.findOne({hour: '23'}).quantity) ;
+        var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(Parts.findOne({hour: '23'}).cavitation).subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"), $lt: moment().format("YYYY-MM-DD 00:00:00.000")}}).count() * (Parts.findOne({hour: '23'}).cavitation / Parts.findOne({hour: '23'}).quantity) ;
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
          

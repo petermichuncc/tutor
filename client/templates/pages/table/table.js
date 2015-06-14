@@ -41,7 +41,8 @@ var post = {
        cavitation: $( "#cavitation" ).val(),
        workcenter: Machines.findOne().machinenumber,
         timestamp: moment().format("YYYY-MM-DD HH:mm:ss.SSS"),
-         hour: moment().format("HH")
+         hour: moment().format("HH"),
+         minute: moment().format("mm")
      };
 var hour = {
       hour: moment().format("HH")
