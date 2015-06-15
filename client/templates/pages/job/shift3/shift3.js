@@ -16,8 +16,7 @@ Template.shift3.helpers({
 
 
           var now = Parts.find().fetch().pop();//This is the last entered parts document
-         console.log("This is a test")
-         console.log("this is the current submitted job hour" + now.hour)
+         
          now=now.hour
          min=moment(Parts.find({hour: now}).fetch().pop().timestamp.toString()).format("mm")
          console.log("This is the minute of the submitted job" + moment(Parts.find({hour: now}).fetch().pop().timestamp.toString()).format("mm"))//this is the latest submitted hour
@@ -69,7 +68,7 @@ else
    
    earnedHours: function () {
     
-    console.log("Here is the earned hours" + Cycles.find({CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 08:00:00.000"),$lt: moment().format("YYYY-MM-DD 09:00:00.000")}}).count())
+    
     //Meteor.subscribe('Presscycles')
     //The Cycles find only looks at the first thing you send in to it.
        num= Machines.find().fetch().pop();
@@ -103,11 +102,22 @@ num= Machines.find().fetch().pop();
     //The Cycles find only looks at the first thing you send in to it.
     num= Machines.find().fetch().pop();
      num=num.machinenumber
+     if (typeof Parts.findOne({hour: '23'}) === 'object')
         var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"), $lt: moment().format("YYYY-MM-DD 00:00:00.000")}}).count() * (Parts.findOne({hour: '23'}).cavitation / Parts.findOne({hour: '23'}).quantity) ;
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
          
         return earnedHoursCalc;
+
+      else
+      {
+var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"),$lt: moment().format("YYYY-MM-DD 00:00:00.000")}}).count()* (Parts.findOne().cavitation / Parts.findOne().quantity) ;
+         
+        earnedHoursCalc = earnedHoursCalc.toFixed(2);
+         
+        return earnedHoursCalc;
+
+      }
             },
      incomingCycles17: function () {
         //grab all cycles from today
@@ -119,7 +129,16 @@ num= Machines.find().fetch().pop();
 // for some reasons the cycles find function only cares about the first argument that it sees.
 num= Machines.find().fetch().pop();
      num=num.machinenumber
+    if (typeof Parts.findOne({hour: '14'}) === 'object')
+      {
     return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"), $lt: moment().format("YYYY-MM-DD 00:00:00.000")}}).count() * Parts.findOne({hour: '23'}).cavitation;
+  }
+  else
+      {
+
+ return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"), $lt: moment().format("YYYY-MM-DD 00:00:00.000")}}).count()* Parts.findOne().cavitation;
+
+      }
   
         
       },
@@ -129,11 +148,22 @@ num= Machines.find().fetch().pop();
     //The Cycles find only looks at the first thing you send in to it.
     num= Machines.find().fetch().pop();
      num=num.machinenumber
-        var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 00:00:00.000"),$lt: moment().format("YYYY-MM-DD 01:00:00.000")}}).count() * (Parts.findOne({hour:'00'}).cavitation / Parts.findOne({hour:'00'}).quantity) ;
+         if (typeof Parts.findOne({hour: '00'}) === 'object')
+        var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 00:00:00.000"), $lt: moment().format("YYYY-MM-DD 01:00:00.000")}}).count() * (Parts.findOne({hour: '00'}).cavitation / Parts.findOne({hour: '00'}).quantity) ;
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
          
         return earnedHoursCalc;
+
+      else
+      {
+var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 00:00:00.000"),$lt: moment().format("YYYY-MM-DD 01:00:00.000")}}).count()* (Parts.findOne().cavitation / Parts.findOne().quantity) ;
+         
+        earnedHoursCalc = earnedHoursCalc.toFixed(2);
+         
+        return earnedHoursCalc;
+
+      }
             },
      incomingCycles18: function () {
             //grab all cycles from today

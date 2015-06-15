@@ -14,8 +14,7 @@ Template.shift2.helpers({
 
 
           var now = Parts.find().fetch().pop();//This is the last entered parts document
-         console.log("This is a test")
-         console.log("this is the current submitted job hour" + now.hour)
+         
          now=now.hour
          min=moment(Parts.find({hour: now}).fetch().pop().timestamp.toString()).format("mm")
          console.log ("This is the minute of the second to lastest item in collection" +moment(Parts.find({}, {sort: {hour: -1}, limit: 2}).fetch().pop().timestamp.toString()).format("mm")) //second to last item in collection

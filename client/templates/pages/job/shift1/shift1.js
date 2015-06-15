@@ -14,8 +14,7 @@ Template.shift1.helpers({
 
 
           var now = Parts.find().fetch().pop();//This is the last entered parts document
-         console.log("This is a test")
-         console.log("this is the current submitted job hour" + now.hour)
+         
          now=now.hour
          min=moment(Parts.find({hour: now}).fetch().pop().timestamp.toString()).format("mm")
          console.log("This is the minute of the submitted job" + moment(Parts.find({hour: now}).fetch().pop().timestamp.toString()).format("mm"))//this is the latest submitted hour
