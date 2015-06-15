@@ -17,7 +17,10 @@ Template.shift2.helpers({
          console.log("This is a test")
          console.log("this is the current submitted job hour" + now.hour)
          now=now.hour
-         min=now.minute
+         min=moment(Parts.find({hour: now}).fetch().pop().timestamp.toString()).format("mm")
+         console.log ("This is the minute of the second to lastest item in collection" +moment(Parts.find({}, {sort: {hour: -1}, limit: 2}).fetch().pop().timestamp.toString()).format("mm")) //second to last item in collection
+         //I'll use this for comparison to figure out if I need to create a new row 
+         console.log("This is the minute of the submitted job" + moment(Parts.find({hour: now}).fetch().pop().timestamp.toString()).format("mm"))//this is the latest submitted hour
          num= Machines.find().fetch().pop();
      num=num.machinenumber
  count = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(Parts.findOne({hour: now , minute: min}).timestamp.toString()).subtract(25,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
@@ -489,20 +492,7 @@ num= Machines.find().fetch().pop();
 
  },
 
-   part: function() {
-   
-   var part =Parts.findOne({hour: '13'})
-   part = Number(part)
-
-   return part.partnumber
-   },
-   quantity: function() {
-   var part =Parts.findOne({hour: '13'})
-
-
-   return part.quantity
-   },
-   
+  
    part9: function ()
    {
 

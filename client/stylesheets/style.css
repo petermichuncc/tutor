@@ -27,19 +27,25 @@ table{
 
   color:black;
 }
-#parts
+table#parts
 {
-/*
+cellspacing:0;
+cellpadding:0;
+
  border-collapse: collapse;
-  border-spacing: 0;*/
+  border-spacing: 0;
 border-spacing: 0;
 }
 table.parts
 {
 
 width:"3000";
+cellspacing:0;
+cellpadding:0;
+
  border-collapse: collapse;
   border-spacing: 0;
+border-spacing: 0;
 
 
 }

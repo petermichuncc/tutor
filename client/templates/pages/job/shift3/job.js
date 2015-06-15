@@ -9,22 +9,25 @@ Template.job.helpers({
     
   calculateTime: function () {
          
+//The calculate time function needs to always show the time for the most recently submitted job
+//This current calculation does not take into account jobs that may be submitted during the same hour
+//if a fetch the latest timestamp I might can use this 
+//basically do a pop to get access to the most recent minute
+//use this minute is my calculateTime function
 
-//I need to have submitted jobs calculate time using the collection for that submitted job
-//until the estimated minutes are up then use the next submitted job if there is one
-//
-//take the hour of the current time stamp
-//I could have only one job saved at at time then it is erased
-//or I could have an additional collection that is used only as an hour recorder
-//for the current job.  Once a new job is submitted this hour recorder is erased
-//I think that is the best option
+
           var now = Parts.find().fetch().pop();//This is the last entered parts document
          console.log("This is a test")
          console.log("this is the current submitted job hour" + now.hour)
          now=now.hour
-         
- count = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment(Parts.findOne({hour: now }).timestamp.toString()).subtract(25,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
-         estimatedTime = (Number(Parts.findOne({hour: now }).quantity) - Number(count))  / Number(Parts.findOne({hour: now }).cavitation);
+         min=moment(Parts.find({hour: now}).fetch().pop().timestamp.toString()).format("mm")
+         console.log ("This is the minute of the second to lastest item in collection" +moment(Parts.find({}, {sort: {hour: -1}, limit: 2}).fetch().pop().timestamp.toString()).format("mm")) //second to last item in collection
+         //I'll use this for comparison to figure out if I need to create a new row 
+         console.log("This is the minute of the submitted job" + moment(Parts.find({hour: now}).fetch().pop().timestamp.toString()).format("mm"))//this is the latest submitted hour
+         num= Machines.find().fetch().pop();
+     num=num.machinenumber
+ count = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(Parts.findOne({hour: now , minute: min}).timestamp.toString()).subtract(25,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
+         estimatedTime = (Number(Parts.findOne({hour: now, minute: min }).quantity) - Number(count))  / Number(Parts.findOne({hour: now , minute: min}).cavitation);
          estimatedTime=estimatedTime * 10; //This 10 is a place holder for the time per cycle
          estimatedminutes=parseInt(estimatedTime/60);
          
@@ -60,7 +63,7 @@ else
 
          
         
-//I need a way to output multiple lines to
+
      },
    hour: function () {
     return "Total"
@@ -91,10 +94,18 @@ else
    },
    hour1p: function () {
      //under what condition should i use and additional row?
-     //if there is
+     //if the latest minute is greater than the previous add this row
+     var now = Parts.find().fetch().pop();//This is the last entered parts document
+         console.log("This is a test")
+         console.log("this is the current submitted job hour" + now.hour)
+         now=now.hour
+         min=moment(Parts.find({hour: '20'}).fetch().pop().timestamp.toString()).format("mm")
+         console.log ("This is the minute of the second to lastest item in collection" +moment(Parts.find({}, {sort: {hour: -1}, limit: 2}).fetch().pop().timestamp.toString()).format("mm")) //second to last item in collection
+         //I'll use this for comparison to figure out if I need to create a new row 
+         console.log("This is the minute of the submitted job" + moment(Parts.find({hour: now}).fetch().pop().timestamp.toString()).format("mm"))//this is the latest submitted hour
+if (Number(moment(Parts.find({hour: '20'}).fetch().pop().timestamp.toString()).format("mm")) >  Number (moment(Parts.find({hour:'20'}, {sort: {hour: -1}, limit: 2}).fetch().pop().timestamp.toString()).format("mm")) )
 
-
-     // return "1"
+     return "1"
    },
    hour2p: function () {
     return "2"
@@ -180,7 +191,7 @@ else
      hour=num.hour  //this is the hour of the submitted job 
          if (typeof Parts.findOne({hour: '23'}) === 'object')
       {
-        var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(Parts.findOne({hour: '23'}).cavitation).subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"), $lt: moment().format("YYYY-MM-DD 00:00:00.000")}}).count() * (Parts.findOne({hour: '23'}).cavitation / Parts.findOne({hour: '23'}).quantity) ;
+        var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(Parts.findOne({hour: '20'}).cavitation).format("YYYY-MM-DD 20:00:00.000"), $lt: moment().format("YYYY-MM-DD 21:00:00.000")}}).count() * (Parts.findOne({hour: '20'}).cavitation / Parts.findOne({hour: '20'}).quantity) ;
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
          
@@ -197,7 +208,7 @@ else
 // for some reasons the cycles find function only cares about the first argument that it sees.
  if (typeof Parts.findOne({hour: '23'}) === 'object')
       {
-    return Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"), $lt: moment().format("YYYY-MM-DD 00:00:00.000")}}).count() * Parts.findOne({hour: '23'}).cavitation;
+    return Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 20:00:00.000"), $lt: moment().format("YYYY-MM-DD 21:00:00.000")}}).count() * Parts.findOne({hour: '20'}).cavitation;
   }
         
       },

@@ -8,23 +8,23 @@ console.log("This the start of today" +moment().format("YYYY-MM-DD 00:00:00.000"
 Template.shift3.helpers({
   calculateTime: function () {
          
+//The calculate time function needs to always show the time for the most recently submitted job
+//This current calculation does not take into account jobs that may be submitted during the same hour
+//if a fetch the latest timestamp I might can use this 
+//basically do a pop to get access to the most recent minute
+//use this minute is my calculateTime function
 
-//I need to have submitted jobs calculate time using the collection for that submitted job
-//until the estimated minutes are up then use the next submitted job if there is one
-//
-//take the hour of the current time stamp
-//I could have only one job saved at at time then it is erased
-//or I could have an additional collection that is used only as an hour recorder
-//for the current job.  Once a new job is submitted this hour recorder is erased
-//I think that is the best option
+
           var now = Parts.find().fetch().pop();//This is the last entered parts document
          console.log("This is a test")
          console.log("this is the current submitted job hour" + now.hour)
          now=now.hour
+         min=moment(Parts.find({hour: now}).fetch().pop().timestamp.toString()).format("mm")
+         console.log("This is the minute of the submitted job" + moment(Parts.find({hour: now}).fetch().pop().timestamp.toString()).format("mm"))//this is the latest submitted hour
          num= Machines.find().fetch().pop();
      num=num.machinenumber
- count = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(Parts.findOne({hour: now }).timestamp.toString()).subtract(25,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
-         estimatedTime = (Number(Parts.findOne({hour: now }).quantity) - Number(count))  / Number(Parts.findOne({hour: now }).cavitation);
+ count = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(Parts.findOne({hour: now , minute: min}).timestamp.toString()).subtract(25,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
+         estimatedTime = (Number(Parts.findOne({hour: now, minute: min }).quantity) - Number(count))  / Number(Parts.findOne({hour: now , minute: min}).cavitation);
          estimatedTime=estimatedTime * 10; //This 10 is a place holder for the time per cycle
          estimatedminutes=parseInt(estimatedTime/60);
          
