@@ -103,12 +103,13 @@ num= Machines.find().fetch().pop();
     num= Machines.find().fetch().pop();
      num=num.machinenumber
      if (typeof Parts.findOne({hour: '23'}) === 'object')
+     {
         var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"), $lt: moment().format("YYYY-MM-DD 00:00:00.000")}}).count() * (Parts.findOne({hour: '23'}).cavitation / Parts.findOne({hour: '23'}).quantity) ;
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
          
         return earnedHoursCalc;
-
+      }
       else
       {
 var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"),$lt: moment().format("YYYY-MM-DD 00:00:00.000")}}).count()* (Parts.findOne().cavitation / Parts.findOne().quantity) ;
@@ -149,12 +150,12 @@ num= Machines.find().fetch().pop();
     num= Machines.find().fetch().pop();
      num=num.machinenumber
          if (typeof Parts.findOne({hour: '00'}) === 'object')
-        var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 00:00:00.000"), $lt: moment().format("YYYY-MM-DD 01:00:00.000")}}).count() * (Parts.findOne({hour: '00'}).cavitation / Parts.findOne({hour: '00'}).quantity) ;
+        {var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 00:00:00.000"), $lt: moment().format("YYYY-MM-DD 01:00:00.000")}}).count() * (Parts.findOne({hour: '00'}).cavitation / Parts.findOne({hour: '00'}).quantity) ;
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
          
         return earnedHoursCalc;
-
+}
       else
       {
 var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 00:00:00.000"),$lt: moment().format("YYYY-MM-DD 01:00:00.000")}}).count()* (Parts.findOne().cavitation / Parts.findOne().quantity) ;

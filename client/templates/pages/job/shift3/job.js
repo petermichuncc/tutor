@@ -65,47 +65,15 @@ else
         
 
      },
-   hour: function () {
-    return "Total"
-   },
-   hour1: function () {
-    return "1"
-   },
-   hour2: function () {
-    return "2"
-   },
-   hour3: function () {
-    return "3"
-   },
-   hour4: function () {
-    return "4"
-   },
-   hour5: function () {
-    return "5"
-   },
-   hour6: function () {
-    return "6"
-   },
-   hour7: function () {
-    return "7"
-   },
-   hour8: function () {
-    return "8"
-   },
+   
    hour1p: function () {
      //under what condition should i use and additional row?
      //if the latest minute is greater than the previous add this row
-     var now = Parts.find().fetch().pop();//This is the last entered parts document
-         console.log("This is a test")
-         console.log("this is the current submitted job hour" + now.hour)
-         now=now.hour
-         min=moment(Parts.find({hour: '20'}).fetch().pop().timestamp.toString()).format("mm")
-         console.log ("This is the minute of the second to lastest item in collection" +moment(Parts.find({}, {sort: {hour: -1}, limit: 2}).fetch().pop().timestamp.toString()).format("mm")) //second to last item in collection
-         //I'll use this for comparison to figure out if I need to create a new row 
-         console.log("This is the minute of the submitted job" + moment(Parts.find({hour: now}).fetch().pop().timestamp.toString()).format("mm"))//this is the latest submitted hour
-if (Number(moment(Parts.find({hour: '20'}).fetch().pop().timestamp.toString()).format("mm")) >  Number (moment(Parts.find({hour:'20'}, {sort: {hour: -1}, limit: 2}).fetch().pop().timestamp.toString()).format("mm")) )
-
+     now= moment().format('HH');
+     if (Number(Parts.find({hour: now}).fetch().pop().minute) >  Number (Parts.find({hour:now}, {sort: {minute: -1}, limit: 2}).fetch().pop().minute))
+    {
      return "1"
+   }
    },
    hour2p: function () {
     return "2"
@@ -135,12 +103,15 @@ if (Number(moment(Parts.find({hour: '20'}).fetch().pop().timestamp.toString()).f
       Meteor.subscribe('cycles-recent', moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"))
      num= Machines.find().fetch().pop();
      num=num.machinenumber
-    console.log("Here is the earned hours" + Cycles.find({CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 14:00:00.000"),$lt: moment().format("YYYY-MM-DD 15:00:00.000")}}).count())
+     now=moment().format("YYYY-MM-DD HH:00:00.000")
+     nowh=moment().format("HH")
+     later= moment.add(1, 'hours').format("YYYY-MM-DD HH:00:00.000");
+    console.log("Here is the earned hours" + Cycles.find({CycleTimeStamp: {$gte: now,$lt: later}}).count())
     //Meteor.subscribe('Presscycles')
     //The Cycles find only looks at the first thing you send in to it.
-         if (typeof Parts.findOne({hour: '14'}) === 'object')
+         if (typeof Parts.findOne({hour: 'now'}) === 'object')
       {
-        var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 14:00:00.000"),$lt: moment().format("YYYY-MM-DD 15:00:00.000")}}).count() * (Parts.findOne({hour: '11'}).cavitation / Parts.findOne({hour: '11'}).quantity) ;
+        var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: now,$lt: later}}).count() * (Parts.findOne({hour: nowh}).cavitation / Parts.findOne({hour: nowh}).quantity) ;
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
          
@@ -150,7 +121,7 @@ if (Number(moment(Parts.find({hour: '20'}).fetch().pop().timestamp.toString()).f
       else
       {
 
- var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 14:00:00.000"),$lt: moment().format("YYYY-MM-DD 15:00:00.000")}}).count() ;
+ var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: now,$lt: later}}).count() ;
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
          
@@ -439,17 +410,21 @@ if (Number(moment(Parts.find({hour: '20'}).fetch().pop().timestamp.toString()).f
     },
 
      changeStatus1: function() {
-      
-     var earnedHoursCalc = Number(Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"), $lt: moment().format("YYYY-MM-DD 00:00:00.000")}}).count() * (Parts.findOne().cavitation / Parts.findOne().quantity));
+      now=moment().format("YYYY-MM-DD HH:00:00.000")
+     nowh=moment().format("HH")
+     num= Machines.find().fetch().pop();
+     num=num.machinenumber
+     later= moment().add(1, 'hours').format("YYYY-MM-DD HH:00:00.000");
+     var earnedHoursCalc = Number(Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: now, $lt: later}}).count() * (Parts.findOne().cavitation / Parts.findOne().quantity));
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
         earnedHoursCalc= Number(earnedHoursCalc)
-       if (earnedHoursCalc >=1&& Parts.findOne({hour: '23'}))
+       if (earnedHoursCalc >=1&& Parts.findOne({hour: nowh}))
       {
         return "Green"
       }
 
-      else if (earnedHoursCalc <1&& Parts.findOne({hour: '23'}))
+      else if (earnedHoursCalc <1&& Parts.findOne({hour: nowh}))
       {
 
         return "Yellow"
@@ -459,24 +434,32 @@ if (Number(moment(Parts.find({hour: '20'}).fetch().pop().timestamp.toString()).f
 
     },
     changeStatus1p: function() {
-      
-     // var earnedHoursCalc = Number(Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"), $lt: moment().format("YYYY-MM-DD 00:00:00.000")}}).count() * (Parts.findOne().cavitation / Parts.findOne().quantity));
+ 
+num= Machines.find().fetch().pop();
+     num=num.machinenumber
+ now=moment().format("YYYY-MM-DD HH:00:00.000")
+     nowh=moment().format("HH")
+     later= moment().add(1, 'hours').format("YYYY-MM-DD HH:00:00.000");
+     var earnedHoursCalc = Number(Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: now, $lt: later}}).count() * (Parts.findOne().cavitation / Parts.findOne().quantity));
          
-     //    earnedHoursCalc = earnedHoursCalc.toFixed(2);
-     //    earnedHoursCalc= Number(earnedHoursCalc)
-     //   if (earnedHoursCalc >=1&& Parts.findOne({hour: '23'}))
-     //  {
-     //    return "Green"
-     //  }
+        earnedHoursCalc = earnedHoursCalc.toFixed(2);
+        earnedHoursCalc= Number(earnedHoursCalc)
+       if (earnedHoursCalc >=1&& typeof Parts.find({hour: nowh}).fetch().pop() === 'object')
+      { 
+         if (Number(Parts.find({hour: nowh}).fetch().pop().minute) >  Number (Parts.find({hour:nowh}, {sort: {minute: -1}, limit: 2}).fetch().pop().minute))
+     {
+    return "Green"
+    }
+      }
 
-     //  else if (earnedHoursCalc <1&& Parts.findOne({hour: '23'}))
-     //  {
-
-     //    return "Yellow"
-     //  }
-
-
-
+      else if (earnedHoursCalc <1&& typeof Parts.find({hour: nowh}).fetch().pop() === 'object')
+  {
+  if (Number(Parts.find({hour: nowh}).fetch().pop().minute) >  Number (Parts.find({hour:nowh}, {sort: {minute: -1}, limit: 2}).fetch().pop().minute))
+     {
+    return "Yellow"
+   }
+ }
+      // }
     },
 
     changeStatus2: function() {
@@ -657,62 +640,90 @@ if(typeof Parts.findOne({hour: '08'}) === 'object')
    
    part1: function ()
    {
+ now = moment().format("HH")
+var part =Parts.findOne({hour: now})
 
-var part =Parts.findOne({hour: '23'})
-
-
-if(typeof Parts.findOne({hour: '23'}) === 'object')
-{
+console.log ("This is the part number" + part.partnumber)
+ if(typeof Parts.findOne({hour: now}) === 'object')
+ {
    
 
 
     return part.partnumber
-}
+ }
 
 
 
    },
    quantity1: function() {
-   var part =Parts.findOne({hour: '23'})
-   
+    now= moment().format('HH');
+ var part =Parts.findOne({hour: now})
 
-   if(typeof Parts.findOne({hour: '23'}) === 'object')
-   {
-   
-
-
-   return part.quantity
+// Parts.find({hour: now}).fetch().pop().timestamp.toString()).format("mm")
+ if(typeof Parts.find({hour: now}).fetch().pop() === 'object')
+ {
+     
+    return part.quantity
+   }
+     
  }
  
-   },
+   ,
    part1p: function ()
    {
+now= moment().format('HH');
+ var part =Parts.find({hour: now}).fetch().pop()
 
-// var part =Parts.findOne({hour: '23'})
-
-
-// if(typeof Parts.findOne({hour: '23'}) === 'object')
-// {
+// Parts.find({hour: now}).fetch().pop().timestamp.toString()).format("mm")
+ if(typeof Parts.find({hour: now}).fetch().pop() === 'object')
+ {
    
+   if (Number(Parts.find({hour: now}).fetch().pop().minute) >  Number (Parts.find({hour:now}, {sort: {minute: -1}, limit: 2}).fetch().pop().minute))
+    {
+    return part.partnumber
+   }
+     
+  }
+ 
 
 
-//     return part.partnumber
-// }
+
+   },
+   part1pp: function ()
+   {
+now= moment().format('HH');
+ var part =Parts.findOne({hour: now})
+
+
+ if(typeof Parts.findOne({hour: now}) === 'object')
+ {
+   
+  if (Number(moment(Parts.find({hour: now}).fetch().pop().timestamp.toString()).format("mm")) >  Number (moment(Parts.find({hour:now}, {sort: {hour: -1}, limit: 2}).fetch().pop().timestamp.toString()).format("mm")) )
+  {
+    
+
+     return part.partnumber
+  }
+ }
 
 
 
    },
    quantity1p: function() {
- //   var part =Parts.findOne({hour: '23'})
+  now= moment().format('HH');
+ var part =Parts.find({hour: now}).fetch().pop()
+
+// Parts.find({hour: now}).fetch().pop().timestamp.toString()).format("mm")
+ if(typeof Parts.find({hour: now}).fetch().pop() === 'object')
+ {
    
-
- //   if(typeof Parts.findOne({hour: '23'}) === 'object')
- //   {
-   
-
-
- //   return part.quantity
- // }
+   if (Number(Parts.find({hour: now}).fetch().pop().minute) >  Number (Parts.find({hour:now}, {sort: {minute: -1}, limit: 2}).fetch().pop().minute))
+    {
+    return part.quantity
+   }
+     
+  }
+ 
  
    },
     part2: function ()
