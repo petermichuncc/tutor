@@ -250,16 +250,14 @@ else
      console.log("This is the amount of jobs submitted in this hour" + count)
         if (typeof Parts.findOne({hour: now}) === 'object' && count===1)
       {
-    return Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-13 09:00:00.000"), $lt: moment().format("YYYY-MM-13 10:00:00.000")}}).count() * Parts.findOne({hour: now}).cavitation;
+    return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-13 09:00:00.000"), $lt: moment().format("YYYY-MM-13 10:00:00.000")}}).count() * Parts.findOne({hour: now}).cavitation;
   }
 
          if (typeof Parts.findOne({hour: now}) === 'object' && count===2)
       {
         //this second job will go from its start time from the time stamp of the latest entry and will continue until the end of the hour
-        return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-13 09:00:00.000"), $lt: moment().format("YYYY-MM-13 10:00:00.000")}}).count() * (Parts.findOne({hour: now}).cavitation;
-         
-        
-         
+        return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-13 09:00:00.000"), $lt: moment().format("YYYY-MM-13 10:00:00.000")}}).count() * Parts.findOne({hour: now}).cavitation;
+                 
        
       }
        else if (typeof Parts.findOne({hour: now}) === 'object' && count>=3)
@@ -267,7 +265,7 @@ else
         //in this case the time stamp will start at its timestamp and end at the time stamp of the next job
         //the timestamp of the most recently submitted job will be 
         //
-        return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(Parts.find({hour:now}, {sort: {minute: -1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-13 09:00:00.000"), $lt: moment(Parts.find({hour: now}).fetch().pop().timestamp).format("YYYY-MM-13 10:00:00.000")}}).count() * (Parts.findOne({hour: now}).cavitation
+        return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(Parts.find({hour:now}, {sort: {minute: -1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-13 09:00:00.000"), $lt: moment(Parts.find({hour: now}).fetch().pop().timestamp).format("YYYY-MM-13 10:00:00.000")}}).count() * (Parts.findOne({hour: now}).cavitation)
          
        
        // Parts.find({hour: now}).fetch().pop().timestamp) this is the latest time stamp
@@ -735,17 +733,54 @@ console.log ("This is the part number" + part.partnumber)
    ,
    part1p: function ()
    {
+// num= Machines.find().fetch().pop();
+//      num=num.machinenumber;
+//      hour= Parts.find().fetch().pop();
+//      hour=num.hour;  //this is the hour of the submitted job 
+//      now=moment().format("HH");
+//      count= Parts.find({hour: now}).count()
+//      console.log("This is the amount of jobs submitted in this hour" + count)
+//         if (typeof Parts.findOne({hour: now}) === 'object' && count===1)
+//       {
+//     return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-13 09:00:00.000"), $lt: moment().format("YYYY-MM-13 10:00:00.000")}}).count() * Parts.findOne({hour: now}).cavitation;
+//   }
+
+//          if (typeof Parts.findOne({hour: now}) === 'object' && count===2)
+//       {
+//         //this second job will go from its start time from the time stamp of the latest entry and will continue until the end of the hour
+//         return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-13 09:00:00.000"), $lt: moment().format("YYYY-MM-13 10:00:00.000")}}).count() * Parts.findOne({hour: now}).cavitation;
+                 
+       
+//       }
+//        else if (typeof Parts.findOne({hour: now}) === 'object' && count>=3)
+//       {
+//         //in this case the time stamp will start at its timestamp and end at the time stamp of the next job
+//         //the timestamp of the most recently submitted job will be 
+//         //
+//         return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(Parts.find({hour:now}, {sort: {minute: -1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-13 09:00:00.000"), $lt: moment(Parts.find({hour: now}).fetch().pop().timestamp).format("YYYY-MM-13 10:00:00.000")}}).count() * (Parts.findOne({hour: now}).cavitation)
+         
+       
+//        // Parts.find({hour: now}).fetch().pop().timestamp) this is the latest time stamp
+//        // Parts.find({hour:now}, {sort: {minute: -1}, limit: 2}).fetch().pop().timestamp   this is the second to latest time stamp
+//       }
+
+
+
+
+
+//basically I need logic that determines which part number to present.
+//This will be easier since I won't be looking at cycles only the position of the part number
+//in the parts database each hour
+
 now= moment().format('HH');
  var part =Parts.find({hour: now}).fetch().pop()
 
 // Parts.find({hour: now}).fetch().pop().timestamp.toString()).format("mm")
- if(typeof Parts.find({hour: now}).fetch().pop() === 'object')
+ if(typeof Parts.find({hour: now}).fetch().pop() === 'object' && count===1) // this is the last entered item
  {
    
-   if (Number(Parts.find({hour: now}).fetch().pop().minute) >  Number (Parts.find({hour:now}, {sort: {minute: -1}, limit: 2}).fetch().pop().minute))
-    {
     return part.partnumber
-   }
+   
      
   }
  
