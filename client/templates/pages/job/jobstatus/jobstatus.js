@@ -69,6 +69,12 @@ statusgreen: function(){
     if (count<=0)
       {
      return true;
+  }},
+  statuswhite: function(){
+
+    if (count===0)
+      {
+     return true;
   }
 
 
