@@ -9,8 +9,7 @@ Template.countdownbar.helpers({
          
          //var now = Parts.findOne(); this is the first entered parts document
          var now = Parts.find().fetch().pop();//This is the last entered parts document
-         console.log("This is a test")
-         console.log("this is the current submitted job hour" + now.hour)
+         
          now=now.hour
           
 
@@ -33,7 +32,7 @@ Template.countdownbar.helpers({
 
    estimatedminutes=0;
  }
-          console.log("Estimated minutes to add to current time" + estimatedminutes)
+          
          
            //The way this logic is setup I may need to just have a completion time setup
            //I could also list the number of cycles to go
