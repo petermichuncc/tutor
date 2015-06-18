@@ -9,8 +9,9 @@ Template.jobstatus.helpers({
 //logic for the status changing
 
 statusgreen: function(){
- 
- count = Cycles.find({PressNumber: '1',CycleTimeStamp: {$gte: moment(Parts.findOne().timestamp.toString()).subtract(60,'seconds').format("YYYY-MM-DD H:mm:ss.SSS")}}).count()
+ num= Machines.find().fetch().pop();
+     num=num.machinenumber
+ count = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).subtract(25,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
  
 
 

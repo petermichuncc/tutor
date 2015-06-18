@@ -5,23 +5,12 @@ Meteor.subscribe('parts');
 Template.shift1.helpers({
 
    calculateTime: function () {
-         
-//The calculate time function needs to always show the time for the most recently submitted job
-//This current calculation does not take into account jobs that may be submitted during the same hour
-//if a fetch the latest timestamp I might can use this 
-//basically do a pop to get access to the most recent minute
-//use this minute is my calculateTime function
-
-
-          var now = Parts.find().fetch().pop();//This is the last entered parts document
-         
-         now=now.hour
-         min=moment(Parts.find({hour: now}).fetch().pop().timestamp.toString()).format("mm")
-         console.log("This is the minute of the submitted job" + moment(Parts.find({hour: now}).fetch().pop().timestamp.toString()).format("mm"))//this is the latest submitted hour
-         num= Machines.find().fetch().pop();
+ num= Machines.find().fetch().pop();
      num=num.machinenumber
- count = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(Parts.findOne({hour: now , minute: min}).timestamp.toString()).subtract(25,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
-         estimatedTime = (Number(Parts.findOne({hour: now, minute: min }).quantity) - Number(count))  / Number(Parts.findOne({hour: now , minute: min}).cavitation);
+ count = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).subtract(25,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
+         console.log("This is the count" + count)
+         console.log("This is the quantity" + Number(Parts.find().fetch().pop().quantity))
+         estimatedTime = (Number(Parts.find().fetch().pop().quantity) - Number(count))  / Number(Parts.find().fetch().pop().cavitation);
          estimatedTime=estimatedTime * 10; //This 10 is a place holder for the time per cycle
          estimatedminutes=parseInt(estimatedTime/60);
          
