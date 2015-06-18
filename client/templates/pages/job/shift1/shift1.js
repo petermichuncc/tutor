@@ -63,8 +63,8 @@ else
      //under what condition should i use and additional row?
      //if the latest minute is greater than the previous added to this row
      
-     console.log("this is the count" + count)
-     now=moment().format("HH") 
+     
+     now="07"
      count= Parts.find({hour: now}).count()
      //change these to be based off of a count function
      if (count>1)
@@ -74,31 +74,74 @@ else
    },
    
    hour2p: function () {
-    return "2"
+   now="08"
+     count= Parts.find({hour: now}).count()
+     //change these to be based off of a count function
+     if (count>1)
+    {
+     return "2"
+   }
    },
    hour3p: function () {
-    return "3"
+    now="09"
+     count= Parts.find({hour: now}).count()
+     //change these to be based off of a count function
+     if (count>1)
+    {
+     return "3"
+   }
    },
    hour4p: function () {
-    return "4"
+    now="10"
+     count= Parts.find({hour: now}).count()
+     //change these to be based off of a count function
+     if (count>1)
+    {
+     return "4"
+   }
    },
    hour5p: function () {
-    return "5"
+   now="11"
+     count= Parts.find({hour: now}).count()
+     //change these to be based off of a count function
+     if (count>1)
+    {
+     return "5"
+   }
    },
    hour6p: function () {
-    return "6"
+    now="12"
+     count= Parts.find({hour: now}).count()
+     //change these to be based off of a count function
+     if (count>1)
+    {
+     return "6"
+   }
    },
    hour7p: function () {
-    return "7"
+    now="13"
+     count= Parts.find({hour: now}).count()
+     //change these to be based off of a count function
+     if (count>1)
+    {
+     return "7"
+   }
    },
    hour8p: function () {
-    return "8"
+    now="14"
+     count= Parts.find({hour: now}).count()
+     //change these to be based off of a count function
+     if (count>1)
+    {
+     return "8"
+   }
    },
+
      
       //Cycles.find({CycleTimeStamp: { $gte: startTime}})
       //this will retrieve all cyles greater than or equal to this start time
       //so this will be 
-     earnedHours1: function () {
+    earnedHours1: function () {
  Meteor.subscribe('parts'); 
      Meteor.subscribe('machines');
       Meteor.subscribe('cycles-recent', moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"))
@@ -111,18 +154,21 @@ else
      now=moment().format("HH")
      count= Parts.find({hour: now}).count()
        
- if (typeof Parts.findOne({hour: '07'}) === 'object' && count===1)
+ if (typeof Parts.findOne({hour: now}) === 'object' && count===1)
       {
-    var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 07:00:00.000"), $lt: moment().format("YYYY-MM-DD 08:00:00.000")}}).count() * (Parts.find({hour:'07'}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation / Parts.find({hour:'07'}, {sort: {minute: 1}, limit: 1}).fetch().pop().quantity) ;
+    var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 07:00:00.000"), $lt: moment().format("YYYY-MM-DD 08:00:00.000")}}).count() * (Parts.find({hour:now}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation / Parts.find({hour:now}, {sort: {minute: 1}, limit: 1}).fetch().pop().quantity) ;
  earnedHoursCalc = earnedHoursCalc.toFixed(2);
          
         return earnedHoursCalc;
   }
-  else if (typeof Parts.findOne({hour: '07'}) === 'object' && count>=2)
+  else if (typeof Parts.findOne({hour: now}) === 'object' && count>=2)
       {
         //the start time is same.  The end time will be the most recent job
+     var minutes = Number(Parts.find({hour: now}, {sort: {minute: 1}, limit: 2}).fetch().pop().minute) 
+    var percent = minutes/Number(60) //This is the percent used in my program
+    
 
-    var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 07:00:00.000"), $lt: moment(Parts.find({hour: '07'}).fetch().pop().timestamp).format("YYYY-MM-DD 07:mm:ss.SSS")}}).count() * (Parts.find({hour:'07'}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation / Parts.find({hour:'07'}, {sort: {minute: 1}, limit: 1}).fetch().pop().quantity) *.5;
+    var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 07:00:00.000"), $lt: moment(Parts.find({hour: now}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD 07:mm:ss.SSS")}}).count() * (Parts.find({hour:now}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation / Parts.find({hour:now}, {sort: {minute: 1}, limit: 1}).fetch().pop().quantity) *percent;
   earnedHoursCalc = earnedHoursCalc.toFixed(2);
          
         return earnedHoursCalc;
@@ -144,13 +190,15 @@ else
       //The start time will be time stamp of the most recent job
       //the end time will be the end of the hour
       //the time stamp of the most recent job will be 
-      if (typeof Parts.findOne({hour: '07'})=== 'object'  && count >=2)
+      if (typeof Parts.findOne({hour: now})=== 'object'  && count >=2)
       {
         //Part = Parts.find({hour: '12'}).fetch().pop().timestamp
         //I need the time stamp of the most recently submitted job
         //if there are 2 jobs submitted then this 2nd job will start at its time stamp and end at the end of the hour
-       
-        var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(Parts.find({hour:'07'}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD 07:mm:ss.SSS"), $lt: moment().format("YYYY-MM-DD 08:00:00.000")}}).count() * (Parts.find({hour:'07'}, {sort: {minute: 1}, limit: 2}).fetch().pop().cavitation / Parts.find({hour:'07'}, {sort: {minute: 1}, limit: 2}).fetch().pop().quantity) *.5;
+        var minutes = Number(60) - Number(Parts.find({hour: now}, {sort: {minute: 1}, limit: 2}).fetch().pop().minute) 
+    var percent = minutes/Number(60) //This is the percent used in my program
+   
+        var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(Parts.find({hour:now}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD 07:mm:ss.SSS"), $lt: moment().format("YYYY-MM-DD 08:00:00.000")}}).count() * (Parts.find({hour:now}, {sort: {minute: 1}, limit: 2}).fetch().pop().cavitation / Parts.find({hour:now}, {sort: {minute: 1}, limit: 2}).fetch().pop().quantity) *percent;
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
          
@@ -173,17 +221,16 @@ else
     //I need to figure out the time stamp that is in
 // return Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count() * Parts.findOne().cavitation ;
 // for some reasons the cycles find function only cares about the first argument that it sees.
- if (typeof Parts.findOne({hour: '07'}) === 'object' && count===1)
+ if (typeof Parts.findOne({hour: now}) === 'object' && count===1)
       {
-    return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 07:00:00.000"), $lt: moment().format("YYYY-MM-DD 08:00:00.000")}}).count() * Parts.find({hour:'07'}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
+    return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 07:00:00.000"), $lt: moment().format("YYYY-MM-DD 08:00:00.000")}}).count() * Parts.find({hour:now}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
   }
-  else if (typeof Parts.findOne({hour: '07'}) === 'object' && count>=2)
+  else if (typeof Parts.findOne({hour: now}) === 'object' && count>=2)
       {
         //the start time is same.  The end time will be the most recent job
 
-    return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 07:00:00.000"), $lt: moment(Parts.find({hour:'07'}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD 07:mm:ss.SSS")}}).count() * Parts.find({hour:'07'}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
+    return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 07:00:00.000"), $lt: moment(Parts.find({hour:now}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD 07:mm:ss.SSS")}}).count() * Parts.find({hour:now}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
   }
- 
   
         
       },
@@ -205,22 +252,22 @@ else
       //The start time will be time stamp of the most recent job
       //the end time will be the end of the hour
       //the time stamp of the most recent job will be 
-      if (typeof Parts.findOne({hour: '07'})=== 'object'  && count ===2)
+      if (typeof Parts.findOne({hour: now})=== 'object'  && count ===2)
       {
         //Part = Parts.find({hour: '12'}).fetch().pop().timestamp
         //I need the time stamp of the most recently submitted job
         //if there are 2 jobs submitted then this 2nd job will start at its time stamp and end at the end of the hour
        
-        return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(part = Parts.find({hour:'07'}, {sort: {minute: 1}, limit: 2}).fetch().pop()).format("YYYY-MM-DD 07:mm:ss.SSS"), $lt: moment().format("YYYY-MM-DD 08:00:00.000")}}).count() * Parts.find({hour:'07'}, {sort: {minute: 1}, limit: 2}).fetch().pop().cavitation;
+        return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(part = Parts.find({hour:now}, {sort: {minute: 1}, limit: 2}).fetch().pop()).format("YYYY-MM-DD 07:mm:ss.SSS"), $lt: moment().format("YYYY-MM-DD 08:00:00.000")}}).count() * Parts.find({hour:now}, {sort: {minute: 1}, limit: 2}).fetch().pop().cavitation;
          
        
       }
-        else if (typeof Parts.findOne({hour: '07'})=== 'object'  && count >2)
+        else if (typeof Parts.findOne({hour: now})=== 'object'  && count >2)
       {
 
         //if there are three job submissions.  this should start from its time stamp and end and the most recent time stamp
         //at this point the second submission will be the second item in the collection or middle item
-        return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(Parts.find({hour:'07'}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD 07:mm:ss.SSS"), $lt: moment(Parts.find({hour:'07'}, {sort: {minute: 1}, limit: 3}).fetch().pop().timestamp).format("YYYY-MM-DD 07:mm:ss.SSS")}}).count() * Parts.find({hour:'07'}, {sort: {minute: 1}, limit: 2}).fetch().pop().cavitation;
+        return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(Parts.find({hour:now}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD 07:mm:ss.SSS"), $lt: moment(Parts.find({hour:now}, {sort: {minute: 1}, limit: 3}).fetch().pop().timestamp).format("YYYY-MM-DD 07:mm:ss.SSS")}}).count() * Parts.find({hour:now}, {sort: {minute: 1}, limit: 2}).fetch().pop().cavitation;
        
       }
      
@@ -248,16 +295,15 @@ else
   else if (typeof Parts.findOne({hour: '08'}) === 'object' && count>=2)
       {
         //the start time is same.  The end time will be the most recent job
-
-    var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 08:00:00.000"), $lt: moment(Parts.find({hour: '08'}).fetch().pop().timestamp).format("YYYY-MM-DD 08:mm:ss.SSS")}}).count() * (Parts.find({hour:'08'}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation / Parts.find({hour:'08'}, {sort: {minute: 1}, limit: 1}).fetch().pop().quantity) *.5;
+ var minutes = Number(Parts.find({hour: now}, {sort: {minute: 1}, limit: 2}).fetch().pop().minute) 
+    var percent = minutes/Number(60) //This is the percent used in my program
+    var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 08:00:00.000"), $lt: moment(Parts.find({hour:'08'}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD 08:mm:ss.SSS")}}).count() * (Parts.find({hour:'08'}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation / Parts.find({hour:'08'}, {sort: {minute: 1}, limit: 1}).fetch().pop().quantity) * percent;
   earnedHoursCalc = earnedHoursCalc.toFixed(2);
          
         return earnedHoursCalc;
 
   }
-  
-
-            },
+        },
             earnedHours2p: function () {
       num= Machines.find().fetch().pop();
      num=num.machinenumber
@@ -276,8 +322,9 @@ else
         //Part = Parts.find({hour: '12'}).fetch().pop().timestamp
         //I need the time stamp of the most recently submitted job
         //if there are 2 jobs submitted then this 2nd job will start at its time stamp and end at the end of the hour
-       
-        var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(Parts.find({hour:'08'}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD 08:mm:ss.SSS"), $lt: moment().format("YYYY-MM-DD 09:00:00.000")}}).count() * (Parts.find({hour:'08'}, {sort: {minute: 1}, limit: 2}).fetch().pop().cavitation / Parts.find({hour:'08'}, {sort: {minute: 1}, limit: 2}).fetch().pop().quantity) *.5;
+        var minutes = Number(60) - Number(Parts.find({hour: now}, {sort: {minute: 1}, limit: 2}).fetch().pop().minute) 
+    var percent = minutes/Number(60) //This is the percent used in my program
+        var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(Parts.find({hour:'08'}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD 08:mm:ss.SSS"), $lt: moment().format("YYYY-MM-DD 09:00:00.000")}}).count() * (Parts.find({hour:'08'}, {sort: {minute: 1}, limit: 2}).fetch().pop().cavitation / Parts.find({hour:'08'}, {sort: {minute: 1}, limit: 2}).fetch().pop().quantity) * percent;
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
          
@@ -295,7 +342,7 @@ else
      hour= Parts.find().fetch().pop();
      hour=num.hour;  //this is the hour of the submitted job 
      now=moment().format("HH");
-     count= Parts.find({hour: now}).count()
+     count= Parts.find({hour: now}).count();
     //find how comparisons are made between time stamps
     //I need to figure out the time stamp that is in
 // return Cycles.find({PressNumber: '1'}, {sort: {CycleTimeStamp: -1}}).count() * Parts.findOne().cavitation ;
@@ -583,14 +630,14 @@ else
 
     changeStatus1: function() {
       
-     now=moment().format("HH")
+     
     num= Machines.find().fetch().pop();
      num=num.machinenumber
      
     //Work on the logic for 4 different submitted jobs 
-    hour= Parts.find().fetch().pop();
-     hour=num.hour  //this is the hour of the submitted job 
-     now=moment().format("HH")
+    // hour= Parts.find().fetch().pop();
+    //  hour=num.hour  //this is the hour of the submitted job 
+     now="07"
      count= Parts.find({hour: now}).count()
        if (typeof Parts.findOne({hour: now}) === 'object'  && count ===1)
       {
@@ -626,20 +673,88 @@ else
 
 
     },
+    changeStatus1p: function() {
+ 
 
-    changeStatus2: function() {
-      num= Machines.find().fetch().pop();
+ now=moment().format("YYYY-MM-DD HH:00:00.000")
+     num= Machines.find().fetch().pop();
      num=num.machinenumber
-      var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 08:00:00.000"), $lt: moment().format("YYYY-MM-DD 09:00:00.000")}}).count() * (Parts.findOne({hour: '08'}).cavitation / Parts.findOne({hour: '08'}).quantity);
+     console.log("This is the machine number" + num)
+    //Work on the logic for 4 different submitted jobs 
+    hour= Parts.find().fetch().pop();
+     hour=num.hour  //this is the hour of the submitted job 
+     now="07"
+     count= Parts.find({hour: now}).count()
+      
+      //The start time will be time stamp of the most recent job
+      //the end time will be the end of the hour
+      //the time stamp of the most recent job will be 
+      if (typeof Parts.findOne({hour: now})=== 'object'  && count ===2)
+      {
+        //Part = Parts.find({hour: '12'}).fetch().pop().timestamp
+        //I need the time stamp of the most recently submitted job
+        //if there are 2 jobs submitted then this 2nd job will start at its time stamp and end at the end of the hour
+       
+        var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(Parts.find({hour:now}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD 07:mm:ss.SSS"), $lt: moment().format("YYYY-MM-DD 08:00:00.000")}}).count() * (Parts.find({hour:now}, {sort: {minute: 1}, limit: 2}).fetch().pop().cavitation / Parts.find({hour:now}, {sort: {minute: 1}, limit: 2}).fetch().pop().quantity) *.5;
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
-          earnedHoursCalc= Number(earnedHoursCalc)
-       if (earnedHoursCalc >=1&& typeof Parts.findOne({hour: '08'}) === 'object')
+         
+        
+      }
+       
+       if (earnedHoursCalc >=1 && count>1)
+      { 
+         
+    return "Green"
+    
+      }
+
+      else if (earnedHoursCalc <1&& count>1)
+  {
+ 
+    return "Yellow"
+   
+ }
+      // }
+    },
+    
+
+    changeStatus2: function() {
+        
+    num= Machines.find().fetch().pop();
+     num=num.machinenumber
+     
+    //Work on the logic for 4 different submitted jobs 
+    // hour= Parts.find().fetch().pop();
+    //  hour=num.hour  //this is the hour of the submitted job 
+     now="08"
+     count= Parts.find({hour: now}).count()
+       if (typeof Parts.findOne({hour: now}) === 'object'  && count ===1)
+      {
+        var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 07:00:00.000"), $lt: moment().format("YYYY-MM-DD 08:00:00.000")}}).count() * (Parts.find({hour:now}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation / Parts.find({hour:now}, {sort: {minute: 1}, limit: 1}).fetch().pop().quantity) ; ;
+         
+        earnedHoursCalc = earnedHoursCalc.toFixed(2);
+         
+        
+      }
+      
+      //The end time will be the time stamp that is from the job submitted right after the first job
+      //if the count is 2 then I will need to get the time stamp of the second to latest submitted job
+      else if (typeof Parts.findOne({hour: now})=== 'object'  && count >=2)
+      {
+        var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 07:00:00.000"), $lt: moment(Parts.find({hour:now}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD 07:mm:ss.SSS")}}).count() * (Parts.find({hour:now}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation / Parts.find({hour:now}, {sort: {minute: 1}, limit: 1}).fetch().pop().quantity) ;
+         
+        earnedHoursCalc = earnedHoursCalc.toFixed(2);
+         
+       
+      }
+            
+       if (earnedHoursCalc >=1)
       {
         return "Green"
       }
 
-      else if (earnedHoursCalc <1&& typeof Parts.findOne({hour: '08'}) === 'object')
+      else if (earnedHoursCalc <1)
       {
 
         return "Yellow"
