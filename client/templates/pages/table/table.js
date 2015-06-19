@@ -44,12 +44,12 @@ var post = {
          hour: moment().format("HH"),
          minute: moment().format("mm")
      };
-var hour = {
-      hour: moment().format("HH")
-     };
+// var hour = {
+//       hour: moment().format("HH")
+//      };
 
-Meteor.subscribe('hours');
-     Meteor.call('hoursInsert', hour)
+// Meteor.subscribe('hours');
+//      Meteor.call('hoursInsert', hour)
 console.log(text);
 Meteor.subscribe('parts');
      Meteor.call('partsInsert', post)

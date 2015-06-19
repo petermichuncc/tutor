@@ -96,12 +96,13 @@ else
    },
    
      earnedHours1: function () {
- Meteor.subscribe('parts'); 
+ Meteor.subscribe('parts');
+ Meteor.subscribe('hours'); 
      Meteor.subscribe('machines');
       Meteor.subscribe('cycles-recent', moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"))
  num= Machines.find().fetch().pop();
      num=num.machinenumber
-     
+      
     //Work on the logic for 4 different submitted jobs 
    now="07"
      count= Parts.find({hour: now}).count()
@@ -158,10 +159,19 @@ count= Parts.find({hour: now}).count()
   }
  if (typeof (Parts.findOne({hour: now}) === 'undefined') && count===0 && estimatedminutes <60)
       { 
-    //This function will execute when the estimated minutes are less than 60
-    //meaning that the latest job will end during this hour.
+    //This code is not working the way it should work
+    //it is updating 
     start = moment().format("YYYY-MM-DD 07:00:00.000")
-    var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 07:00:00.000"), $lt: moment(start).add(estimatedminutes, 'minutes').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count() * (Parts.find().fetch().pop().cavitation / Parts.find().fetch().pop().quantity) ;
+   
+   
+      if (typeof Hours.findOne() === 'undefined')
+      {
+      var hour = {
+      hour: moment(start).add(estimatedminutes,'minutes').format("YYYY-MM-DD HH:mm:ss.SSS")
+     };
+      Meteor.call('hoursInsert', hour)
+      }
+      var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 07:00:00.000"), $lt: moment(Hours.findOne().hour).format("YYYY-MM-DD HH:mm:ss.SSS")}}).count() * (Parts.find().fetch().pop().cavitation / Parts.find().fetch().pop().quantity) ;
  earnedHoursCalc = earnedHoursCalc.toFixed(2);
          
         return earnedHoursCalc;
@@ -174,7 +184,7 @@ count= Parts.find({hour: now}).count()
       num= Machines.find().fetch().pop();
      num=num.machinenumber
      
-    //Work on the logic for 4 different submitted jobs 
+    
     
      now=moment().format("HH")
      count= Parts.find({hour: now}).count()
@@ -270,15 +280,25 @@ count= Parts.find({hour: now}).count()
    return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 07:00:00.000"), $lt: moment().format("YYYY-MM-DD 08:00:00.000")}}).count() * Parts.find().fetch().pop().cavitation;
 
     }
- if (typeof (Parts.findOne({hour: now}) === 'undefined') && count===0 && estimatedminutes <60)
+ 
+    if (typeof (Parts.findOne({hour: now}) === 'undefined') && count===0 && estimatedminutes <60)
       { 
     //This function will execute when the estimated minutes are less than 60
-    //This function executes under the right conditions
-    //
-    incomecycles = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 07:00:00.000"), $lt: moment(start).add(estimatedminutes, 'minutes').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count() * (Parts.find().fetch().pop().cavitation / Parts.find().fetch().pop().quantity) ;
+    //meaning that the latest job will end during this hour.
+    start = moment().format("YYYY-MM-DD 07:00:00.000")
+   
+      if (typeof Hours.findOne() === 'undefined')
+      {
+      var hour = {
+      hour: moment(start).add(estimatedminutes,'minutes').format("YYYY-MM-DD HH:mm:ss.SSS")
+     };
+      Meteor.call('hoursInsert', hour)
+      }
+      incomecycles = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 07:00:00.000"), $lt: moment(Hours.findOne().hour).format("YYYY-MM-DD HH:mm:ss.SSS")}}).count() * (Parts.find().fetch().pop().cavitation);
      incomecycles = incomecycles.toFixed(2);
      return incomecycles
-  }    
+  }
+  
       },
       
      incomingCycles1p: function () {
@@ -327,17 +347,19 @@ count= Parts.find({hour: now}).count()
 
   estimatedminutes=0;
 }
-counthour= Parts.find().fetch().pop().hour
-count=Parts.find({hour:counthour}).count()
-  if (typeof Parts.findOne({hour: now}) === 'undefined' && count===2&& estimatedminutes >0)
+
+count=Parts.find({hour: now}).count()
+  if (typeof Parts.findOne({hour: now}) === 'undefined' && count===2&& estimatedminutes >=60)
       {
+
         //the start time is same.  The end time will be the most recent job
 
-     return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(part = Parts.find({hour:now}, {sort: {minute: 1}, limit: 2}).fetch().pop()).format("YYYY-MM-DD 07:mm:ss.SSS"), $lt: moment().format("YYYY-MM-DD 08:00:00.000")}}).count() * Parts.find({hour:now}, {sort: {minute: 1}, limit: 2}).fetch().pop().cavitation;
+     return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(Parts.find({hour:now}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD 07:mm:ss.SSS"), $lt: moment().format("YYYY-MM-DD 08:00:00.000")}}).count() * Parts.find({hour:now}, {sort: {minute: 1}, limit: 2}).fetch().pop().cavitation;
          }
-  else if (typeof Parts.findOne({hour: now}) === 'undefined' && count>2&& estimatedminutes >0)
+  else if (typeof Parts.findOne({hour: now}) === 'undefined' && count===2&& estimatedminutes <60)
       {
-        //the start time is same.  The end time will be the start of the second job
+        //I need to figure out the code for how to determine if the estimated minutes need to be calculated
+        //at this location or not
 
     return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(Parts.find({hour:now}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD 07:mm:ss.SSS"), $lt: moment(Parts.find({hour:now}, {sort: {minute: 1}, limit: 3}).fetch().pop().timestamp).format("YYYY-MM-DD 07:mm:ss.SSS")}}).count() * Parts.find({hour:now}, {sort: {minute: 1}, limit: 2}).fetch().pop().cavitation;
        }
@@ -406,16 +428,16 @@ count= Parts.find({hour: now}).count()
          
         return earnedHoursCalc;
   }
- if (typeof (Parts.findOne({hour: now}) === 'undefined') && count===0 && estimatedminutes <60)
-      { 
-    //This function will execute when the estimated minutes are less than 60
-    //meaning that the latest job will end during this hour.
+ // if (typeof (Parts.findOne({hour: now}) === 'undefined') && count===0 && estimatedminutes <60)
+ //      { 
+ //    //This function will execute when the estimated minutes are less than 60
+ //    //meaning that the latest job will end during this hour.
 
-    var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 07:00:00.000"), $lt: moment().format("YYYY-MM-DD 07:00:00.000").add(estimatedminutes, 'minutes')}}).count() * (Parts.find().fetch().pop().cavitation / Parts.find().fetch().pop().quantity) ;
- earnedHoursCalc = earnedHoursCalc.toFixed(2);
+ //    var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 07:00:00.000"), $lt: moment().format("YYYY-MM-DD 07:00:00.000").add(estimatedminutes, 'minutes')}}).count() * (Parts.find().fetch().pop().cavitation / Parts.find().fetch().pop().quantity) ;
+ // earnedHoursCalc = earnedHoursCalc.toFixed(2);
          
-        return earnedHoursCalc;
-  }
+ //        return earnedHoursCalc;
+ //  }
   
 
 
@@ -520,14 +542,14 @@ count= Parts.find({hour: now}).count()
     return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 08:00:00.000"), $lt: moment().format("YYYY-MM-DD 09:00:00.000")}}).count() * Parts.find().fetch().pop().cavitation;
 
     }
- if (typeof (Parts.findOne({hour: now}) === 'undefined') && count===0 && estimatedminutes <60)
-      { 
-    //This function will execute when the estimated minutes are less than 60
-    //meaning that the latest job will end during this hour.
-    return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 08:00:00.000"), $lt: moment().format("YYYY-MM-DD 08:00:00.000").add(estimatedminutes, 'minutes')}}).count() * (Parts.find().fetch().pop().cavitation / Parts.find().fetch().pop().quantity) ;
+ // if (typeof (Parts.findOne({hour: now}) === 'undefined') && count===0 && estimatedminutes <60)
+ //      { 
+ //    //This function will execute when the estimated minutes are less than 60
+ //    //meaning that the latest job will end during this hour.
+ //    return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 08:00:00.000"), $lt: moment().format("YYYY-MM-DD 08:00:00.000").add(estimatedminutes, 'minutes')}}).count() * (Parts.find().fetch().pop().cavitation / Parts.find().fetch().pop().quantity) ;
  
     
-  }    
+ //  }    
       },
       
      incomingCycles2p: function () {
@@ -821,28 +843,86 @@ if(typeof Parts.find({hour: now}).fetch().pop() === 'object' &&count >=2)
     
 
    
-    part2: function ()
+   part2: function ()
    {
-  var part =Parts.findOne({hour: '00'})
+ now = "08"
+var part =Parts.findOne({hour: now})
 
 
-if(typeof Parts.findOne({hour: '00'}) === 'object')
-{
-   
+ if(typeof Parts.findOne({hour: now}) === 'object')
+ {
     return part.partnumber
-}
-
-   },
-   quantity2: function() {
-   var part =Parts.findOne({hour: '00'})
-   
-
-   (typeof Parts.findOne({hour: '00'}) === 'object')
-   {
-      return part.quantity
  }
- 
+ if(typeof Parts.find({hour: now}).fetch().pop() === 'undefined')
+ {       
+  part =Parts.find().fetch().pop();
+         return part.partnumber
    }
+   },
+   part2p: function ()
+   {
+     now= "08"
+count= Parts.find({hour: now}).count()
+ var part =Parts.find({hour: now}).fetch().pop()
+
+// Parts.find({hour: now}).fetch().pop().timestamp.toString()).format("mm")
+ 
+if(typeof Parts.find({hour: now}).fetch().pop() === 'object' &&count >=2)
+ {
+         return part.partnumber
+   }
+  if(typeof Parts.find({hour: now}).fetch().pop() === 'undefined'&&count >=2)
+ {     
+  part =Parts.find().fetch().pop();
+  
+         return part.partnumber
+   }
+      },
+
+ 
+ 
+    
+
+    quantity2: function() {
+    now= "08"
+ var part =Parts.findOne({hour: now})
+
+// Parts.find({hour: now}).fetch().pop().timestamp.toString()).format("mm")
+ if(typeof Parts.find({hour: now}).fetch().pop() === 'object')
+ {
+         return part.quantity
+   }
+  if(typeof Parts.find({hour: now}).fetch().pop() === 'undefined')
+ {     
+  part =Parts.find().fetch().pop();
+  
+         return part.quantity
+   }
+      }
+    ,
+   
+   quantity2p: function() {
+  
+//basically I need logic that determines which part number to present.
+//This will be easier since I won't be looking at cycles only the position of the part number
+//in the parts database each hour
+now= "08"
+count= Parts.find({hour: now}).count()
+ var part =Parts.find({hour: now}).fetch().pop()
+
+// Parts.find({hour: now}).fetch().pop().timestamp.toString()).format("mm")
+ 
+if(typeof Parts.find({hour: now}).fetch().pop() === 'object' &&count >=2)
+ {
+         return part.quantity
+   }
+  if(typeof Parts.find({hour: now}).fetch().pop() === 'undefined'&&count >=2)
+ {     
+  part =Parts.find().fetch().pop();
+  
+         return part.quantity
+   }
+      },
 
 });
 
