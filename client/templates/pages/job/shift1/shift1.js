@@ -7,19 +7,21 @@ Template.shift1.helpers({
    calculateTime: function () {
  num= Machines.find().fetch().pop();
      num=num.machinenumber
- count = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).subtract(25,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
-         console.log("This is the count" + count)
-         console.log("This is the quantity" + Number(Parts.find().fetch().pop().quantity))
+ count = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).subtract(60,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
+         
          estimatedTime = (Number(Parts.find().fetch().pop().quantity) - Number(count))  / Number(Parts.find().fetch().pop().cavitation);
          estimatedTime=estimatedTime * 10; //This 10 is a place holder for the time per cycle
          estimatedminutes=parseInt(estimatedTime/60);
          
+          totaltime= Number(Parts.find().fetch().pop().quantity)/Number(Parts.find().fetch().pop().cavitation)
+          totaltime = totaltime*10;
+         totaltime= parseInt(totaltime/60);
 if (estimatedminutes <=0)
 {
 
   estimatedminutes=0;
-}
-         console.log("Estimated minutes to add to current time" + estimatedminutes)
+}         
+         
          
           //The way this logic is setup I may need to just have a completion time setup
           //I could also list the number of cycles to go
@@ -1305,20 +1307,85 @@ earnedHours8: function () {
 
 
     },
+changeStatus2p: function() {
+ 
 
-    changeStatus3: function() {
-      num= Machines.find().fetch().pop();
+ now=moment().format("YYYY-MM-DD HH:00:00.000")
+     num= Machines.find().fetch().pop();
      num=num.machinenumber
-      var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 09:00:00.000"), $lt: moment().format("YYYY-MM-DD 10:00:00.000")}}).count() * (Parts.findOne({hour: '09'}).cavitation / Parts.findOne({hour: '09'}).quantity);
+     console.log("This is the machine number" + num)
+    //Work on the logic for 4 different submitted jobs 
+    hour= Parts.find().fetch().pop();
+     hour=num.hour  //this is the hour of the submitted job 
+     now="07"
+     count= Parts.find({hour: now}).count()
+      
+      //The start time will be time stamp of the most recent job
+      //the end time will be the end of the hour
+      //the time stamp of the most recent job will be 
+      if (typeof Parts.findOne({hour: now})=== 'object'  && count ===2)
+      {
+        //Part = Parts.find({hour: '12'}).fetch().pop().timestamp
+        //I need the time stamp of the most recently submitted job
+        //if there are 2 jobs submitted then this 2nd job will start at its time stamp and end at the end of the hour
+       
+        var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(Parts.find({hour:now}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD 07:mm:ss.SSS"), $lt: moment().format("YYYY-MM-DD 08:00:00.000")}}).count() * (Parts.find({hour:now}, {sort: {minute: 1}, limit: 2}).fetch().pop().cavitation / Parts.find({hour:now}, {sort: {minute: 1}, limit: 2}).fetch().pop().quantity) *.5;
          
         earnedHoursCalc = earnedHoursCalc.toFixed(2);
-        earnedHoursCalc= Number(earnedHoursCalc)
-     if (earnedHoursCalc >=1&& typeof Parts.findOne({hour: '09'}) === 'object')
+         
+        
+      }
+       
+       if (earnedHoursCalc >=1 && count>1)
+      { 
+         
+    return "Green"
+    
+      }
+
+      else if (earnedHoursCalc <1&& count>1)
+  {
+ 
+    return "Yellow"
+   
+ }
+      // }
+    },
+    changeStatus3: function() {
+       num= Machines.find().fetch().pop();
+     num=num.machinenumber
+     
+    //Work on the logic for 4 different submitted jobs 
+    // hour= Parts.find().fetch().pop();
+    //  hour=num.hour  //this is the hour of the submitted job 
+     now="09"
+     count= Parts.find({hour: now}).count()
+       if (typeof Parts.findOne({hour: now}) === 'object'  && count ===1)
+      {
+        var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 07:00:00.000"), $lt: moment().format("YYYY-MM-DD 08:00:00.000")}}).count() * (Parts.find({hour:now}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation / Parts.find({hour:now}, {sort: {minute: 1}, limit: 1}).fetch().pop().quantity) ; ;
+         
+        earnedHoursCalc = earnedHoursCalc.toFixed(2);
+         
+        
+      }
+      
+      //The end time will be the time stamp that is from the job submitted right after the first job
+      //if the count is 2 then I will need to get the time stamp of the second to latest submitted job
+      else if (typeof Parts.findOne({hour: now})=== 'object'  && count >=2)
+      {
+        var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 07:00:00.000"), $lt: moment(Parts.find({hour:now}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD 07:mm:ss.SSS")}}).count() * (Parts.find({hour:now}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation / Parts.find({hour:now}, {sort: {minute: 1}, limit: 1}).fetch().pop().quantity) ;
+         
+        earnedHoursCalc = earnedHoursCalc.toFixed(2);
+         
+       
+      }
+            
+       if (earnedHoursCalc >=1)
       {
         return "Green"
       }
 
-      else if (earnedHoursCalc <1&& typeof Parts.findOne({hour: '09'}) === 'object')
+      else if (earnedHoursCalc <1)
       {
 
         return "Yellow"
@@ -1328,7 +1395,46 @@ earnedHours8: function () {
 
 
     },
+changeStatus3p: function() {
+ 
 
+ now=moment().format("YYYY-MM-DD HH:00:00.000")
+     num= Machines.find().fetch().pop();
+     num=num.machinenumber
+     now="09"
+     count= Parts.find({hour: now}).count()
+      
+      //The start time will be time stamp of the most recent job
+      //the end time will be the end of the hour
+      //the time stamp of the most recent job will be 
+      if (typeof Parts.findOne({hour: now})=== 'object'  && count ===2)
+      {
+        //Part = Parts.find({hour: '12'}).fetch().pop().timestamp
+        //I need the time stamp of the most recently submitted job
+        //if there are 2 jobs submitted then this 2nd job will start at its time stamp and end at the end of the hour
+       
+        var earnedHoursCalc = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(Parts.find({hour:now}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD 07:mm:ss.SSS"), $lt: moment().format("YYYY-MM-DD 08:00:00.000")}}).count() * (Parts.find({hour:now}, {sort: {minute: 1}, limit: 2}).fetch().pop().cavitation / Parts.find({hour:now}, {sort: {minute: 1}, limit: 2}).fetch().pop().quantity) *.5;
+         
+        earnedHoursCalc = earnedHoursCalc.toFixed(2);
+         
+        
+      }
+       
+       if (earnedHoursCalc >=1 && count>1)
+      { 
+         
+    return "Green"
+    
+      }
+
+      else if (earnedHoursCalc <1&& count>1)
+  {
+ 
+    return "Yellow"
+   
+ }
+      // }
+    },
     changeStatus4: function() {
       num= Machines.find().fetch().pop();
      num=num.machinenumber

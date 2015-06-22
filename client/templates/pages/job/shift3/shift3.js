@@ -10,19 +10,20 @@ Template.shift3.helpers({
          
  num= Machines.find().fetch().pop();
      num=num.machinenumber
- count = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).subtract(25,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
-         console.log("This is the count" + count)
-         console.log("This is the quantity" + Number(Parts.find().fetch().pop().quantity))
+ count = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).subtract(60,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
          estimatedTime = (Number(Parts.find().fetch().pop().quantity) - Number(count))  / Number(Parts.find().fetch().pop().cavitation);
          estimatedTime=estimatedTime * 10; //This 10 is a place holder for the time per cycle
          estimatedminutes=parseInt(estimatedTime/60);
          
+          totaltime= Number(Parts.find().fetch().pop().quantity)/Number(Parts.find().fetch().pop().cavitation)
+          totaltime = totaltime*10;
+         totaltime= parseInt(totaltime/60);
 if (estimatedminutes <=0)
 {
 
   estimatedminutes=0;
-}
-         console.log("Estimated minutes to add to current time" + estimatedminutes)
+}         
+         
          
           //The way this logic is setup I may need to just have a completion time setup
           //I could also list the number of cycles to go

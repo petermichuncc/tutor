@@ -2,7 +2,29 @@
  
 
 // console.log("This is your cavitation" +Parts.findOne().cavitation);
+//Use this events template to have the current job taking place to end at the
+//time stamp of the current moment
 
+// Template.job.events({
+// "submit .workcenterSelection": function(event){
+// event.defaultPrevented;
+// console.log(event);
+// var text = $( "#someId" ).val();
+// var post = {
+//       machinenumber: $( "#someId" ).val()
+//      };
+
+
+// console.log("example test for machines" + post);
+// console.log(text);
+// Meteor.subscribe('machines');
+//      Meteor.call('machinesInsert', post)
+// console.log("second hi");
+// Router.go('main'); 
+// return false;
+
+// }
+// });
 
 
 Template.job.helpers({
@@ -132,7 +154,7 @@ else
   }
   // I need a second block of if statements that basically differ subtly.
   // This block will run if there is not a submitted job this hour AND if
-  // there is a job whose calculated time is not <= 0 (meaning that it is finished)
+  // there is a job whose calculated time is not <= 0 (meaning that it is not finished)
   count = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).subtract(25,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
         estimatedTime = (Number(Parts.find().fetch().pop().quantity) - Number(count))  / Number(Parts.find().fetch().pop().cavitation);
          estimatedTime=estimatedTime * 10; //This 10 is a place holder for the time per cycle
