@@ -181,8 +181,7 @@ count= Parts.find({hour: now}).count()
   }
  if (typeof (Parts.findOne({hour: now}) === 'undefined') && count===0 && estimatedminutes <60)
       { 
-    //This code is not working the way it should work
-    //it is updating 
+     
     start = moment().format("YYYY-MM-DD 07:00:00.000")
    
    
