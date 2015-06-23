@@ -5,7 +5,7 @@ Template.countdownbar.helpers({
 
  percent: function(){
     Meteor.subscribe('cycles-recent', moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"))
-    Meteor.subscribe('hours')
+   
          
          
          var now = Parts.find().fetch().pop();//This is the last entered parts document
@@ -30,7 +30,7 @@ if (estimatedminutes <=0)
          percent=estimatedminutes/totaltime;
           percent=percent*100;
           percent=parseInt(percent)
-          console.log("This is the percent" + percent)
+          
           if (percent<=0)
           {
 

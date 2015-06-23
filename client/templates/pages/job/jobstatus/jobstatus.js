@@ -1,41 +1,60 @@
 Template.jobstatus.helpers({
-//I need the logic here for the if else statement that
-//decides essentially when to put the work center into green(good)
-//or to put it into yellow
-//so basically if I don't get cycles within x minutes put the machine into yellow
-//if the machine hasn't gotten any cyles at all leave it in transparent.
+status: function(){
+    // setInterval(function(){     
+return true
 
-//I might be able to use some of the logic for the progress bar to determine the 
-//logic for the status changing
-
+},
 statusgreen: function(){
- num= Machines.find().fetch().pop();
+ 
+     //code goes here that will be run every 5 seconds.
+    num= Machines.find().fetch().pop();
      num=num.machinenumber
- count = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).subtract(25,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
+
+    //code goes here that will be run every 5 seconds.    
+recent =Cycles.find({PressNumber: num},{sort: {CycleTimeStamp: -1}, limit: 1}).fetch().pop().CycleTimeStamp
+ past = Cycles.find({PressNumber: num},{sort: {CycleTimeStamp: -1}, limit: 2}).fetch().pop().CycleTimeStamp
+
+// recent =Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).subtract(60,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}},{sort: {CycleTimeStamp: -1}, limit: 1}).fetch().pop().CycleTimeStamp
+//  past = Cycles.find({PressNumber: num, CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).subtract(60,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}},{sort: {CycleTimeStamp: -1}, limit: 2}).fetch().pop().CycleTimeStamp
+
+
  
 
+recentseconds=moment(recent).format("ss.SSS")
+pastseconds=moment(past).format("ss.SSS")
+cycletime= recentseconds-pastseconds
+console.log ("This is the cycletime "+ cycletime)
+stdcycletime= Number(10)
+// setInterval(function(){ 
+    //code goes here that will be run every 5 seconds.
+    
+    //code goes here that will be run every 5 seconds.    
 
-   if (count>0)
+if (cycletime>=stdcycletime)
     {
     return true
-}
-
-  },
+  }
   
-// },
+// }, 1000);
+   
+},
+
 
  statusyellow: function(){
-
-    if (count<=0)
-      {
-     return true;
-  }},
-  statuswhite: function(){
-
-    if (count===0)
-      {
-     return true;
+    // setInterval(function(){     
+if (cycletime<stdcycletime && cycletime >0)
+    {
+    return true
   }
+  // }, 1000);
+},
+  statuswhite: function(){
+    // setInterval(function(){ 
+     if (cycletime<=0)
+    {
+    return true
+  }
+  // }, 1000);
 
 
 }})
