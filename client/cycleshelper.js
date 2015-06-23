@@ -11,7 +11,7 @@ Template.start.helpers({
   },
   entry2: function() {
   	now=moment().format("HH")
-  	var myArray2 = Cycles.find({},{sort: {PressNumber: -1},limit: 2, CycleTimeStamp: {$gte: moment().subtract(83, 'seconds').format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment().format("YYYY-MM-DD HH:mm:ss.SSS")}}).fetch().pop().PressNumber;
+  	var myArray2 = Cycles.find({CycleTimeStamp: {$gte: moment().subtract(70, 'seconds').format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment().format("YYYY-MM-DD HH:mm:ss.SSS")}}).fetch().pop().PressNumber;
   	
 
     return myArray2
