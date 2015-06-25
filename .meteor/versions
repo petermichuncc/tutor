@@ -46,7 +46,9 @@ minimongo@1.0.8
 mobile-status-bar@1.0.3
 momentjs:moment@2.9.0
 mongo@1.1.0
+mrt:csv-to-collection@0.2.0
 mrt:nprogress@0.2.0
+netanelgilad:excel@0.2.4
 npm-bcrypt@0.7.8_2
 observe-sequence@1.0.6
 ordered-dict@1.0.3

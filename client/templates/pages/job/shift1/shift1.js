@@ -10,11 +10,26 @@ Template.shift1.helpers({
  count = Cycles.find({PressNumber: num, AutoStatus: "1", CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).subtract(60,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
          
          estimatedTime = (Number(Parts.find().fetch().pop().quantity) - Number(count))  / Number(Parts.find().fetch().pop().cavitation);
-         estimatedTime=estimatedTime * 10; //This 10 is a place holder for the time per cycle
+         //figure out cycle time
+        start =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).CycleTimeStamp
+        
+        next =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: moment(start.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).CycleTimeStamp
+        
+        
+startseconds=moment(start).format("ss.SSS")
+startminutes=moment(start).format("mm")
+startseconds=Number(startseconds)+ Number(startminutes)*60
+nextseconds=moment(next).format("ss.SSS")
+nextminutes=moment(next).format("mm")
+nextseconds=Number(nextseconds) + Number(nextminutes)*60
+cycletime= nextseconds-startseconds
+
+         
+         estimatedTime=estimatedTime * cycletime
          estimatedminutes=parseInt(estimatedTime/60);
          
           totaltime= Number(Parts.find().fetch().pop().quantity)/Number(Parts.find().fetch().pop().cavitation)
-          totaltime = totaltime*10;
+          totaltime = totaltime*cycletime
          totaltime= parseInt(totaltime/60);
 if (estimatedminutes <=0)
 {
@@ -311,8 +326,8 @@ else
   //If it would have then I should output its data until the time it would finish.
   //Cycles.find
 
-  else if (typeof Parts.findOne({hour:now, month: month, day: day}) === 'undefined' && percent >0 )
-{
+    if (typeof Parts.findOne({hour:now, month: month, day: day}) === 'undefined' && percent >0 )
+    {
   
      return Cycles.find({PressNumber: num, AutoStatus: "1", CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 08:00:00.000"), $lt: moment().format("YYYY-MM-DD 09:00:00.000")}}).count() * Parts.find({hour: {$lt: now},month: month, day: day}).fetch().pop().cavitation;
   

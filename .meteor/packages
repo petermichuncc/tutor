@@ -20,3 +20,5 @@ iron:router
 twbs:bootstrap
 ddp
 krstffr:spreadsheet-to-mongodb
+mrt:csv-to-collection
+netanelgilad:excel
