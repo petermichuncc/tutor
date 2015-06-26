@@ -12,18 +12,25 @@ statusgreen: function(){
          
          estimatedTime = (Number(Parts.find().fetch().pop().quantity) - Number(count))  / Number(Parts.find().fetch().pop().cavitation);
          //figure out cycle time
-        start =Cycles.find({PressNumber: num, AutoStatus:'1', CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).fetch().pop().CycleTimeStamp
+        start =Cycles.find({PressNumber: num, AutoStatus:'1', CycleTimeStamp: {$gte: moment().subtract(60,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).fetch().pop().CycleTimeStamp
         console.log("This is the most recent" + start)
-        next =Cycles.find({PressNumber: num, AutoStatus:'1', {sort: {CycleTimeStamp: -1}, limit: 2},CycleTimeStamp: {$gt: moment(start.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).CycleTimeStamp
-       console.log("This is the second most recent " + next)
+        prev =Cycles.find({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: moment(start.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).CycleTimeStamp
+       console.log("This is the second most recent " + prev)
+   
+   //This finds the time stamp of the cycle happening at the job submission     
+// start =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).CycleTimeStamp
+    //This finds the time stamp of the cycle happening right after the time stamp     
+//  next =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: moment(start.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).CycleTimeStamp
         
+
+
 startseconds=moment(start).format("ss.SSS")
 startminutes=moment(start).format("mm")
 startseconds=Number(startseconds)+ Number(startminutes)*60
-nextseconds=moment(next).format("ss.SSS")
-nextminutes=moment(next).format("mm")
-nextseconds=Number(nextseconds) + Number(nextminutes)*60
-cycletime= nextseconds-startseconds
+prevseconds=moment(prev).format("ss.SSS")
+prevminutes=moment(prev).format("mm")
+prevseconds=Number(prevseconds) + Number(prevminutes)*60
+cycletime= startseconds-prevseconds
 console.log("This is the cycletime" + cycletime)
 stdcycletime= Number(10)
 // // setInterval(function(){ 
@@ -41,20 +48,20 @@ stdcycletime= Number(10)
  }
 
 
-//  statusyellow: function(){
-//     // setInterval(function(){     
-// if (cycletime<stdcycletime && cycletime >0)
-//     {
-//     return true
-//   }
-//   // }, 1000);
-// },
-//   statuswhite: function(){
-//     // setInterval(function(){ 
-//      if (cycletime<=0)
-//     {
-//     return true
-//   }
+ statusyellow: function(){
+     // setInterval(function(){     
+ if (cycletime<stdcycletime && cycletime >0)
+     {
+     return true
+   }
+   // }, 1000);
+ },
+   statuswhite: function(){
+     // setInterval(function(){ 
+      if (cycletime<=0)
+     {
+     return true
+   }
 //   // }, 1000);
 
 
