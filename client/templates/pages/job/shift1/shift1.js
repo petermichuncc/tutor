@@ -1,28 +1,31 @@
 
-Meteor.subscribe('parts');
-Meteor.subscribe('machines');
+
 // console.log("This is your cavitation" +Parts.findOne().cavitation);
 Template.shift1.helpers({
 
    calculateTime: function () {
- num= Machines.findOne();
-     num=num.machinenumber
+     Meteor.subscribe('cycles-recent', moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"))
+   Meteor.subscribe('parts');
+Meteor.subscribe('machines');
+    
+num= Machines.findOne();
+     num=num.machinenumber;
  count = Cycles.find({PressNumber: num, AutoStatus: "1", CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).subtract(60,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
          
          estimatedTime = (Number(Parts.find().fetch().pop().quantity) - Number(count))  / Number(Parts.find().fetch().pop().cavitation);
          //figure out cycle time
+         
         start =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).CycleTimeStamp
         
         next =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: moment(start.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).CycleTimeStamp
-        
-        
-startseconds=moment(start).format("ss.SSS")
-startminutes=moment(start).format("mm")
-startseconds=Number(startseconds)+ Number(startminutes)*60
-nextseconds=moment(next).format("ss.SSS")
-nextminutes=moment(next).format("mm")
-nextseconds=Number(nextseconds) + Number(nextminutes)*60
-cycletime= nextseconds-startseconds
+       
+        startseconds=moment(start).format("ss.SSS")
+        startminutes=moment(start).format("mm")
+        startseconds=Number(startseconds)+ Number(startminutes)*60
+        nextseconds=moment(next).format("ss.SSS")
+        nextminutes=moment(next).format("mm")
+        nextseconds=Number(nextseconds) + Number(nextminutes)*60
+        cycletime= nextseconds-startseconds
 
          
          estimatedTime=estimatedTime * cycletime
@@ -30,12 +33,29 @@ cycletime= nextseconds-startseconds
          
           totaltime= Number(Parts.find().fetch().pop().quantity)/Number(Parts.find().fetch().pop().cavitation)
           totaltime = totaltime*cycletime
+
          totaltime= parseInt(totaltime/60);
+         if (totaltime <=0)
+         {
+          totaltime=1;
+
+         }
 if (estimatedminutes <=0)
 {
 
   estimatedminutes=0;
 }         
+        
+         percent=estimatedminutes/totaltime;
+          percent=percent*100;
+          percent=parseInt(percent)
+         
+          if (percent<=0)
+          {
+
+           percent=0;
+          }
+
        estimatedhours = estimatedminutes/60;
        estimatedhours = parseInt(estimatedhours)
        estimatedminutesleft=estimatedminutes%60;
@@ -165,7 +185,7 @@ else
     earnedHours1: function () {
  
      
-      Meteor.subscribe('cycles-recent', moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"))
+      
  
   
 
@@ -1845,35 +1865,9 @@ var part =Parts.findOne({hour: now})
  {
     return part.partnumber
  }
-    //I need to change these 
-      num= Machines.find().fetch().pop();
-     num=num.machinenumber
-     //Parts.find({hour:now}, {sort: {minute: 1}, limit: 2}).fetch().pop()  this would the second entered job
-     //how do i find the second to last submitted job.
-     // I need to be looking at the previously entered job
-      count = Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).subtract(60,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
-         estimatedTime = (Number(Parts.find().fetch().pop().quantity) - Number(count))  / Number(Parts.find().fetch().pop().cavitation);
-         estimatedTime=estimatedTime * 10; //This 10 is a place holder for the time per cycle
-         estimatedminutes=parseInt(estimatedTime/60);
-         
-          totaltime= Number(Parts.find().fetch().pop().quantity)/Number(Parts.find().fetch().pop().cavitation)
-          totaltime = totaltime*10;
-         totaltime= parseInt(totaltime/60);
-if (estimatedminutes <=0)
-{
-
-  estimatedminutes=0;
-}         
-        
-         percent=estimatedminutes/totaltime;
-          percent=percent*100;
-          percent=parseInt(percent)
-          console.log("This is the percent" + percent)
-          if (percent<=0)
-          {
-
-           percent=0;
-          }
+    
+     
+          
 else if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined' )
 {
   
