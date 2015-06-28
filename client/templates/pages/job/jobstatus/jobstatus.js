@@ -32,7 +32,7 @@ prevminutes=moment(prev).format("mm")
 prevseconds=Number(prevseconds) + Number(prevminutes)*60
 cycletime= startseconds-prevseconds
 console.log("This is the cycletime" + cycletime)
-stdcycletime= Number(10)
+stdcycletime= Number(10.5)
 // // setInterval(function(){ 
 //     //code goes here that will be run every 5 seconds.
     

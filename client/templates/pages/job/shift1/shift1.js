@@ -25,6 +25,7 @@ num= Machines.findOne();
         nextseconds=moment(next).format("ss.SSS")
         nextminutes=moment(next).format("mm")
         nextseconds=Number(nextseconds) + Number(nextminutes)*60
+        //This is the cycletime calculated at the start of the job being submitted
         cycletime= nextseconds-startseconds
 
          
@@ -183,7 +184,7 @@ else
      
      
     earnedHours1: function () {
- 
+          //I'll put something here once I'm able to pull data from the AS400 or put data from excel here
      
       
  
@@ -206,16 +207,9 @@ else
      count= Parts.find({hour: now, month:month, day:day}).count()
            
         
-         percent=estimatedminutes/totaltime;
-          percent=percent*100;
-          percent=parseInt(percent)
-          
-          if (percent<=0)
-          {
 
-           percent=0;
-          }
 
+//all this is activated whenever a job is submitted in this hour
  if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'object' && count===1)
       {
     return Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 07:00:00.000"), $lt: moment().format("YYYY-MM-DD 08:00:00.000")}}).count() * Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
@@ -226,7 +220,16 @@ else
 
     return Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 07:00:00.000"), $lt: moment(Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD 07:mm:ss.SSS")}}).count() * Parts.find({hour:now}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
   }
-  else if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined' && percent >0 )
+  //I need to come up with a good way to know if the current hour had a job that was submitted in any hour before this hour
+//continue into this hour.
+//A simple way to do this is to find out if there are cycles coming in during this hour
+//I will need to cases.  One is if there is a cycle time all the way until the end of the hour
+//The other is if there is a cycle time that ends during the hour
+//I could grab the cycle time starting from the beginning of the hour and if it is zero
+//then I could 
+
+
+  else if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined')
 {
   
      return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 07:00:00.000"), $lt: moment().format("YYYY-MM-DD 08:00:00.000")}}).count() * Parts.find({hour: {$lt: now}, month: month, day: day}).fetch().pop().cavitation;
