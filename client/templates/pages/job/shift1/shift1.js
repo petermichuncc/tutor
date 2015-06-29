@@ -220,14 +220,28 @@ else
 
     return Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 07:00:00.000"), $lt: moment(Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD 07:mm:ss.SSS")}}).count() * Parts.find({hour:now}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
   }
-  //I need to come up with a good way to know if the current hour had a job that was submitted in any hour before this hour
-//continue into this hour.
+ 
 //A simple way to do this is to find out if there are cycles coming in during this hour
 //I will need to cases.  One is if there is a cycle time all the way until the end of the hour
 //The other is if there is a cycle time that ends during the hour
-//I could grab the cycle time starting from the beginning of the hour and if it is zero
-//then I could 
+//I could grab the cycle time starting from the beginning of the hour and if it is isn't zero
+//then I could list the cyle times for the entire hour
+//or I could 
 
+
+//So I need to check the cycles starting right at the beginning of this hour
+start =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD HH:mm:ss.SSS")}}).CycleTimeStamp
+        
+        next =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: moment(start.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).CycleTimeStamp
+       
+        startseconds=moment(start).format("ss.SSS")
+        startminutes=moment(start).format("mm")
+        startseconds=Number(startseconds)+ Number(startminutes)*60
+        nextseconds=moment(next).format("ss.SSS")
+        nextminutes=moment(next).format("mm")
+        nextseconds=Number(nextseconds) + Number(nextminutes)*60
+        //This is the cycletime calculated at the start of the job being submitted
+        cycletime= nextseconds-startseconds
 
   else if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined')
 {
