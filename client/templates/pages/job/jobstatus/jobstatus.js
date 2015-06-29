@@ -50,7 +50,7 @@ stdcycletime= Number(10.5)
 
  statusyellow: function(){
      // setInterval(function(){     
- if (cycletime<stdcycletime && cycletime >0)
+ if (cycletime<stdcycletime )
      {
      return true
    }
