@@ -1,7 +1,7 @@
 // register event on form, not submit button
 Meteor.subscribe('machines');
 Meteor.subscribe('entries');
-Meteor.subscribe('nba');
+
 
 Template.table.events({
 "submit .workcenterSelection": function(event){
