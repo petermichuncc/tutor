@@ -5,7 +5,10 @@ console.log(event);
 var text = $( "#someId" ).val();
 
 var post = {
-      timestamp: moment().format("YYYY-MM-DD HH:mm:ss.SSS")
+      month: moment().format("MM"),
+         day: moment().format("DD"),
+         hour: moment().format("HH"),
+         minute: moment().format("mm")
          
      };
 
@@ -25,7 +28,7 @@ Template.endjob.helpers({
     var Part = Parts.find().fetch().pop()
     
 
-    // console.log(machine);
+    console.log("This is the part number" + Part.partnumber)
 
     return Part.partnumber
 

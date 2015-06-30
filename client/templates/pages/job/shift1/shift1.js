@@ -206,9 +206,14 @@ else
       
      count= Parts.find({hour: now, month:month, day:day}).count()
            
-        
+   //I need logic that will run the code a certain way if the end job button wasn't selected
+   //versus it will run the code a certain way if the end job was pressed
 
-
+   //  it needs to be an either or scenario.  //So if there is NOT a end job TS during this hour then
+   //run this code
+//I need a month and day component to this
+if (typeof Hours.findOne({hour: now, month:month, day:day}) === 'undefined')
+{
 //all this is activated whenever a job is submitted in this hour
  if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'object' && count===1)
       {
@@ -220,7 +225,7 @@ else
 
     return Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 07:00:00.000"), $lt: moment(Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD 07:mm:ss.SSS")}}).count() * Parts.find({hour:now}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
   }
- 
+ }
 //A simple way to do this is to find out if there are cycles coming in during this hour
 //I will need to cases.  One is if there is a cycle time all the way until the end of the hour
 //The other is if there is a cycle time that ends during the hour

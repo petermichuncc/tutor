@@ -5,12 +5,12 @@
 
 <body>
 
-  
+
 
   <div id="right">
     <div id="wrap">
     
-   
+  
       <form name="myForm" onsubmit="return validateForm()" method="post" class="workcenterSelection">
       <table>
         <tr>
@@ -21,7 +21,8 @@
         <td>  
           <div class="form-group">
             <label for="partnumber"></label>
-            <input type="partnumber" name="partnumber" required class="form-control" id="partnumber"  placeholder="Enter Part number">
+            {{>partnumber}}
+            <!-- <input type="partnumber" name="partnumber" required class="form-control" id="partnumber"  placeholder="Enter Part number"> -->
           </div>
         </td>
         </tr>

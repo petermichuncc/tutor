@@ -2,6 +2,9 @@
 Meteor.publish('entries', function() {
   return Entries.find();
 });
+Meteor.publish('nba', function() {
+  return Entries.find();
+});
 Meteor.publish('hours', function() {
   return Hours.find();
 });
