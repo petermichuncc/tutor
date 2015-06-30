@@ -5,7 +5,7 @@ console.log(event);
 var text = $( "#someId" ).val();
 
 var post = {
-      timestamp: moment().format("YYYY-MM-DD HH:mm:ss.SSS"),
+      timestamp: moment().format("YYYY-MM-DD HH:mm:ss.SSS")
          
      };
 
@@ -22,7 +22,8 @@ Template.endjob.helpers({
     
     parts: function () {
       Meteor.subscribe('parts');
-    var Part = Parts.find().fetch().pop();
+    var Part = Parts.find().fetch().pop()
+    
 
     // console.log(machine);
 

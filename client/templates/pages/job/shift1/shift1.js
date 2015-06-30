@@ -7,7 +7,7 @@ Template.shift1.helpers({
      Meteor.subscribe('cycles-recent', moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"))
    Meteor.subscribe('parts');
 Meteor.subscribe('machines');
-    
+Meteor.subscribe('entries');    
 num= Machines.findOne();
      num=num.machinenumber;
  count = Cycles.find({PressNumber: num, AutoStatus: "1", CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).subtract(60,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
@@ -230,20 +230,20 @@ else
 
 
 //So I need to check the cycles starting right at the beginning of this hour
-start =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD HH:mm:ss.SSS")}}).CycleTimeStamp
+// start =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD HH:mm:ss.SSS")}}).CycleTimeStamp
         
-        next =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: moment(start.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).CycleTimeStamp
+//         next =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: moment(start.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).CycleTimeStamp
        
-        startseconds=moment(start).format("ss.SSS")
-        startminutes=moment(start).format("mm")
-        startseconds=Number(startseconds)+ Number(startminutes)*60
-        nextseconds=moment(next).format("ss.SSS")
-        nextminutes=moment(next).format("mm")
-        nextseconds=Number(nextseconds) + Number(nextminutes)*60
-        //This is the cycletime calculated at the start of the job being submitted
-        cycletime= nextseconds-startseconds
+//         startseconds=moment(start).format("ss.SSS")
+//         startminutes=moment(start).format("mm")
+//         startseconds=Number(startseconds)+ Number(startminutes)*60
+//         nextseconds=moment(next).format("ss.SSS")
+//         nextminutes=moment(next).format("mm")
+//         nextseconds=Number(nextseconds) + Number(nextminutes)*60
+//         //This is the cycletime calculated at the start of the job being submitted
+//         cycletime= nextseconds-startseconds
 
- if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined')
+ if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined' && Parts.find().fetch().pop().hour < now)
 {
   //This needs to be setup to multiply the cycles by the last submitted Part so fetch().pop()
      return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 07:00:00.000"), $lt: moment().format("YYYY-MM-DD 08:00:00.000")}}).count() * Parts.find().fetch().pop().cavitation;
@@ -371,7 +371,7 @@ start =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gte: m
 
  if (typeof Parts.findOne({hour:now, month: month, day: day}) === 'object' && count===1)
       {
-    return Cycles.find({PressNumber: num, AutoStatus: "1",CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 08:00:00.000"), $lt: moment().format("YYYY-MM-DD 089:00:00.000")}}).count() * Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
+    return Cycles.find({PressNumber: num, AutoStatus: "1",CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 08:00:00.000"), $lt: moment().format("YYYY-MM-DD 09:00:00.000")}}).count() * Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
   }
   else if (typeof Parts.findOne({hour:now, month: month, day: day}) === 'object' && count>=2)
       {
@@ -380,7 +380,7 @@ start =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gte: m
     return Cycles.find({PressNumber: num, AutoStatus: "1",CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 08:00:00.000"), $lt: moment(Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD 08:mm:ss.SSS")}}).count() * Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
   }
    
-    if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined')
+    if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined'&& Parts.find().fetch().pop().hour < now)
 {
   //This needs to be setup to multiply the cycles by the last submitted Part so fetch().pop()
      return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 08:00:00.000"), $lt: moment().format("YYYY-MM-DD 09:00:00.000")}}).count() * Parts.find().fetch().pop().cavitation;
@@ -504,7 +504,7 @@ start =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gte: m
 
      return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 09:00:00.000"), $lt: moment(Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD 09:mm:ss.SSS")}}).count() * Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
    }
-  if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined')
+  if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined' && Parts.find().fetch().pop().hour < now)
 {
   //This needs to be setup to multiply the cycles by the last submitted Part so fetch().pop()
      return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 09:00:00.000"), $lt: moment().format("YYYY-MM-DD 10:00:00.000")}}).count() * Parts.find().fetch().pop().cavitation;
@@ -629,7 +629,7 @@ start =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gte: m
 
      return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 10:00:00.000"), $lt: moment(Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD 10:mm:ss.SSS")}}).count() * Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
    }
-  if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined')
+  if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined' && Parts.find().fetch().pop().hour < now)
 {
   //This needs to be setup to multiply the cycles by the last submitted Part so fetch().pop()
      return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 10:00:00.000"), $lt: moment().format("YYYY-MM-DD 11:00:00.000")}}).count() * Parts.find().fetch().pop().cavitation;
@@ -750,7 +750,7 @@ start =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gte: m
 
      return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 11:00:00.000"), $lt: moment(Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD 11:mm:ss.SSS")}}).count() * Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
    }
-  if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined')
+  if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined' && Parts.find().fetch().pop().hour < now)
 {
   //This needs to be setup to multiply the cycles by the last submitted Part so fetch().pop()
      return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 11:00:00.000"), $lt: moment().format("YYYY-MM-DD 12:00:00.000")}}).count() * Parts.find().fetch().pop().cavitation;
@@ -874,7 +874,7 @@ start =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gte: m
          //the start time is same.  The end time will be the most recent job
           return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 12:00:00.000"), $lt: moment(Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD 12:mm:ss.SSS")}}).count() * Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
    }
-  if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined')
+  if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined' && Parts.find().fetch().pop().hour < now)
 {
   //This needs to be setup to multiply the cycles by the last submitted Part so fetch().pop()
      return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 12:00:00.000"), $lt: moment().format("YYYY-MM-DD 13:00:00.000")}}).count() * Parts.find().fetch().pop().cavitation;
@@ -997,7 +997,7 @@ start =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gte: m
      return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 13:00:00.000"), $lt: moment(Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD 13:mm:ss.SSS")}}).count() * Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
    }
  
-   if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined')
+   if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined' && Parts.find().fetch().pop().hour < now)
 {
   //This needs to be setup to multiply the cycles by the last submitted Part so fetch().pop()
      return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 13:00:00.000"), $lt: moment().format("YYYY-MM-DD 14:00:00.000")}}).count() * Parts.find().fetch().pop().cavitation;
@@ -1120,7 +1120,7 @@ start =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gte: m
 
      return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 14:00:00.000"), $lt: moment(Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD 14:mm:ss.SSS")}}).count() * Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
    }
-      if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined')
+      if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined' && Parts.find().fetch().pop().hour < now)
 {
   //This needs to be setup to multiply the cycles by the last submitted Part so fetch().pop()
      return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 14:00:00.000"), $lt: moment().format("YYYY-MM-DD 15:00:00.000")}}).count() * Parts.find().fetch().pop().cavitation;
