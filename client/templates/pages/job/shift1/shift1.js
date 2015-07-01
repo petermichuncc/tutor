@@ -1,3 +1,6 @@
+//put any reusable code up here in javascript
+//any data/vars or functions that aren't getting sent directly to the html code can be calculated
+//in a javascript function
 
 
 // console.log("This is your cavitation" +Parts.findOne().cavitation);
@@ -15,22 +18,16 @@ num= Machines.findOne();
          
          estimatedTime = (Number(Parts.find().fetch().pop().quantity) - Number(count))  / Number(Parts.find().fetch().pop().cavitation);
          //figure out cycle time
-         
         start =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).CycleTimeStamp
-        
-        next =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: moment(start.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).CycleTimeStamp
-       
+       next =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: moment(start.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).CycleTimeStamp
         startseconds=moment(start).format("ss.SSS")
         startminutes=moment(start).format("mm")
         startseconds=Number(startseconds)+ Number(startminutes)*60
         nextseconds=moment(next).format("ss.SSS")
         nextminutes=moment(next).format("mm")
         nextseconds=Number(nextseconds) + Number(nextminutes)*60
-        //This is the cycletime calculated at the start of the job being submitted
         cycletime= nextseconds-startseconds
-
-         
-         estimatedTime=estimatedTime * cycletime
+   estimatedTime=estimatedTime * cycletime
          estimatedminutes=parseInt(estimatedTime/60);
          
           totaltime= Number(Parts.find().fetch().pop().quantity)/Number(Parts.find().fetch().pop().cavitation)
@@ -40,34 +37,18 @@ num= Machines.findOne();
          if (totaltime <=0)
          {
           totaltime=1;
-
          }
 if (estimatedminutes <=0)
 {
 
   estimatedminutes=0;
 }         
-        
-         percent=estimatedminutes/totaltime;
-          percent=percent*100;
-          percent=parseInt(percent)
-         
-          if (percent<=0)
-          {
-
-           percent=0;
-          }
-
-       estimatedhours = estimatedminutes/60;
+        estimatedhours = estimatedminutes/60;
        estimatedhours = parseInt(estimatedhours)
        estimatedminutesleft=estimatedminutes%60;
-
-         
-       
        if (estimatedhours===1)
          {
          return estimatedhours.toString().concat(" hour left and ",estimatedminutesleft," minutes left");
-
 }
 else 
 {
@@ -185,12 +166,15 @@ else
      
      
     earnedHours1: function () {
-          //I'll put something here once I'm able to pull data from the AS400 or put data from excel here
-     
-      
+          //retrieve the cycle time from the DB with the part number equal to the chosen part number
+          //run calculations
+          console.log("This is the most recent partnum" + Parts.find().fetch().pop().partnumber)
+          //earnedhours is 
+          
  
   
-
+          //earned hours is Actual planned
+          //
             },
             earnedHours1p: function () {
       
