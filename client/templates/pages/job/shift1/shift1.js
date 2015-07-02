@@ -876,19 +876,23 @@ function earnedhourstotal() {
             return total
             }
 function incomingc1(){
-total=incomingcycles1()
-if (total >=0){
-return total
-}
+
+now="07"
+//if no job was submitted this hour and there was not a endjob submitted 
+//after the previous job submission
+//Then show all the count from the previous time stamp to the end of the hour
+Hours.find({hour: now, month:month, day:day}).fetch().pop().timestamp //this will find the time stamp of when the latest job was ended
+if (Parts.find().fetch().pop()!=now && Hours.find() )
 }
 function incomingc2(){
-
+now="08"
  total= incomingcycles1()+incomingcycles2()
  if (total >=0){
 return total
 }
 }
 function incomingc3(){
+now="09"
 total= incomingcycles1()+incomingcycles2()+incomingcycles3()
  if (total >=0){
 return total
@@ -896,6 +900,7 @@ return total
   
 }
 function incomingc4(){
+now="10"
 total= incomingcycles1()+incomingcycles2()+incomingcycles3()+incomingcycles4()
  if (total >=0){
 return total
@@ -903,6 +908,7 @@ return total
   
 }
 function incomingc5(){
+now="11"
 total= incomingcycles1()+incomingcycles2()+incomingcycles3()+incomingcycles4()+incomingcycles5()
  if (total >=0){
 return total
@@ -910,6 +916,7 @@ return total
   
 }
 function incomingc6(){
+now="12"
 total= incomingcycles1()+incomingcycles2()+incomingcycles3()+incomingcycles4()+incomingcycles5()+incomingcycles6()
  if (total >=0){
 return total
@@ -917,6 +924,7 @@ return total
   
 }
 function incomingc7(){
+now="13"
 total= incomingcycles1()+incomingcycles2()+incomingcycles3()+incomingcycles4()+incomingcycles5()+incomingcycles6()+incomingcycles7()
  if (total >=0){
 return total
@@ -924,6 +932,7 @@ return total
   
 }
 function incomingc8(){
+now="14"
 total= incomingcycles1()+incomingcycles2()+incomingcycles3()+incomingcycles4()+incomingcycles5()+incomingcycles6()+incomingcycles7()+incomingcycles8()
  if (total >=0){
 return total
