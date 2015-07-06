@@ -1,14 +1,23 @@
+ Meteor.subscribe('cycles-recent', moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"))
+Meteor.subscribe('workcenters');
+ function pressnumber(){
+//basically I need to have num equal the CellNum of the Workcenter that was selected
+
+num= Workcenters.find({CellID: Machines.find().fetch().pop().machinenumber}).fetch().pop().CellNum;
+return num
+
+}
+
  Template.jobstatus.helpers({
- status: function(){
+  status: function(){
      // setInterval(function(){     
  return true
 
  },
 statusgreen: function(){
   
-     num= Machines.find().fetch().pop();
-     num=num.machinenumber
- count = Cycles.find({PressNumber: num, AutoStatus: "1", CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).subtract(60,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
+     num= pressnumber()
+     count = Cycles.find({PressNumber: num, AutoStatus: "1", CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).subtract(60,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
          
          estimatedTime = (Number(Parts.find().fetch().pop().quantity) - Number(count))  / Number(Parts.find().fetch().pop().cavitation);
          //figure out cycle time
@@ -58,7 +67,7 @@ stdcycletime= Number(10.5)
  },
    statuswhite: function(){
      // setInterval(function(){ 
-      if (cycletime<=0)
+      if (cycletime<=0 || cycletime === null)
      {
      return true
    }

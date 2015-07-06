@@ -11,7 +11,13 @@
         Workcenter:{{>workcenter}}<br/><br/>
         <span id="label">Fetching status...</span>
      </div>
- -->
+ -->{{#if status}}
+     <div id="status"> 
+{{changeStatus}}
+        Workcenter:{{>workcenter}}<br/><br/>
+        <span id="label">Fetching status...</span>
+     </div>
+   {{else}}
  {{#if statusgreen}}
      <div id="statusgreen"> 
 {{changeStatus}}
@@ -35,7 +41,7 @@
      </div>
      
 
-
+ {{/if}}
      {{/if}}
      {{/if}}
     {{/if}}
