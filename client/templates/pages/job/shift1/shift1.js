@@ -883,6 +883,9 @@ now="07"
 //Then show all the count from the previous time stamp to the end of the hour
 Hours.find({hour: now, month:month, day:day}).fetch().pop().timestamp //this will find the time stamp of when the latest job was ended
 if (Parts.find().fetch().pop()!=now && Hours.find() )
+{
+  
+}
 }
 function incomingc2(){
 now="08"

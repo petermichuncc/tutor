@@ -9,8 +9,9 @@
 <form class="workcenterSelection">
 <select class="form-control" id="someId">
 
-<option value="{{entry1}}">{{entry1}}</option>
-<option value="{{entry2}}">{{entry2}}</option>
+{{#each machines}}  
+  <option value="{{CellID}}">{{CellID}}</option>
+ {{/each}}
 </select>
 <button type="submit" class="btn btn-default">Select</button>
 </form>

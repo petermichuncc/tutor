@@ -30,7 +30,6 @@ var post = {
 console.log(text);
 Meteor.subscribe('parts');
      Meteor.call('partsInsert', post)
-console.log("second hi");
 //Here is the logic to determine the page to go to based on the time of day
 
 if (moment().format("HH")>=15 && moment().format("HH") <23)

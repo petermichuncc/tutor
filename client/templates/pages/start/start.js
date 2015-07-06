@@ -1,4 +1,4 @@
- 
+ Meteor.subscribe('workcenters');
 
  Template.start.events({
 "submit .workcenterSelection": function(event){
@@ -9,9 +9,6 @@ var post = {
       machinenumber: $( "#someId" ).val()
      };
 
-
-console.log("example test for machines" + post);
-console.log(text);
 Meteor.subscribe('machines');
      Meteor.call('machinesInsert', post)
 console.log("second hi");
@@ -20,3 +17,17 @@ return false;
 
 }
 });
+
+ Template.start.helpers({
+    
+    machines: function () {
+    
+    // console.log(machine);
+console.log("THis is the workcenters" + Workcenters.findOne().CellID)
+    return Workcenters.find()
+
+
+  }
+  
+});
+

@@ -2,7 +2,9 @@
 Meteor.publish('entries', function() {
   return Entries.find();
 });
-
+Meteor.publish('workcenters', function() {
+  return Workcenters.find();
+});
 Meteor.publish('hours', function() {
   return Hours.find();
 });
