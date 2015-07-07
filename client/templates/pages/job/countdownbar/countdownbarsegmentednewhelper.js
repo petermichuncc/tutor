@@ -38,9 +38,9 @@ count = Cycles.find({PressNumber: num, AutoStatus: "1", CycleTimeStamp: {$gte: m
          estimatedhours = estimatedminutes/60;
         estimatedhours = parseInt(estimatedhours);
 
-         if (totaltime <=0)
+         if (estimatedhours <=0)
          {
-          totaltime=1;
+          estimatedhours=0;
          }
          return estimatedhours
          
