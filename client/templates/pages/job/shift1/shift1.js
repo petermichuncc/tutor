@@ -723,22 +723,19 @@ if (typeof Hours.findOne({hour: now, month:month, day:day}) === 'undefined')
          
        }
  function earnedhours1() {
-          //get actual
-          //I need the cycle time that is located in the Entries db
-          now="14"
-    month=moment().format("MM")
-    day=moment().format("DD")
-
-          count= Parts.find({hour: now, month:month, day:day}).count()
-
-          cycletime=Entries.find({partnum:Parts.find().fetch().pop().partnumber}).cycletime1
+         now="07"
+          month=moment().format("MM")
+          day=moment().format("DD")
+         
+          if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='object')
+          {
+          cycletime=Entries.find({partnum:Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber}).fetch().pop().cycletime1
            
           planned=1000/Number(cycletime)
-          earnedhours = Number(incomingcycles1())/planned
-             if(earnedhours >= 0)
-             {
+          earnedhours = Number(incomingcycles2())/planned
+              
              return earnedhours
-             }      
+           }       
             }
 function earnedhours1p() {
       cycletime=Entries.find({partnum:Parts.find().fetch().pop().partnumber}).cycletime1
@@ -751,17 +748,32 @@ function earnedhours1p() {
              } 
             }
 function earnedhours2() {
-          //get actual
-          //I need the cycle time that is located in the Entries db
-          
-          cycletime=Entries.find({partnum:Parts.find().fetch().pop().partnumber}).cycletime1
+          //I need to show the cycle time for the job that was submitted during this hour
+          //
+          //
+          now="08"
+          month=moment().format("MM")
+          day=moment().format("DD")
+         
+          if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='object')
+          {
+          cycletime=Entries.find({partnum:Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber}).fetch().pop().cycletime1
            
           planned=1000/Number(cycletime)
           earnedhours = Number(incomingcycles2())/planned
-                if(earnedhours >= 0)
-             {
+              
              return earnedhours
-             }  
+           }
+
+           if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='undefined' && incomingcycles2()>=0)
+          {
+          cycletime=Entries.find({partnum:Parts.find({month:month}).fetch().pop().partnumber}).fetch().pop().cycletime1
+           
+          planned=1000/Number(cycletime)
+          earnedhours = Number(incomingcycles2())/planned
+              
+             return earnedhours
+           }   
             }
 function earnedhours2p() {
       
@@ -778,14 +790,28 @@ function earnedhours3() {
           //get actual
           //I need the cycle time that is located in the Entries db
           
-          cycletime=Entries.find({partnum:Parts.find().fetch().pop().partnumber}).cycletime1
+          now="09"
+          month=moment().format("MM")
+          day=moment().format("DD")
          
+          if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='object')
+          {
+          cycletime=Entries.find({partnum:Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber}).fetch().pop().cycletime1
+           
+          planned=1000/Number(cycletime)
+          earnedhours = Number(incomingcycles2())/planned
+              
+             return earnedhours
+           } 
+            if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='undefined' && incomingcycles3()>=0)
+          {
+          cycletime=Entries.find({partnum:Parts.find({month:month}).fetch().pop().partnumber}).fetch().pop().cycletime1
+           
           planned=1000/Number(cycletime)
           earnedhours = Number(incomingcycles3())/planned
-            if(earnedhours >= 0)
-             {
+              
              return earnedhours
-             }        
+           }         
             }
 function earnedhours3p() {
        cycletime=Entries.find({partnum:Parts.find().fetch().pop().partnumber}).cycletime1
@@ -797,18 +823,31 @@ function earnedhours3p() {
              return earnedhours
              } 
             }
-function earnedHours4() {
+function earnedhours4() {
           //get actual
           //I need the cycle time that is located in the Entries db
-          
-          cycletime=Entries.find({partnum:Parts.find().fetch().pop().partnumber}).cycletime1
+         now="10"
+          month=moment().format("MM")
+          day=moment().format("DD")
          
+          if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='object')
+          {
+          cycletime=Entries.find({partnum:Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber}).fetch().pop().cycletime1
+           
           planned=1000/Number(cycletime)
           earnedhours = Number(incomingcycles4())/planned
-              if(earnedhours >= 0)
-             {
+              
              return earnedhours
-             }     
+           } 
+          if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='undefined' && incomingcycles4()>=0)
+          {
+          cycletime=Entries.find({partnum:Parts.find({month:month}).fetch().pop().partnumber}).fetch().pop().cycletime1
+           
+          planned=1000/Number(cycletime)
+          earnedhours = Number(incomingcycles3())/planned
+              
+             return earnedhours
+           }  
             }
 function earnedhours4p() {
       cycletime=Entries.find({partnum:Parts.find().fetch().pop().partnumber}).cycletime1
@@ -820,18 +859,31 @@ function earnedhours4p() {
              return earnedhours
              } 
             }
-function earnedHours5() {
+function earnedhours5() {
           //get actual
           //I need the cycle time that is located in the Entries db
-          
-          cycletime=Entries.find({partnum:Parts.find().fetch().pop().partnumber}).cycletime1
+          now="11"
+          month=moment().format("MM")
+          day=moment().format("DD")
+         
+          if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='object')
+          {
+          cycletime=Entries.find({partnum:Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber}).fetch().pop().cycletime1
            
           planned=1000/Number(cycletime)
           earnedhours = Number(incomingcycles5())/planned
-                if(earnedhours >= 0)
-             {
+              
              return earnedhours
-             }   
+           } 
+          if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='undefined' && incomingcycles5()>=0)
+          {
+          cycletime=Entries.find({partnum:Parts.find({month:month}).fetch().pop().partnumber}).fetch().pop().cycletime1
+           
+          planned=1000/Number(cycletime)
+          earnedhours = Number(incomingcycles5())/planned
+              
+             return earnedhours
+           }   
             }
 function earnedhours5p() {
       cycletime=Entries.find({partnum:Parts.find().fetch().pop().partnumber}).cycletime1
@@ -843,18 +895,36 @@ function earnedhours5p() {
              return earnedhours
              } 
             }
-            function earnedHours6() {
+  function earnedHours6() {
           //get actual
           //I need the cycle time that is located in the Entries db
-          
-          cycletime=Entries.find({partnum:Parts.find().fetch().pop().partnumber}).cycletime1
+          now="12"
+          month=moment().format("MM")
+          day=moment().format("DD")
+         
+          if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='object')
+          {
+          cycletime=Entries.find({partnum:Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber}).fetch().pop().cycletime1
            
           planned=1000/Number(cycletime)
           earnedhours = Number(incomingcycles6())/planned
-                 if(earnedhours >= 0)
-             {
+              
              return earnedhours
-             }   
+           }
+          if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='undefined' && incomingcycles6()>=0)
+          {
+          cycletime=Entries.find({partnum:Parts.find({month:month}).fetch().pop().partnumber}).fetch().pop().cycletime1
+           
+          planned=1000/Number(cycletime)
+          earnedhours = Number(incomingcycles6())/planned
+              
+             return earnedhours
+           } 
+           else
+           {
+            earnedhours=Number(0)
+            return earnedhours
+           }  
             }
 function earnedhours6p() {
       cycletime=Entries.find({partnum:Parts.find().fetch().pop().partnumber}).cycletime1
@@ -866,18 +936,29 @@ function earnedhours6p() {
              return earnedhours
              } 
             }
-            function earnedHours7() {
-          //get actual
-          //I need the cycle time that is located in the Entries db
-          
-          cycletime=Entries.find({partnum:Parts.find().fetch().pop().partnumber}).cycletime1
+function earnedhours7() {
+        now="13"
+          month=moment().format("MM")
+          day=moment().format("DD")
+         
+          if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='object')
+          {
+          cycletime=Entries.find({partnum:Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber}).fetch().pop().cycletime1
            
           planned=1000/Number(cycletime)
           earnedhours = Number(incomingcycles7())/planned
-                if(earnedhours >= 0)
-             {
+              
              return earnedhours
-             }    
+           } 
+          if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='undefined' && incomingcycles7()>=0)
+          {
+          cycletime=Entries.find({partnum:Parts.find({month:month}).fetch().pop().partnumber}).fetch().pop().cycletime1
+           
+          planned=1000/Number(cycletime)
+          earnedhours = Number(incomingcycles7())/planned
+              
+             return earnedhours
+           }     
             }
 function earnedhours7p() {
       cycletime=Entries.find({partnum:Parts.find().fetch().pop().partnumber}).cycletime1
@@ -889,18 +970,29 @@ function earnedhours7p() {
              return earnedhours
              } 
             }
-            function earnedHours8() {
-          //get actual
-          //I need the cycle time that is located in the Entries db
-          
-          cycletime=Entries.find({partnum:Parts.find().fetch().pop().partnumber}).cycletime1
-        
+  function earnedhours8() {
+         now="14"
+          month=moment().format("MM")
+          day=moment().format("DD")
+         
+          if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='object')
+          {
+          cycletime=Entries.find({partnum:Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber}).fetch().pop().cycletime1
+           
           planned=1000/Number(cycletime)
           earnedhours = Number(incomingcycles8())/planned
-                if(earnedhours >= 0)
-             {
+              
              return earnedhours
-             }   
+           }
+          if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='undefined' && incomingcycles8()>=0)
+          {
+          cycletime=Entries.find({partnum:Parts.find({month:month}).fetch().pop().partnumber}).fetch().pop().cycletime1
+           
+          planned=1000/Number(cycletime)
+          earnedhours = Number(incomingcycles8())/planned
+              
+             return earnedhours
+           }     
             }
 function earnedhours8p() {
        cycletime=Entries.find({partnum:Parts.find().fetch().pop().partnumber}).cycletime1
@@ -913,7 +1005,7 @@ function earnedhours8p() {
              } 
             }
 function earnedhourstotal() {
-            total= earnedhours1()+earnedhours2()+earnedhours3()+earnedhours4()+earnedhours5()+earnedhours6()+earnedhours7()+earnedhours8()+earnedhours1p()+earnedhours2p()+earnedhours3p()+earnedhours4p()+earnedhours5p()+earnedhours6p()+earnedhours7p()+earnedhours8p()
+            total= Number(earnedhours1()+earnedhours2()+earnedhours3()+earnedhours4()+earnedhours5()+earnedhours6()+earnedhours7()+earnedhours8()+earnedhours1p()+earnedhours2p()+earnedhours3p()+earnedhours4p()+earnedhours5p()+earnedhours6p()+earnedhours7p()+earnedhours8p())
             if(total >= 0)
              {
              return earnedhours
@@ -1076,60 +1168,42 @@ now="14"
 
   
 }
+function incomingc1p(){
 
-function earnedc1(){
-total=earnedhours1()
-if (total >=0){
-return total
-}
-}
-function earnedc2(){
+now="07"
 
- total= earnedhours1()+earnedhours2()
- if (total >=0){
-return total
 }
+function incomingc2p(){
+now="08"
+
 }
-function earnedc3(){
-total= earnedhours1()+earnedhours2()+earnedhours3()
- if (total >=0){
-return total
-}
+function incomingc3p(){
+now="09"
+
   
 }
-function earnedc4(){
-total= earnedhours1()+earnedhours2()+earnedhours3()+earnedhours4()
- if (total >=0){
-return total
-}
+function incomingc4p(){
+now="10"
+
   
 }
-function earnedc5(){
-total= earnedhours1()+earnedhours2()+earnedhours3()+earnedhours4()+earnedhours5()
- if (total >=0){
-return total
-}
+function incomingc5p(){
+now="11"
+
   
 }
-function earnedc6(){
-total= earnedhours1()+earnedhours2()+earnedhours3()+earnedhours4()+earnedhours5()+earnedhours6()
- if (total >=0){
-return total
-}
+function incomingc6p(){
+now="12"
+
   
 }
-function earnedc7(){
-total= earnedhours1()+earnedhours2()+earnedhours3()+earnedhours4()+earnedhours5()+earnedhours6()+earnedhours7()
- if (total >=0){
-return total
+function incomingc7p(){
+now="13"
+
 }
-  
-}
-function earnedc8(){
-total= earnedhours1()+earnedhours2()+earnedhours3()+earnedhours4()+earnedhours5()+earnedhours6()+earnedhours7()+earnedhours8()
- if (total >=0){
-return total
-}
+function incomingc8p(){
+now="14"
+
   
 }
 
@@ -1400,40 +1474,12 @@ Template.shift1.helpers({
      {
      return earnedhours8p()
    }},
-
-    incomingc1: function(){
-      return incomingc1();},
-      incomingc2: function(){
-      return incomingc2();},
-      incomingc3: function(){
-      return incomingc3();},
-      incomingc4: function(){
-      return incomingc4();},
-      incomingc5: function(){
-      return incomingc5();},
-      incomingc6: function(){
-      return incomingc6();},
-      incomingc7: function(){
-      return incomingc7();},
-      incomingc8: function(){
-      return incomingc8();},
-    incomingc1p: function(){
-      return incomingc1p();},
-      incomingc2p: function(){
-      return incomingc2p();},
-      incomingc3p: function(){
-      return incomingc3p();},
-      incomingc4p: function(){
-      return incomingc4p();},
-      incomingc5p: function(){
-      return incomingc5p();},
-      incomingc6p: function(){
-      return incomingc6p();},
-      incomingc7p: function(){
-      return incomingc7p();},
-      incomingc8p: function(){
-      return incomingc8p();},
-    
+// earnedhourstotal: function () {
+//       if (earnedhourstotal()>=Number(0))
+//      {
+//      return earnedhourstotal()
+//    }},
+   
 
      changeStatus1: function() {
       
@@ -1731,7 +1777,6 @@ changeStatus8p: function() {
     },     
   part1: function ()
    {
-
    num= pressnumber();
      now = "07"
     month=moment().format("MM")
@@ -1749,7 +1794,7 @@ var part =Parts.findOne({hour: now, month:month, day:day})
    
 if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined' )
 {
-  //Just fetch the most recently submitted job  
+  //fetch the the part from the job that happened
     part=Parts.find().fetch().pop()
      
   return part.partnumber
@@ -2089,6 +2134,108 @@ if(typeof Parts.find({hour: now, month:month, day:day}).fetch().pop() === 'objec
   }
 
 
-   }
+   },
    
+ endjob: function ()
+ {
+  //basically show the end job button if there was a submit job button pressed more recently
+  //than an end job button
+  if (Hours.find().fetch().pop().timestamp<Parts.find().fetch().pop().timestamp)
+{
+  return true
+}
+ } ,
+ submitjob: function ()
+ {
+  //show the submit job button if there was an end job button clicked more recently than
+  //a submit job button , or show it by default.
+  //
+if (Hours.find().fetch().pop().timestamp>Parts.find().fetch().pop().timestamp)
+{
+  return true
+}
+},
+
+hour1second: function()
+ {//if the part count for this hour is <=2 then return true
+   now="07"
+    month=moment().format("MM")
+    day=moment().format("DD")
+  if (Parts.find({hour:now, month:month, day:day}).count() >=2)
+  {
+    return true
+  }
+
+ },
+ hour2second: function()
+ {
+now="08"
+    month=moment().format("MM")
+    day=moment().format("DD")
+  if (Parts.find({hour:now, month:month, day:day}).count() >=2)
+  {
+    return true
+  }
+ } , 
+ hour3second: function()
+ {
+now="09"
+    month=moment().format("MM")
+    day=moment().format("DD")
+  if (Parts.find({hour:now, month:month, day:day}).count() >=2)
+  {
+    return true
+  }
+ } , 
+ hour4second: function()
+ {
+now="10"
+    month=moment().format("MM")
+    day=moment().format("DD")
+  if (Parts.find({hour:now, month:month, day:day}).count() >=2)
+  {
+    return true
+  }
+ } , 
+ hour5second: function()
+ {
+now="11"
+    month=moment().format("MM")
+    day=moment().format("DD")
+  if (Parts.find({hour:now, month:month, day:day}).count() >=2)
+  {
+    return true
+  }
+ } , 
+ hour6second: function()
+ {
+now="12"
+    month=moment().format("MM")
+    day=moment().format("DD")
+  if (Parts.find({hour:now, month:month, day:day}).count() >=2)
+  {
+    return true
+  }
+ } , 
+ hour7second: function()
+ {
+now="13"
+    month=moment().format("MM")
+    day=moment().format("DD")
+  if (Parts.find({hour:now, month:month, day:day}).count() >=2)
+  {
+    return true
+  }
+ }, 
+ hour8second: function()
+ {
+now="14"
+    month=moment().format("MM")
+    day=moment().format("DD")
+  if (Parts.find({hour:now, month:month, day:day}).count() >=2)
+  {
+    return true
+  }
+ } ,   
+
 });

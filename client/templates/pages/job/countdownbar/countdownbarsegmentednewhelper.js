@@ -43,7 +43,7 @@ count = Cycles.find({PressNumber: num, AutoStatus: "1", CycleTimeStamp: {$gte: m
           totaltime=1;
          }
          return estimatedhours
-         console.log("inside the outer JS" + estimatedhours)
+         
 }
 
 Template.countdownbar.helpers({
