@@ -1,6 +1,4 @@
-//put any reusable code up here in javascript
-//any data/vars or functions that aren't getting sent directly to the html code can be calculated
-//in a javascript function
+
  Meteor.subscribe('cycles-recent', moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"))
    Meteor.subscribe('parts');
 Meteor.subscribe('machines');
@@ -14,8 +12,6 @@ num= Workcenters.find({CellID: Machines.find().fetch().pop().machinenumber}).fet
 return num
 
 }
-
-
 
 function planned1(){
           now="07"
@@ -52,13 +48,19 @@ function planned1(){
            }
            //no job submitted this hour and the end job hasn't been clicked after the last just was submitted
            //I need to setup that logic.
+           timestamp= moment().format("YYYY-MM-DD 07:59:00.000")
+
+     //part=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop()
+     
+  
+
             if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='undefined')
           {
             //I need to retrieve the cycle time for the job submitted prior to this hour
             //so find  $lte than the entire time stamp!
-          cycletimeH=Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber.cycletimeH
-          cycletimeP=Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber.cycletimeP
-          cycletimeQ=Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber.cycletimeQ
+          cycletimeH=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().partnumber.cycletimeH
+          cycletimeP=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().partnumber.cycletimeP
+          cycletimeQ=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().partnumber.cycletimeQ
           if (cycletimeH>0)
             {
               cycletime=cycletimeH
@@ -81,13 +83,80 @@ function planned1(){
               
              return planned
            }
-          planned=1000/Number(cycletime)
-          return planned
+          
            }
-}
+
 function planned2(){
-   
-   return planned
+   now="08"
+          month=moment().format("MM")
+          day=moment().format("DD")
+         
+          if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='object')
+          {
+          //I need if statements that determine what to set the cycletime equal time
+            cycletimeH=Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber.cycletimeH
+            cycletimeP=Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber.cycletimeP
+            cycletimeQ=Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber.cycletimeQ
+            if (cycletimeH>0)
+            {
+              cycletime=cycletimeH
+            }
+
+            if ((cycletimeH<=0 || cyletimeH=="") && cycletimeP> 0)
+            {
+              cycletime=cycletimeP
+            }
+            if ((cycletimeH<=0 || cyletimeH=="") && (cycletimeP<=0 || cyletimeP=="") && cycletimeQ!=0)
+            {
+              cycletime=cycletimeQ
+            }
+            else
+            {
+              cycletime = 0
+            }
+                      planned=1000/Number(cycletime)
+          
+              
+             return planned
+           }
+           //no job submitted this hour and the end job hasn't been clicked after the last just was submitted
+           //I need to setup that logic.
+           timestamp= moment().format("YYYY-MM-DD 08:59:00.000")
+
+     //part=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop()
+     
+  
+
+            if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='undefined')
+          {
+            //I need to retrieve the cycle time for the job submitted prior to this hour
+            //so find  $lte than the entire time stamp!
+          cycletimeH=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().partnumber.cycletimeH
+          cycletimeP=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().partnumber.cycletimeP
+          cycletimeQ=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().partnumber.cycletimeQ
+          if (cycletimeH>0)
+            {
+              cycletime=cycletimeH
+            }
+
+            if ((cycletimeH<=0 || cyletimeH=="") && cycletimeP> 0)
+            {
+              cycletime=cycletimeP
+            }
+            if ((cycletimeH<=0 || cyletimeH=="") && (cycletimeP<=0 || cyletimeP=="") && cycletimeQ!=0)
+            {
+              cycletime=cycletimeQ
+            }
+            else
+            {
+              cycletime = 0
+            }
+                      planned=1000/Number(cycletime)
+          
+              
+             return planned
+           }
+          
 }
 function planned3(){
    

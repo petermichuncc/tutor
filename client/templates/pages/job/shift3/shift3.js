@@ -2,9 +2,7 @@ Meteor.subscribe('cycles-recent', moment().subtract(1, 'days').format("YYYY-MM-D
 
 
 // console.log("This is your cavitation" +Parts.findOne().cavitation);
-console.log("This is yesterday at 11:00 " + moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"))
 
-console.log("This the start of today" +moment().format("YYYY-MM-DD 00:00:00.000") )
 Template.shift3.helpers({
   calculateTime: function () {
          
@@ -796,11 +794,6 @@ if(Number(part.quantity) >0)
 
  
 });
-
-
-
-//Figure out the logic for breaking up the job into 24 hours.
-//after that only output 8 hour segments of the job
 
 
 
