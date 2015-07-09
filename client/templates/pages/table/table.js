@@ -19,7 +19,12 @@ var post = {
          month: moment().format("MM"),
          day: moment().format("DD"),
          hour: moment().format("HH"),
-         minute: moment().format("mm")
+         minute: moment().format("mm"),
+         //add all the cycle times for this part number
+         cycletimeH:Entries.find({partnumber:$( "#partnumber" ).val()}).fetch().pop().cycletimeH,
+         cycletimeP:Entries.find({partnumber:$( "#partnumber" ).val()}).fetch().pop().cycletimeP,
+         cycletimeQ:Entries.find({partnumber:$( "#partnumber" ).val()}).fetch().pop().cycletimeQ
+         
      };
 // var hour = {
 //       hour: moment().format("HH")

@@ -13,7 +13,27 @@ statusgreen: function(){
         start =Cycles.find({PressNumber: num, AutoStatus:'1', CycleTimeStamp: {$gte: moment().subtract(75,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).fetch().pop().CycleTimeStamp
        
         prev =Cycles.find({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: moment().subtract(100,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment(start.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).fetch().pop().CycleTimeStamp
-      
+  
+            cycletimeH=Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber.cycletimeH
+            cycletimeP=Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber.cycletimeP
+            cycletimeQ=Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber.cycletimeQ
+            if (cycletimeH>0)
+            {
+              cycletime=cycletimeH
+            }
+
+            if ((cycletimeH<=0 || cyletimeH=="") && cycletimeP> 0)
+            {
+              cycletime=cycletimeP
+            }
+            if ((cycletimeH<=0 || cyletimeH=="") && (cycletimeP<=0 || cyletimeP=="") && cycletimeQ!=0)
+            {
+              cycletime=cycletimeQ
+            }
+            else
+            {
+              cycletime = 0
+            }    
    
 
 
@@ -23,10 +43,10 @@ startseconds=Number(startseconds)+ Number(startminutes)*60
 prevseconds=moment(prev).format("ss.SSS")
 prevminutes=moment(prev).format("mm")
 prevseconds=Number(prevseconds) + Number(prevminutes)*60
-cycletime= startseconds-prevseconds
+cycletimeNow= startseconds-prevseconds
 // console.log("This is the cycletime" + cycletime)
-stdcycletime= Number(10.5)  
- if (cycletime>=stdcycletime)
+ 
+ if (cycletimeNow>=cycletime)
      {
      return true
    }
@@ -50,7 +70,26 @@ stdcycletime= Number(10.5)
        
         prev =Cycles.find({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: moment().subtract(100,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment(start.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).fetch().pop().CycleTimeStamp
       
-   
+   cycletimeH=Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber.cycletimeH
+            cycletimeP=Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber.cycletimeP
+            cycletimeQ=Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber.cycletimeQ
+            if (cycletimeH>0)
+            {
+              cycletime=cycletimeH
+            }
+
+            if ((cycletimeH<=0 || cyletimeH=="") && cycletimeP> 0)
+            {
+              cycletime=cycletimeP
+            }
+            if ((cycletimeH<=0 || cyletimeH=="") && (cycletimeP<=0 || cyletimeP=="") && cycletimeQ!=0)
+            {
+              cycletime=cycletimeQ
+            }
+            else
+            {
+              cycletime = 0
+            }  
 
 
 startseconds=moment(start).format("ss.SSS")
@@ -59,10 +98,10 @@ startseconds=Number(startseconds)+ Number(startminutes)*60
 prevseconds=moment(prev).format("ss.SSS")
 prevminutes=moment(prev).format("mm")
 prevseconds=Number(prevseconds) + Number(prevminutes)*60
-cycletime= startseconds-prevseconds
+cycletimeNow= startseconds-prevseconds
 // console.log("This is the cycletime" + cycletime)
 stdcycletime= Number(10.5)
- if (cycletime<stdcycletime )
+ if (cycletimeNow<cycletime )
      {
      return true
    }
@@ -83,7 +122,26 @@ stdcycletime= Number(10.5)
        
         prev =Cycles.find({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: moment().subtract(100,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment(start.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).fetch().pop().CycleTimeStamp
       
-   
+   cycletimeH=Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber.cycletimeH
+            cycletimeP=Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber.cycletimeP
+            cycletimeQ=Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber.cycletimeQ
+            if (cycletimeH>0)
+            {
+              cycletime=cycletimeH
+            }
+
+            if ((cycletimeH<=0 || cyletimeH=="") && cycletimeP> 0)
+            {
+              cycletime=cycletimeP
+            }
+            if ((cycletimeH<=0 || cyletimeH=="") && (cycletimeP<=0 || cyletimeP=="") && cycletimeQ!=0)
+            {
+              cycletime=cycletimeQ
+            }
+            else
+            {
+              cycletime = 0
+            }  
 
 
 startseconds=moment(start).format("ss.SSS")
@@ -92,10 +150,11 @@ startseconds=Number(startseconds)+ Number(startminutes)*60
 prevseconds=moment(prev).format("ss.SSS")
 prevminutes=moment(prev).format("mm")
 prevseconds=Number(prevseconds) + Number(prevminutes)*60
-cycletime= startseconds-prevseconds
+cycletimeNow= startseconds-prevseconds
 // console.log("This is the cycletime" + cycletime)
-stdcycletime= Number(10.5)
-      if (cycletime<=0 || cycletime === null || cycletime=== 'undefined')
+
+
+      if (!(cycletimeNow>=cycletime) && !(cycletimeNow<cycletime))
      {
      return true
    }
