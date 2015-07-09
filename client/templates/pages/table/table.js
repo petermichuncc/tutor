@@ -14,7 +14,7 @@ var post = {
        quantity: $( "#quantity" ).val(),
        initials: $( "#initials" ).val(),
        cavitation: $( "#cavitation" ).val(),
-       workcenter: Machines.findOne().machinenumber,
+       workcenter: Machines.find().fetch().pop().machinenumber,
         timestamp: moment().format("YYYY-MM-DD HH:mm:ss.SSS"),
          month: moment().format("MM"),
          day: moment().format("DD"),

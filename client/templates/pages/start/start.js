@@ -1,5 +1,5 @@
  Meteor.subscribe('workcenters');
-
+Meteor.subscribe('EDITED');
  Template.start.events({
 "submit .workcenterSelection": function(event){
 event.defaultPrevented;

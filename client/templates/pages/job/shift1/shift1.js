@@ -7,11 +7,20 @@ Meteor.subscribe('machines');
 Meteor.subscribe('workcenters');
 Meteor.subscribe('entries');
 Meteor.subscribe('hours');
+
 function pressnumber(){
 //basically I need to have num equal the CellNum of the Workcenter that was selected
 
 num= Workcenters.find({CellID: Machines.find().fetch().pop().machinenumber}).fetch().pop().CellNum;
 return num
+
+}
+function cycletime(){
+//I want the cycle time for the job submitted for this workcenter!
+//
+//I need if statements that determine what to set the cycletime equal time
+cycletime=Entries.find({partnumber:Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber}).fetch().pop().cycletime1
+if ( )
 
 }
 function planned1(){
@@ -21,7 +30,7 @@ function planned1(){
          
           if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='object')
           {
-          cycletime=Entries.find({partnum:Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber}).fetch().pop().cycletime1
+          cycletime=Entries.find({partnumber:Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber}).fetch().pop().cycletime1
            
           planned=1000/Number(cycletime)
           
@@ -30,7 +39,7 @@ function planned1(){
            }
             if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='undefined')
           {
-          cycletime=Entries.find({partnum:Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber}).fetch().pop().cycletime1
+          cycletime=Entries.find({partnumber:Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber}).fetch().pop().cycletime1
            
           planned=1000/Number(cycletime)
           
@@ -1908,12 +1917,13 @@ var part =Parts.findOne({hour: now, month:month, day:day})
  {
     return part.partnumber
  }
-   
+   //set this up to only list if there was not an end job submitted
+   //after the job submitted before this hour 
 if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined' )
 {
-  //fetch the latest part from the job that happened before this month day and hour
-  //CycleTimeStamp: {$gte: startTime}
-    part=Parts.find({month: {$lte: month },day: {$lte: day}, hour: {$lte: now}}).fetch().pop()
+  //fetch the latest part from the job that happened before this hour
+  
+    part=Parts.find({month: month ,day: {$lte: day}, hour: {$lte: now}}).fetch().pop()
      
   return part.partnumber
 
@@ -1954,7 +1964,7 @@ if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined' )
 {
   //fetch the latest part from the job that happened before this month day and hour
   //CycleTimeStamp: {$gte: startTime}
-    part=Parts.find({month: {$lte: month },day: {$lte: day}, hour: {$lte: now}}).fetch().pop()
+    part=Parts.find({month: month ,day: {$lte: day}, hour: {$lte: now}}).fetch().pop()
      
   return part.partnumber
 

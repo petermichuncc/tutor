@@ -32,10 +32,7 @@ Meteor.publish('cycles-recent', function (startTime) {
 return Cycles.find({CycleTimeStamp: {$gte: startTime}});
 });
 
-Meteor.publish('cycles-new', function (startTime) {
 
-return Cycles.find({CycleTimeStamp: {$gte: startTime}});
-});
 // Meteor.publish('cycles-recent', function (startTime, endTime) {
 
 // return Cycles.find({CycleTimeStamp: { $lt: startTime, $gte: endTime}});
