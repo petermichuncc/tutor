@@ -1,11 +1,11 @@
 Meteor.subscribe('cycles-recent', moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"))
-Meteor.subscribe('workcenters');
+Meteor.subscribe('machines');
  Meteor.subscribe('parts');
  Template.jobstatus.helpers({
 
 statusgreen: function(){
    
-   num= Workcenters.find({CellID: Machines.find().fetch().pop().machinenumber}).fetch().pop().CellNum;
+   num= Machines.find().fetch().pop().cellnum;
      count = Cycles.find({PressNumber: num, AutoStatus: "1", CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).subtract(60,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
          
          estimatedTime = (Number(Parts.find().fetch().pop().quantity) - Number(count))  / Number(Parts.find().fetch().pop().cavitation);
@@ -13,22 +13,28 @@ statusgreen: function(){
         start =Cycles.find({PressNumber: num, AutoStatus:'1', CycleTimeStamp: {$gte: moment().subtract(75,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).fetch().pop().CycleTimeStamp
        
         prev =Cycles.find({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: moment().subtract(100,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment(start.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).fetch().pop().CycleTimeStamp
-  
-            cycletimeH=Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber.cycletimeH
-            cycletimeP=Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber.cycletimeP
-            cycletimeQ=Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber.cycletimeQ
+        
+        //I should always compare with the most recently submitted job
+        
+            cycletimeH=Parts.find().fetch().pop().cycletimeH
+            cycletimeP=Parts.find().fetch().pop().cycletimeP
+            cycletimeQ=Parts.find().fetch().pop().cycletimeQ
+           
             if (cycletimeH>0)
             {
               cycletime=cycletimeH
+              console.log("H selected")
             }
 
-            if ((cycletimeH<=0 || cyletimeH=="") && cycletimeP> 0)
+            if ((cycletimeH<=0 || cycletimeH=="") && cycletimeP> 0)
             {
               cycletime=cycletimeP
+              console.log("P selected")
             }
-            if ((cycletimeH<=0 || cyletimeH=="") && (cycletimeP<=0 || cyletimeP=="") && cycletimeQ!=0)
+            if ((cycletimeH<=0 || cycletimeH=="") && (cycletimeP<=0 || cycletimeP=="") && cycletimeQ!=0)
             {
               cycletime=cycletimeQ
+              console.log("Q selected")
             }
             else
             {
@@ -61,7 +67,7 @@ cycletimeNow= startseconds-prevseconds
 
 
  statusyellow: function(){
-   num= Workcenters.find({CellID: Machines.find().fetch().pop().machinenumber}).fetch().pop().CellNum;
+   num= Machines.find().fetch().pop().cellnum;
      count = Cycles.find({PressNumber: num, AutoStatus: "1", CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).subtract(60,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
          
          estimatedTime = (Number(Parts.find().fetch().pop().quantity) - Number(count))  / Number(Parts.find().fetch().pop().cavitation);
@@ -69,20 +75,19 @@ cycletimeNow= startseconds-prevseconds
         start =Cycles.find({PressNumber: num, AutoStatus:'1', CycleTimeStamp: {$gte: moment().subtract(75,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).fetch().pop().CycleTimeStamp
        
         prev =Cycles.find({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: moment().subtract(100,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment(start.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).fetch().pop().CycleTimeStamp
-      
-   cycletimeH=Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber.cycletimeH
-            cycletimeP=Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber.cycletimeP
-            cycletimeQ=Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber.cycletimeQ
+        cycletimeH=Parts.find().fetch().pop().cycletimeH
+            cycletimeP=Parts.find().fetch().pop().cycletimeP
+            cycletimeQ=Parts.find().fetch().pop().cycletimeQ
             if (cycletimeH>0)
             {
               cycletime=cycletimeH
             }
 
-            if ((cycletimeH<=0 || cyletimeH=="") && cycletimeP> 0)
+            if ((cycletimeH<=0 || cycletimeH=="") && cycletimeP> 0)
             {
               cycletime=cycletimeP
             }
-            if ((cycletimeH<=0 || cyletimeH=="") && (cycletimeP<=0 || cyletimeP=="") && cycletimeQ!=0)
+            if ((cycletimeH<=0 || cycletimeH=="") && (cycletimeP<=0 || cycletimeP=="") && cycletimeQ!=0)
             {
               cycletime=cycletimeQ
             }
@@ -113,7 +118,7 @@ stdcycletime= Number(10.5)
  },
    statuswhite: function(){
      // setInterval(function(){ 
-    num= Workcenters.find({CellID: Machines.find().fetch().pop().machinenumber}).fetch().pop().CellNum;
+    num= Machines.find().fetch().pop().cellnum;
      count = Cycles.find({PressNumber: num, AutoStatus: "1", CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).subtract(60,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
          
          estimatedTime = (Number(Parts.find().fetch().pop().quantity) - Number(count))  / Number(Parts.find().fetch().pop().cavitation);
@@ -121,20 +126,19 @@ stdcycletime= Number(10.5)
         start =Cycles.find({PressNumber: num, AutoStatus:'1', CycleTimeStamp: {$gte: moment().subtract(75,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).fetch().pop().CycleTimeStamp
        
         prev =Cycles.find({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: moment().subtract(100,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment(start.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).fetch().pop().CycleTimeStamp
-      
-   cycletimeH=Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber.cycletimeH
-            cycletimeP=Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber.cycletimeP
-            cycletimeQ=Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1}).fetch().pop().partnumber.cycletimeQ
+        cycletimeH=Parts.find().fetch().pop().cycletimeH
+            cycletimeP=Parts.find().fetch().pop().cycletimeP
+            cycletimeQ=Parts.find().fetch().pop().cycletimeQ
             if (cycletimeH>0)
             {
               cycletime=cycletimeH
             }
 
-            if ((cycletimeH<=0 || cyletimeH=="") && cycletimeP> 0)
+            if ((cycletimeH<=0 || cycletimeH=="") && cycletimeP> 0)
             {
               cycletime=cycletimeP
             }
-            if ((cycletimeH<=0 || cyletimeH=="") && (cycletimeP<=0 || cyletimeP=="") && cycletimeQ!=0)
+            if ((cycletimeH<=0 || cycletimeH=="") && (cycletimeP<=0 || cycletimeP=="") && cycletimeQ!=0)
             {
               cycletime=cycletimeQ
             }

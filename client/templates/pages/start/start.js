@@ -1,17 +1,17 @@
  Meteor.subscribe('workcenters');
-Meteor.subscribe('EDITED');
+
  Template.start.events({
 "submit .workcenterSelection": function(event){
 event.defaultPrevented;
-console.log(event);
-var text = $( "#someId" ).val();
-var post = {
-      machinenumber: $( "#someId" ).val()
-     };
 
+var post = {
+      machinenumber: $( "#someId" ).val(),
+      cellnum: Workcenters.find({CellID:$( "#someId" ).val()}).fetch().pop().CellNum
+     };
+console.log("This is the cell num selected" + Workcenters.find({CellID:$( "#someId" ).val()}).fetch().pop().CellNum)
 Meteor.subscribe('machines');
      Meteor.call('machinesInsert', post)
-console.log("second hi");
+
 Router.go('main'); 
 return false;
 
@@ -23,7 +23,7 @@ return false;
     machines: function () {
     
     // console.log(machine);
-console.log("THis is the workcenters" + Workcenters.findOne().CellID)
+
     return Workcenters.find()
 
 

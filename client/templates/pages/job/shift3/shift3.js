@@ -13,7 +13,7 @@ Template.shift3.helpers({
          estimatedTime=estimatedTime * 10; //This 10 is a place holder for the time per cycle
          estimatedminutes=parseInt(estimatedTime/60);
          
-          totaltime= Number(Parts.find().fetch().pop().quantity)/Number(Parts.find().fetch().pop().cavitation)
+          totaltime= Number(Parts.find({reactive: false}).fetch().pop().quantity)/Number(Parts.find({reactive: false}).fetch().pop().cavitation)
           totaltime = totaltime*10;
          totaltime= parseInt(totaltime/60);
 if (estimatedminutes <=0)
