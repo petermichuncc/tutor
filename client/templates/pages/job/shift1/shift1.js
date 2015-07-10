@@ -5,8 +5,6 @@ Meteor.subscribe('machines');
 
  Meteor.subscribe('hours');
 
-
-
 Template.shift1.helpers({
    calculateTime: function () {
         
@@ -186,10 +184,7 @@ Template.shift1.helpers({
               cycletime=cycletimeQ
               
             }
-            else
-            {
-              cycletime = 0
-            }    
+                
    
                       planned=1000/Number(cycletime)
           
@@ -227,10 +222,7 @@ Template.shift1.helpers({
               cycletime=cycletimeQ
               console.log("In Q")
             }
-            else
-            {
-              cycletime = 0
-            }    
+                
    
                       planned=1000/Number(cycletime)
           
@@ -240,7 +232,7 @@ Template.shift1.helpers({
           
            },
        planned2: function(){
-   now="08"
+        now="08"
           month=moment().format("MM")
           day=moment().format("DD")
          timestamp= moment().format("YYYY-MM-DD 08:59:00.000")
@@ -266,14 +258,11 @@ Template.shift1.helpers({
               cycletime=cycletimeQ
               
             }
-            else
-            {
-              cycletime = 0
-            }  
+            
                       planned=1000/Number(cycletime)
           
               
-             return planned
+             return parseInt(planned)
            }
            //no job submitted this hour and the end job hasn't been clicked after the last just was submitted
            //I need to setup that logic.
@@ -306,14 +295,11 @@ Template.shift1.helpers({
               cycletime=cycletimeQ
               
             }
-            else
-            {
-              cycletime = 0
-            }  
+             
                       planned=1000/Number(cycletime)
           
               
-             return planned
+             return parseInt(planned)
            }
           
 },
@@ -344,14 +330,11 @@ planned3: function(){
               cycletime=cycletimeQ
               
             }
-            else
-            {
-              cycletime = 0
-            }  
+             
                       planned=1000/Number(cycletime)
           
               
-             return planned
+             return parseInt(planned)
            }
            //no job submitted this hour and the end job hasn't been clicked after the last just was submitted
            //I need to setup that logic.
@@ -384,14 +367,11 @@ planned3: function(){
               cycletime=cycletimeQ
               
             }
-            else
-            {
-              cycletime = 0
-            }  
+             
                       planned=1000/Number(cycletime)
           
               
-             return planned
+             return parseInt(planned)
            }
           
 },
@@ -422,14 +402,11 @@ planned4: function(){
               cycletime=cycletimeQ
               
             }
-            else
-            {
-              cycletime = 0
-            }  
+              
                       planned=1000/Number(cycletime)
           
               
-             return planned
+             return parseInt(planned)
            }
            //no job submitted this hour and the end job hasn't been clicked after the last just was submitted
            //I need to setup that logic.
@@ -462,14 +439,11 @@ planned4: function(){
               cycletime=cycletimeQ
               
             }
-            else
-            {
-              cycletime = 0
-            }  
+              
                       planned=1000/Number(cycletime)
           
               
-             return planned
+             return parseInt(planned)
            }
           
 },
@@ -500,14 +474,11 @@ planned5: function(){
               cycletime=cycletimeQ
               
             }
-            else
-            {
-              cycletime = 0
-            }  
+              
                       planned=1000/Number(cycletime)
           
               
-             return planned
+             return parseInt(planned)
            }
            //no job submitted this hour and the end job hasn't been clicked after the last just was submitted
            //I need to setup that logic.
@@ -540,14 +511,11 @@ planned5: function(){
               cycletime=cycletimeQ
               
             }
-            else
-            {
-              cycletime = 0
-            }  
+            
                       planned=1000/Number(cycletime)
           
               
-             return planned
+             return parseInt(planned)
            }
           
 },
@@ -578,14 +546,11 @@ planned6: function(){
               cycletime=cycletimeQ
               
             }
-            else
-            {
-              cycletime = 0
-            }  
+              
                       planned=1000/Number(cycletime)
           
               
-             return planned
+             return parseInt(planned)
            }
            //no job submitted this hour and the end job hasn't been clicked after the last just was submitted
            //I need to setup that logic.
@@ -618,14 +583,11 @@ planned6: function(){
               cycletime=cycletimeQ
               
             }
-            else
-            {
-              cycletime = 0
-            }  
+              
                       planned=1000/Number(cycletime)
           
               
-             return planned
+             return parseInt(planned)
            }
           
 },
@@ -656,14 +618,11 @@ planned7: function(){
               cycletime=cycletimeQ
               
             }
-            else
-            {
-              cycletime = 0
-            }  
+              
                       planned=1000/Number(cycletime)
           
               
-             return planned
+             return parseInt(planned)
            }
            //no job submitted this hour and the end job hasn't been clicked after the last just was submitted
            //I need to setup that logic.
@@ -696,14 +655,11 @@ planned7: function(){
               cycletime=cycletimeQ
               
             }
-            else
-            {
-              cycletime = 0
-            }  
+             
                       planned=1000/Number(cycletime)
           
               
-             return planned
+             return parseInt(planned)
            }
           
 },
@@ -734,14 +690,11 @@ planned8: function(){
               cycletime=cycletimeQ
               
             }
-            else
-            {
-              cycletime = 0
-            }  
+              
                       planned=1000/Number(cycletime)
           
               
-             return planned
+             return parseInt(planned)
            }
            //no job submitted this hour and the end job hasn't been clicked after the last just was submitted
            //I need to setup that logic.
@@ -774,14 +727,11 @@ planned8: function(){
               cycletime=cycletimeQ
               
             }
-            else
-            {
-              cycletime = 0
-            }  
+             
                       planned=1000/Number(cycletime)
           
               
-             return planned
+             return parseInt(planned)
            }
           
 },
@@ -817,10 +767,7 @@ plannedc1: function (){
               cycletime=cycletimeQ
               
             }
-            else
-            {
-              cycletime = 0
-            }    
+               
    
                       planned=1000/Number(cycletime)
           
@@ -840,11 +787,12 @@ plannedc1: function (){
             //I need to multiply the day of TS by 24 and multiply the day of now by 24
             //Then I need to add the hours of TS to 24 and add the hours of now to current day hours
             //Then subtract the two from each other then use this as the multiplier
-
-            
-
-            timeHour=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().hour
-            multiplier=now - timeHour
+            timeDays=Number(Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().day)
+            timeHour=Number(Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().hour)  + (Number(timeDays)*24)
+             nowDays=Number(moment().format("DD"))
+             nowHours=Number(now) + (Number(nowDays)*24)
+             
+            multiplier=nowHours - timeHour
           cycletimeH=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cycletimeH
           cycletimeP=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cycletimeP
           cycletimeQ=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cycletimeQ
@@ -864,15 +812,12 @@ plannedc1: function (){
               cycletime=cycletimeQ
               console.log("In Q")
             }
-            else
-            {
-              cycletime = 0
-            }    
+               
    
-                      planned=1000/Number(cycletime)*multiplier
+                      planned=1000/Number(cycletime)
           
               
-             return parseInt(planned)
+             return parseInt(planned)*multiplier
            }
           
            },
@@ -903,14 +848,11 @@ plannedc1: function (){
               cycletime=cycletimeQ
               
             }
-            else
-            {
-              cycletime = 0
-            }  
+             
                       planned=1000/Number(cycletime)
           
               
-             return planned
+             return parseInt(planned)
            }
            //no job submitted this hour and the end job hasn't been clicked after the last just was submitted
            //I need to setup that logic.
@@ -922,8 +864,12 @@ plannedc1: function (){
 
             if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='undefined')
           {
-            timeHour=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().hour
-            multiplier=now - timeHour
+            timeDays=Number(Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().day)
+            timeHour=Number(Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().hour)  + (Number(timeDays)*24)
+             nowDays=Number(moment().format("DD"))
+             nowHours=Number(now) + (Number(nowDays)*24)
+             
+            multiplier=nowHours - timeHour
            cycletimeH=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cycletimeH
           cycletimeP=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cycletimeP
           cycletimeQ=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cycletimeQ
@@ -943,14 +889,11 @@ plannedc1: function (){
               cycletime=cycletimeQ
               
             }
-            else
-            {
-              cycletime = 0
-            }  
-                      planned=1000/Number(cycletime)*multiplier
+             
+                      planned=1000/Number(cycletime)
           
               
-             return planned
+             return parseInt(planned)*multiplier
            }
           
 },
@@ -981,14 +924,11 @@ plannedc3: function(){
               cycletime=cycletimeQ
               
             }
-            else
-            {
-              cycletime = 0
-            }  
+              
                       planned=1000/Number(cycletime)
           
               
-             return planned
+             return parseInt(planned)
            }
            //no job submitted this hour and the end job hasn't been clicked after the last just was submitted
            //I need to setup that logic.
@@ -1000,8 +940,12 @@ plannedc3: function(){
 
             if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='undefined')
           {
-            timeHour=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().hour
-            multiplier=now - timeHour
+             timeDays=Number(Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().day)
+            timeHour=Number(Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().hour)  + (Number(timeDays)*24)
+             nowDays=Number(moment().format("DD"))
+             nowHours=Number(now) + (Number(nowDays)*24)
+             
+            multiplier=nowHours - timeHour
            cycletimeH=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cycletimeH
           cycletimeP=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cycletimeP
           cycletimeQ=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cycletimeQ
@@ -1021,14 +965,11 @@ plannedc3: function(){
               cycletime=cycletimeQ
               
             }
-            else
-            {
-              cycletime = 0
-            }  
-                      planned=1000/Number(cycletime)*multiplier
+             
+                      planned=1000/Number(cycletime)
           
               
-             return planned
+             return parseInt(planned)*multiplier
            }
           
 },
@@ -1059,14 +1000,11 @@ plannedc4: function(){
               cycletime=cycletimeQ
               
             }
-            else
-            {
-              cycletime = 0
-            }  
+             
                       planned=1000/Number(cycletime)
           
               
-             return planned
+             return parseInt(planned)
            }
            //no job submitted this hour and the end job hasn't been clicked after the last just was submitted
            //I need to setup that logic.
@@ -1078,8 +1016,12 @@ plannedc4: function(){
 
             if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='undefined')
           {
-            timeHour=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().hour
-            multiplier=now - timeHour
+             timeDays=Number(Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().day)
+            timeHour=Number(Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().hour)  + (Number(timeDays)*24)
+             nowDays=Number(moment().format("DD"))
+             nowHours=Number(now) + (Number(nowDays)*24)
+             
+            multiplier=nowHours - timeHour
             cycletimeH=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cycletimeH
           cycletimeP=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cycletimeP
           cycletimeQ=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cycletimeQ
@@ -1099,14 +1041,11 @@ plannedc4: function(){
               cycletime=cycletimeQ
               
             }
-            else
-            {
-              cycletime = 0
-            }  
-                      planned=1000/Number(cycletime)*multiplier
+             
+                      planned=1000/Number(cycletime)
           
               
-             return planned
+             return parseInt(planned)*multiplier
            }
           
 },
@@ -1137,14 +1076,11 @@ plannedc5: function(){
               cycletime=cycletimeQ
               
             }
-            else
-            {
-              cycletime = 0
-            }  
+             
                       planned=1000/Number(cycletime)
           
               
-             return planned
+             return parseInt(planned)
            }
            //no job submitted this hour and the end job hasn't been clicked after the last just was submitted
            //I need to setup that logic.
@@ -1156,8 +1092,12 @@ plannedc5: function(){
 
             if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='undefined')
           {
-            timeHour=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().hour
-            multiplier=now - timeHour
+             timeDays=Number(Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().day)
+            timeHour=Number(Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().hour)  + (Number(timeDays)*24)
+             nowDays=Number(moment().format("DD"))
+             nowHours=Number(now) + (Number(nowDays)*24)
+             
+            multiplier=nowHours - timeHour
             cycletimeH=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cycletimeH
           cycletimeP=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cycletimeP
           cycletimeQ=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cycletimeQ
@@ -1177,14 +1117,11 @@ plannedc5: function(){
               cycletime=cycletimeQ
               
             }
-            else
-            {
-              cycletime = 0
-            }  
-                      planned=1000/Number(cycletime)*multiplier
+            
+                      planned=1000/Number(cycletime)
           
               
-             return planned
+             return parseInt(planned)*multiplier
            }
           
 },
@@ -1215,14 +1152,11 @@ plannedc6: function(){
               cycletime=cycletimeQ
               
             }
-            else
-            {
-              cycletime = 0
-            }  
+            
                       planned=1000/Number(cycletime)
           
               
-             return planned
+             return parseInt(planned)
            }
            //no job submitted this hour and the end job hasn't been clicked after the last just was submitted
            //I need to setup that logic.
@@ -1234,8 +1168,12 @@ plannedc6: function(){
 
             if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='undefined')
           {
-            timeHour=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().hour
-            multiplier=now - timeHour
+             timeDays=Number(Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().day)
+            timeHour=Number(Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().hour)  + (Number(timeDays)*24)
+             nowDays=Number(moment().format("DD"))
+             nowHours=Number(now) + (Number(nowDays)*24)
+             
+            multiplier=nowHours - timeHour
             cycletimeH=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cycletimeH
           cycletimeP=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cycletimeP
           cycletimeQ=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cycletimeQ
@@ -1255,14 +1193,11 @@ plannedc6: function(){
               cycletime=cycletimeQ
               
             }
-            else
-            {
-              cycletime = 0
-            }  
-                      planned=1000/Number(cycletime)*multiplier
+             
+                      planned=1000/Number(cycletime)
           
               
-             return planned
+             return parseInt(planned)*multiplier
            }
           
 },
@@ -1293,14 +1228,11 @@ plannedc7: function(){
               cycletime=cycletimeQ
               
             }
-            else
-            {
-              cycletime = 0
-            }  
+            
                       planned=1000/Number(cycletime)
           
               
-             return planned
+             return parseInt(planned)
            }
            //no job submitted this hour and the end job hasn't been clicked after the last just was submitted
            //I need to setup that logic.
@@ -1312,8 +1244,12 @@ plannedc7: function(){
 
             if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='undefined')
           {
-            timeHour=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().hour
-            multiplier=now - timeHour
+             timeDays=Number(Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().day)
+            timeHour=Number(Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().hour)  + (Number(timeDays)*24)
+             nowDays=Number(moment().format("DD"))
+             nowHours=Number(now) + (Number(nowDays)*24)
+             
+            multiplier=nowHours - timeHour
            cycletimeH=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cycletimeH
           cycletimeP=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cycletimeP
           cycletimeQ=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cycletimeQ
@@ -1333,14 +1269,11 @@ plannedc7: function(){
               cycletime=cycletimeQ
               
             }
-            else
-            {
-              cycletime = 0
-            }  
-                      planned=1000/Number(cycletime)*multiplier
+             
+                      planned=1000/Number(cycletime)
           
               
-             return planned
+             return parseInt(planned)*multiplier
            }
           
 },
@@ -1371,14 +1304,11 @@ plannedc8: function(){
               cycletime=cycletimeQ
               
             }
-            else
-            {
-              cycletime = 0
-            }  
+            
                       planned=1000/Number(cycletime)
           
               
-             return planned
+             return parseInt(planned)
            }
            //no job submitted this hour and the end job hasn't been clicked after the last just was submitted
            //I need to setup that logic.
@@ -1390,8 +1320,12 @@ plannedc8: function(){
 
             if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='undefined')
           {
-            timeHour=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().hour
-            multiplier=now - timeHour
+             timeDays=Number(Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().day)
+            timeHour=Number(Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().hour)  + (Number(timeDays)*24)
+             nowDays=Number(moment().format("DD"))
+             nowHours=Number(now) + (Number(nowDays)*24)
+             
+            multiplier=nowHours - timeHour
            cycletimeH=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cycletimeH
           cycletimeP=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cycletimeP
           cycletimeQ=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cycletimeQ
@@ -1411,14 +1345,11 @@ plannedc8: function(){
               cycletime=cycletimeQ
               
             }
-            else
-            {
-              cycletime = 0
-            }  
-                      planned=1000/Number(cycletime)*multiplier
+            
+                      planned=1000/Number(cycletime)
           
               
-             return planned
+             return parseInt(planned)*multiplier
            }
           
 },
@@ -1449,7 +1380,7 @@ if (typeof Hours.findOne({hour: now, month:month, day:day}) === 'undefined')
  
 
 
- if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined' && moment().format("mm") >=now)
+ if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined' && moment().format("HH") >=now)
 {
   //multiply it by the cavitation of the the job less than the current hour
      return Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 07:00:00.000"), $lt: moment().format("YYYY-MM-DD 08:00:00.000")}}).count() * Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cavitation;
@@ -1472,7 +1403,7 @@ if (typeof Hours.findOne({hour: now, month:month, day:day}) === 'undefined')
  
 //This find the last submitted part prior to this hour
 
- if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined')
+ if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined'&& moment().format("HH") >=now)
 {
   //This needs to be setup to multiply the cycles by the last submitted Part so fetch().pop()
      return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 07:00:00.000"), $lt: moment(Hours.findOne({hour: now, month:month, day:day})).format("YYYY-MM-DD 07:mm:ss.SSS")}}).count() * Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cavitation;
@@ -1522,7 +1453,7 @@ if (typeof Hours.findOne({hour: now, month:month, day:day}) === 'undefined')
      now="08"
     month=moment().format("MM")
     day=moment().format("DD")
-      
+      timestamp= moment().format("YYYY-MM-DD 08:59:00.000")
      count= Parts.find({hour: now, month:month, day:day}).count()
      
  if (typeof Hours.findOne({hour: now, month:month, day:day}) === 'undefined')
@@ -1530,21 +1461,21 @@ if (typeof Hours.findOne({hour: now, month:month, day:day}) === 'undefined')
 //all this is activated whenever a job is submitted in this hour
  if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'object' && count===1)
       {
-    return Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment(Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 1}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment().format("YYYY-MM-DD 09:00:00.000")}}).count() * Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
+    incomingcycles= Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment(Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 1}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment().format("YYYY-MM-DD 09:00:00.000")}}).count() * Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
   }
   else if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'object' && count>=2)
       {
         //the start time is same.  The end time will be the most recent job
 
-    return Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment(Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 1}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment(Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS")}}).count() * Parts.find({hour:now}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
+    incomingcycles=  Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment(Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 1}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment(Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS")}}).count() * Parts.find({hour:now}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
   }
  
 
 
- if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined' && Parts.find().fetch().pop().hour < now && moment().format("mm") >=now)
+ if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined' &&  moment().format("HH") >=now)
 {
   //This needs to be setup to multiply the cycles by the last submitted Part so fetch().pop()
-     return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 08:00:00.000"), $lt: moment().format("YYYY-MM-DD 09:00:00.000")}}).count() * Parts.find().fetch().pop().cavitation;
+     incomingcycles=  Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 08:00:00.000"), $lt: moment().format("YYYY-MM-DD 09:00:00.000")}}).count() * Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cavitation;
   
     }
     }
@@ -1553,25 +1484,25 @@ if (typeof Hours.findOne({hour: now, month:month, day:day}) === 'undefined')
 //run this code when there is an end job in this hour
  if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'object' && count===1)
       {
-    return Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment(Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 1}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment(Hours.findOne({hour: now, month:month, day:day}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS")}}).count() * Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
+    incomingcycles=  Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment(Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 1}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment(Hours.findOne({hour: now, month:month, day:day}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS")}}).count() * Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
   }
   else if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'object' && count>=2)
       {
         //the start time is same.  The end time will be the most recent job
 
-    return Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment(Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 1}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment(Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS")}}).count() * Parts.find({hour:now}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
+    incomingcycles=  Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment(Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 1}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment(Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS")}}).count() * Parts.find({hour:now}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
   }
  
 
 
- if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined' && Parts.find().fetch().pop().hour < now)
+ if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined' && moment().format("HH") >=now)
 {
   //This needs to be setup to multiply the cycles by the last submitted Part so fetch().pop()
-     return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 08:00:00.000"), $lt: moment(Hours.findOne({hour: now, month:month, day:day})).format("YYYY-MM-DD 08:mm:ss.SSS")}}).count() * Parts.find({month: {$lte: month },day: {$lte: day}, hour: {$lte: now}}).fetch().pop().cavitation
+     incomingcycles=  Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 08:00:00.000"), $lt: moment(Hours.findOne({hour: now, month:month, day:day})).format("YYYY-MM-DD 08:mm:ss.SSS")}}).count() * Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cavitation;
   
     }
     }   
-        
+       return incomingcycles 
       },
       
      incomingcycles2p: function () {
@@ -1611,7 +1542,7 @@ if (typeof Hours.findOne({hour: now, month:month, day:day}) === 'undefined')
      now="09";
     month=moment().format("MM")
     day=moment().format("DD")
-      
+      timestamp= moment().format("YYYY-MM-DD 08:59:00.000")
      count= Parts.find({hour: now, month:month, day:day}).count()
      if (typeof Hours.findOne({hour: now, month:month, day:day}) === 'undefined')
 {
@@ -1629,10 +1560,10 @@ if (typeof Hours.findOne({hour: now, month:month, day:day}) === 'undefined')
  
 
 
- if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined' && Parts.find().fetch().pop().hour < now && moment().format("mm") >=now)
+ if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined' && moment().format("HH") >=now)
 {
   //This needs to be setup to multiply the cycles by the last submitted Part so fetch().pop()
-     return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 09:00:00.000"), $lt: moment().format("YYYY-MM-DD 10:00:00.000")}}).count() * Parts.find().fetch().pop().cavitation;
+     return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 09:00:00.000"), $lt: moment().format("YYYY-MM-DD 10:00:00.000")}}).count() * Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cavitation;
   
     }
     }
@@ -1652,10 +1583,10 @@ if (typeof Hours.findOne({hour: now, month:month, day:day}) === 'undefined')
  
 
 //This code won't work when there is a newer submitted job and there was not a job submitted this hour.
- if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined' && Parts.find().fetch().pop().hour < now)
+ if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined' && moment().format("HH") >=now)
 {
   //This needs to be setup to multiply the cycles by the last submitted Part so fetch().pop()
-     return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 09:00:00.000"), $lt: moment(Hours.findOne({hour: now, month:month, day:day})).format("YYYY-MM-DD 09:mm:ss.SSS")}}).count() * Parts.find({month: {$lte: month },day: {$lte: day}, hour: {$lte: now}}).fetch().pop().cavitation
+     return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 09:00:00.000"), $lt: moment(Hours.findOne({hour: now, month:month, day:day})).format("YYYY-MM-DD 09:mm:ss.SSS")}}).count() * Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cavitation;
   
     }
     }   
@@ -1717,7 +1648,7 @@ if (typeof Hours.findOne({hour: now, month:month, day:day}) === 'undefined')
  
 
 
- if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined' && Parts.find().fetch().pop().hour < now && moment().format("mm") >=now)
+ if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined' && Parts.find().fetch().pop().hour < now && moment().format("HH") >=now)
   //This needs to be setup to multiply the cycles by the last submitted Part so fetch().pop()
 {
      return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 10:00:00.000"), $lt: moment().format("YYYY-MM-DD 11:00:00.000")}}).count() * Parts.find().fetch().pop().cavitation;
@@ -1740,7 +1671,7 @@ if (typeof Hours.findOne({hour: now, month:month, day:day}) === 'undefined')
  
 
 
- if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined' && Parts.find().fetch().pop().hour < now)
+ if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined'&& moment().format("HH") >=now)
 {
   //This needs to be setup to multiply the cycles by the last submitted Part so fetch().pop()
      return Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 10:00:00.000"), $lt: moment(Hours.findOne({hour: now, month:month, day:day})).format("YYYY-MM-DD 10:mm:ss.SSS")}}).count() * Parts.find({month: {$lte: month },day: {$lte: day}, hour: {$lte: now}}).fetch().pop().cavitation
@@ -2400,23 +2331,19 @@ now="14"
 
   
 }, 
-      earnedhours1: function() {
+earnedhours1: function() {
         //I will need to put planned in here and incoming cycles
          
-        num= Machines.find().fetch().pop().cellnum;
-    
-      now="07"
-    month=moment().format("MM")
-    day=moment().format("DD")
-      timestamp= moment().format("YYYY-MM-DD 07:59:00.000")
-     count= Parts.find({hour: now, month:month, day:day}).count()
-         
+       now="07"
+          month=moment().format("MM")
+          day=moment().format("DD")
+         timestamp= moment().format("YYYY-MM-DD 07:59:00.000")
           if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='object')
           {
           //I need if statements that determine what to set the cycletime equal time
-            cycletimeH=Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1},{reactive: false}).fetch().pop().partnumber.cycletimeH
-            cycletimeP=Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1},{reactive: false}).fetch().pop().partnumber.cycletimeP
-            cycletimeQ=Parts.find({hour:now, month:month, day:day},{sort: {minute: 1}, limit: 1},{reactive: false}).fetch().pop().partnumber.cycletimeQ
+            cycletimeH=Parts.find({hour:now, month:month, day:day}).fetch().pop().cycletimeH
+            cycletimeP=Parts.find({hour:now, month:month, day:day}).fetch().pop().cycletimeP
+            cycletimeQ=Parts.find({hour:now, month:month, day:day}).fetch().pop().cycletimeQ
             if (cycletimeH>0)
             {
               cycletime=cycletimeH
@@ -2433,31 +2360,28 @@ now="14"
               cycletime=cycletimeQ
               
             }
-            else
-            {
-              cycletime = 0
-            }    
+                
    
-                      planned=1000/Number(cycletime)
+                      planned=parseInt(1000/Number(cycletime))
           
               
              
            }
            //no job submitted this hour and the end job hasn't been clicked after the last just was submitted
            //I need to setup that logic.
-           timestamp= moment().format("YYYY-MM-DD 07:59:00.000")
+           
 
      //part=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop()
      
   
 
-            if(typeof Parts.findOne({hour:now, month:month, day:day},{reactive: false}) ==='undefined')
+            if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='undefined')
           {
             //I need to retrieve the cycle time for the job submitted prior to this hour
             //so find  $lte than the entire time stamp!
-          cycletimeH=Parts.find({timestamp: {$lt: timestamp}},{reactive: false}).fetch().pop().partnumber.cycletimeH
-          cycletimeP=Parts.find({timestamp: {$lt: timestamp}},{reactive: false}).fetch().pop().partnumber.cycletimeP
-          cycletimeQ=Parts.find({timestamp: {$lt: timestamp}},{reactive: false}).fetch().pop().partnumber.cycletimeQ
+          cycletimeH=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cycletimeH
+          cycletimeP=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cycletimeP
+          cycletimeQ=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cycletimeQ
            if (cycletimeH>0)
             {
               cycletime=cycletimeH
@@ -2472,14 +2396,11 @@ now="14"
             if ((cycletimeH<=0 || cycletimeH=="") && (cycletimeP<=0 || cycletimeP=="") && cycletimeQ!=0)
             {
               cycletime=cycletimeQ
-              
+             
             }
-            else
-            {
-              cycletime = 0
-            }    
+                
    
-                      planned=1000/Number(cycletime)
+                      planned=parseInt(1000/Number(cycletime))
           
               
              
@@ -2488,19 +2409,28 @@ now="14"
 
  
            
+     //grab all cycles from today
+      num= Machines.find().fetch().pop().cellnum;
+    
+      now="07"
+    month=moment().format("MM")
+    day=moment().format("DD")
+      timestamp= moment().format("YYYY-MM-DD 07:59:00.000")
+     count= Parts.find({hour: now, month:month, day:day}).count()
+           
    //Basically I need code to be run if there was NOT a end job submitted this hour
 if (typeof Hours.findOne({hour: now, month:month, day:day}) === 'undefined')
 {
 //all this is activated whenever a job is submitted in this hour
  if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'object' && count===1)
       {
-    incomingcycles= Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment(Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 1}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment().format("YYYY-MM-DD 08:00:00.000")}}).count() * Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
+   incomingcycles= Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment(Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 1}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment().format("YYYY-MM-DD 08:00:00.000")}}).count() * Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
   }
   else if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'object' && count>=2)
       {
         //the start time is same.  The end time will be the most recent job
 
-   incomingcycles= Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment(Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 1}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment(Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS")}}).count() * Parts.find({hour:now}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
+    incomingcycles= Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment(Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 1}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment(Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS")}}).count() * Parts.find({hour:now}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
   }
  
 
@@ -2508,7 +2438,7 @@ if (typeof Hours.findOne({hour: now, month:month, day:day}) === 'undefined')
  if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined' && moment().format("mm") >=now)
 {
   //multiply it by the cavitation of the the job less than the current hour
-     incomingcycles= Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 07:00:00.000"), $lt: moment().format("YYYY-MM-DD 08:00:00.000")}}).count() * Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cavitation;
+     incomingcycles= Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 07:00:00.000"), $lt: moment().format("YYYY-MM-DD 08:00:00.000")}}).count() * Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cavitation;
   
     }
     }
@@ -2534,32 +2464,157 @@ if (typeof Hours.findOne({hour: now, month:month, day:day}) === 'undefined')
      incomingcycles= Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 07:00:00.000"), $lt: moment(Hours.findOne({hour: now, month:month, day:day})).format("YYYY-MM-DD 07:mm:ss.SSS")}}).count() * Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cavitation;
   
     }
-    }
+    } 
 
-          earnedhours = Number(incomingcycles)/planned
+           earnedhours = Number(incomingcycles)/planned
               
-             return earnedhours
+            return earnedhours
                 
             },
 earnedhours1p: function() {
-     planned=planned1p()
+     
           earnedhours = Number(incomingcycles1p())/planned
           if(earnedhours >= 0)
              {
              return earnedhours
              } 
             },
-earnedhours2: function() {
-        
-         
-          planned=planned2()
-          earnedhours = Number(incomingcycles2())/planned
-              
-             return earnedhours
+
+
+  earnedhours2: function(){
+        num= Machines.find().fetch().pop().cellnum;
+             now="08"
+            month=moment().format("MM")
+            day=moment().format("DD")
+              timestamp= moment().format("YYYY-MM-DD 08:59:00.000")
+             count= Parts.find({hour: now, month:month, day:day}).count()
+             
+         if (typeof Hours.findOne({hour: now, month:month, day:day}) === 'undefined')
+        {
+        //all this is activated whenever a job is submitted in this hour
+         if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'object' && count===1)
+              {
+            incomingcycles= Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment(Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 1}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment().format("YYYY-MM-DD 09:00:00.000")}}).count() * Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
+          }
+          else if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'object' && count>=2)
+              {
+                //the start time is same.  The end time will be the most recent job
+
+            incomingcycles=  Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment(Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 1}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment(Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS")}}).count() * Parts.find({hour:now}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
+          }
          
 
-           
-            },
+
+         if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined' &&  moment().format("mm") >=now)
+        {
+          //This needs to be setup to multiply the cycles by the last submitted Part so fetch().pop()
+             incomingcycles=  Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 08:00:00.000"), $lt: moment().format("YYYY-MM-DD 09:00:00.000")}}).count() * Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cavitation;
+          
+            }
+            }
+         if (typeof Hours.findOne({hour: now, month:month, day:day}) === 'object')
+         {
+        //run this code when there is an end job in this hour
+         if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'object' && count===1)
+              {
+            incomingcycles=  Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment(Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 1}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment(Hours.findOne({hour: now, month:month, day:day}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS")}}).count() * Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
+          }
+          else if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'object' && count>=2)
+              {
+                //the start time is same.  The end time will be the most recent job
+
+            incomingcycles=  Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment(Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 1}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment(Parts.find({hour:now, month: month, day: day}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS")}}).count() * Parts.find({hour:now}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
+          }
+         
+
+
+         if (typeof Parts.findOne({hour: now, month:month, day:day}) === 'undefined' && moment().format("mm") >=now)
+        {
+          //This needs to be setup to multiply the cycles by the last submitted Part so fetch().pop()
+             incomingcycles=  Cycles.find({PressNumber: num,CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 08:00:00.000"), $lt: moment(Hours.findOne({hour: now, month:month, day:day})).format("YYYY-MM-DD 08:mm:ss.SSS")}}).count() * Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cavitation;
+          
+            }
+            }
+
+
+
+
+         now="08"
+          month=moment().format("MM")
+          day=moment().format("DD")
+         timestamp= moment().format("YYYY-MM-DD 08:59:00.000")
+          if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='object')
+          {
+          //I need if statements that determine what to set the cycletime equal time
+            cycletimeH=Parts.find({hour:now, month:month, day:day}).fetch().pop().cycletimeH
+            cycletimeP=Parts.find({hour:now, month:month, day:day}).fetch().pop().cycletimeP
+            cycletimeQ=Parts.find({hour:now, month:month, day:day}).fetch().pop().cycletimeQ
+           if (cycletimeH>0)
+            {
+              cycletime=cycletimeH
+              
+            }
+
+            if ((cycletimeH<=0 || cycletimeH=="") && cycletimeP> 0)
+            {
+              cycletime=cycletimeP
+              
+            }
+            if ((cycletimeH<=0 || cycletimeH=="") && (cycletimeP<=0 || cycletimeP=="") && cycletimeQ!=0)
+            {
+              cycletime=cycletimeQ
+              
+            }
+            
+                      planned=parseInt(1000/Number(cycletime))
+          
+              
+              
+           }
+           //no job submitted this hour and the end job hasn't been clicked after the last just was submitted
+           //I need to setup that logic.
+           timestamp= moment().format("YYYY-MM-DD 08:59:00.000")
+
+     //part=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop()
+     
+  
+
+            if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='undefined')
+          {
+            //I need to retrieve the cycle time for the job submitted prior to this hour
+            //so find  $lte than the entire time stamp!
+           cycletimeH=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cycletimeH
+          cycletimeP=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cycletimeP
+          cycletimeQ=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop().cycletimeQ
+          if (cycletimeH>0)
+            {
+              cycletime=cycletimeH
+              
+            }
+
+            if ((cycletimeH<=0 || cycletimeH=="") && cycletimeP> 0)
+            {
+              cycletime=cycletimeP
+              
+            }
+            if ((cycletimeH<=0 || cycletimeH=="") && (cycletimeP<=0 || cycletimeP=="") && cycletimeQ!=0)
+            {
+              cycletime=cycletimeQ
+              
+            }
+             
+                      planned=parseInt(1000/Number(cycletime))
+          
+              
+             
+           }
+
+                  // earnedhours = Number(incomingcycles/planned
+                              
+                  // return earnedhours
+},      
+              
+     
 earnedhours2p: function() {
       planned=planned2p()
           earnedhours = Number(incomingcycles2p())/planned
@@ -3332,14 +3387,14 @@ if(typeof Parts.find({hour: now, month:month, day:day}).fetch().pop() === 'objec
  {
   //basically show the end job button if there was a submit job button pressed more recently
   //than an end job button
-  if (Hours.find().fetch().pop().timestamp=== 'object')
+  if (typeof Hours.find().fetch().pop()=== 'object')
   {
   if (Hours.find().fetch().pop().timestamp<Parts.find().fetch().pop().timestamp)
 {
   return true
 }
 }
-if ( Hours.find().fetch().pop().timestamp==='undefined')
+if (typeof Hours.find().fetch().pop()==='undefined')
 {
   return true
 
@@ -3349,7 +3404,7 @@ if ( Hours.find().fetch().pop().timestamp==='undefined')
  {
   //show the submit job button if there was an end job button clicked more recently than
   //a submit job button , or show it by default.
-  if (Hours.find().fetch().pop().timestamp=== 'object')
+  if (typeof Hours.find().fetch().pop()=== 'object')
   {
 if (Hours.find().fetch().pop().timestamp>Parts.find().fetch().pop().timestamp)
 {
