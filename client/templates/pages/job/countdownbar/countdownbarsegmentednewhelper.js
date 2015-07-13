@@ -12,12 +12,14 @@ Template.countdownbar.helpers({
     
         //change percent to be how many hours out of 24 hours
           num= Machines.find().fetch().pop().cellnum;
-count = Cycles.find({PressNumber: num, AutoStatus: "1", CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).subtract(60,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
-         estimatedTime = (Number(Parts.find().fetch().pop().quantity) - Number(count))  / Number(Parts.find().fetch().pop().cavitation);
-         //figure out cycle time
-         // if ()
-         start =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).CycleTimeStamp
-         next =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: moment(start.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).CycleTimeStamp
+ count = Cycles.find({PressNumber: num, AutoStatus: "1", CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).subtract(60,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
+         
+         // estimatedTime = (Number(Parts.find().fetch().pop().quantity) - Number(count))  / Number(Parts.find().fetch().pop().cavitation);
+          estimatedTime = (Number(Parts.find().fetch().pop().quantity)) / Number(Parts.find().fetch().pop().cavitation);
+         
+         // //basically take the quantity divided by cavitation and multiply this by 
+        start =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).CycleTimeStamp
+       next =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: moment(start.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).CycleTimeStamp
         startseconds=moment(start).format("ss.SSS")
         startminutes=moment(start).format("mm")
         startseconds=Number(startseconds)+ Number(startminutes)*60
@@ -25,26 +27,40 @@ count = Cycles.find({PressNumber: num, AutoStatus: "1", CycleTimeStamp: {$gte: m
         nextminutes=moment(next).format("mm")
         nextseconds=Number(nextseconds) + Number(nextminutes)*60
         cycletime= nextseconds-startseconds
-         
-         estimatedminutes=parseInt(estimatedTime/60);
-         estimatedTime=estimatedTime * cycletime
-         if (estimatedminutes <=0)
-        {
-          estimatedminutes=0;
-        } 
-         totaltime= Number(Parts.find().fetch().pop().quantity)/Number(Parts.find().fetch().pop().cavitation)
-          totaltime = totaltime*cycletime
-         totaltime= parseInt(totaltime/60);//this is minutes, I need to convert it to seconds
-         totaltimehours = parseInt(totaltime/60);//this will be the total hours
-         estimatedhours = estimatedminutes/60;
-        estimatedhours = parseInt(estimatedhours);
+   estimatedTime=estimatedTime * cycletime
 
-         if (estimatedhours <=0)
+         estimatedminutes=parseInt(estimatedTime/60);
+         if (estimatedminutes <=0)
          {
-          estimatedhours=0;
+          totaltime=0;
          }
-         estimatedhours
-          percent=(estimatedhours/24) * 100
+             
+        estimatedhours = estimatedminutes/60;
+        estimatedhours = parseInt(estimatedhours)//this is the total time
+        //I need to subtract the actual cycles coming from the total hours
+        //Therefore I need to take a count of the actual cycles and multiply this by the cycle time
+        //Then i need to subtract this count from the total
+        //Then i need to divide by the cavitation
+
+        cycles= Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment().format("YYYY-MM-DD HH:mm:ss.SSS")}}).count() * Parts.find().fetch().pop().cavitation;
+        cycles = Number(cycles)
+        cycles = cycles/60
+        cycles = cycles/60
+
+        
+        total= (estimatedhours - cycles)/ Parts.find().fetch().pop().cavitation
+       
+         if (total <=0)
+         {
+          total=0;
+         }
+         if (total >24)
+         {
+          total=24
+         }
+
+         
+          percent=(total/24) * 100
          
          if (percent<=0)
           {
@@ -55,12 +71,14 @@ count = Cycles.find({PressNumber: num, AutoStatus: "1", CycleTimeStamp: {$gte: m
    },
 hour: function(){
     num= Machines.find().fetch().pop().cellnum;
-count = Cycles.find({PressNumber: num, AutoStatus: "1", CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).subtract(60,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
-         estimatedTime = (Number(Parts.find().fetch().pop().quantity) - Number(count))  / Number(Parts.find().fetch().pop().cavitation);
-         //figure out cycle time
-         // if ()
-         start =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).CycleTimeStamp
-         next =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: moment(start.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).CycleTimeStamp
+ count = Cycles.find({PressNumber: num, AutoStatus: "1", CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).subtract(60,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
+         
+         // estimatedTime = (Number(Parts.find().fetch().pop().quantity) - Number(count))  / Number(Parts.find().fetch().pop().cavitation);
+          estimatedTime = (Number(Parts.find().fetch().pop().quantity)) / Number(Parts.find().fetch().pop().cavitation);
+         
+         // //basically take the quantity divided by cavitation and multiply this by 
+        start =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).CycleTimeStamp
+       next =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: moment(start.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).CycleTimeStamp
         startseconds=moment(start).format("ss.SSS")
         startminutes=moment(start).format("mm")
         startseconds=Number(startseconds)+ Number(startminutes)*60
@@ -68,27 +86,40 @@ count = Cycles.find({PressNumber: num, AutoStatus: "1", CycleTimeStamp: {$gte: m
         nextminutes=moment(next).format("mm")
         nextseconds=Number(nextseconds) + Number(nextminutes)*60
         cycletime= nextseconds-startseconds
-         
+   estimatedTime=estimatedTime * cycletime
+
          estimatedminutes=parseInt(estimatedTime/60);
-         estimatedTime=estimatedTime * cycletime
-         if (estimatedminutes <=0)
-        {
-          estimatedminutes=0;
-        } 
-         totaltime= Number(Parts.find().fetch().pop().quantity)/Number(Parts.find().fetch().pop().cavitation)
-          totaltime = totaltime*cycletime
-         totaltime= parseInt(totaltime/60);//this is minutes, I need to convert it to seconds
-         totaltimehours = parseInt(totaltime/60);//this will be the total hours
-         estimatedhours = estimatedminutes/60;
-        estimatedhours = parseInt(estimatedhours);
+         
+           
+        estimatedhours = estimatedminutes/60;
+        estimatedhours = parseInt(estimatedhours)
+
 
          if (estimatedhours <=0)
          {
           estimatedhours=0;
          }
          estimatedhours
+          cycles= Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment().format("YYYY-MM-DD HH:mm:ss.SSS")}}).count() * Parts.find().fetch().pop().cavitation;
+        
+        cycles = Number(cycles)
+        cycles = cycles/60
+        cycles = cycles/60
+        
+        total= (estimatedhours - cycles)/ Parts.find().fetch().pop().cavitation
+       total = parseInt(total)
+         if (total <=0)
+         {
+          total=0;
+         }
+         if (total >24)
+         {
+          total=24
+         }
+
+        
         //change percent to be how many hours out of 24 hours
-        return estimatedhours;
+        return total;
    }
 
 

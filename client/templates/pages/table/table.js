@@ -20,6 +20,7 @@ var post = {
          day: moment().format("DD"),
          hour: moment().format("HH"),
          minute: moment().format("mm"),
+         press: Machines.find().fetch().pop().cellnum,
          //add all the cycle times for this part number
          cycletimeH:Entries.find({partnumber:$( "#partnumber" ).val()}).fetch().pop().cycletimeH,
          cycletimeP:Entries.find({partnumber:$( "#partnumber" ).val()}).fetch().pop().cycletimeP,

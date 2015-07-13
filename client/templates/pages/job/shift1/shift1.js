@@ -31,6 +31,7 @@ Template.shift1.helpers({
          {
           totaltime=0;
          }
+
          //convert this to show when the job will end 
          //  totaltime= Number(Parts.find().fetch().pop().quantity)/Number(Parts.find().fetch().pop().cavitation)
          //  totaltime = totaltime*cycletime
@@ -47,6 +48,9 @@ Template.shift1.helpers({
 // }         
         estimatedhours = estimatedminutes/60;
         estimatedhours = parseInt(estimatedhours)
+        
+       
+
        estimatedminutesleft=estimatedminutes%60;
       finishtime=moment(Parts.find().fetch().pop().timestamp.toString()).add(estimatedhours, 'hours').format("YYYY-MM-DD HH:mm:ss.SSS")
       finishtime = moment(finishtime).add(estimatedminutesleft, 'minutes').format("YYYY-MM-DD HH:mm:ss.SSS")

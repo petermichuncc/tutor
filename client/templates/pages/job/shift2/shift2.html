@@ -51,31 +51,9 @@
            
  
     <th>Hour  </th><th>Part #</th><th>Planned</th><th>Actual</th><th>EarnedHours</th><th>Status</th><th WIDTH="350">Reason</th>
-    
-      <!-- <tr><td>Total</td> <td>{{part}} </td> <td>{{quantity}} </td><td>{{incomingCycles}}</td><td>{{earnedHours}} </td><td>{{changeStatus}} </td><td WIDTH="350">None</td></tr> -->   
-        <tr><td>9</td> <td>{{part9}} </td> <td>{{quantity9}} </td><td>{{incomingCycles9}}</td><td>{{earnedHours9}} </td><td>{{changeStatus9}} </td><td WIDTH="350"></td></tr>  
-       <tr><td>{{hour9p}}</td> <td>{{part9p}} </td> <td>{{quantity9p}} </td><td>{{incomingCycles9p}}</td><td>{{earnedHours9p}} </td><td>{{changeStatus9p}} </td><td WIDTH="350"></td></tr> 
-      
-       <tr><td>10</td> <td>{{part10}} </td> <td>{{quantity10}} </td><td>{{incomingCycles10}}</td><td>{{earnedHours10}} </td><td>{{changeStatus10}} </td><td WIDTH="350"></td></tr>  
-       <tr><td>{{hour10p}}</td> <td>{{part10p}} </td> <td>{{quantity10p}} </td><td>{{incomingCycles10p}}</td><td>{{earnedHours10p}} </td><td>{{changeStatus10p}} </td><td WIDTH="350"></td></tr> 
-       
-      <tr><td>11</td> <td>{{part11}} </td> <td>{{quantity11}} </td><td>{{incomingCycles11}}</td><td>{{earnedHours11}} </td><td>{{changeStatus11}} </td><td WIDTH="350"></td></tr>  
-       <tr><td>{{hour11p}}</td> <td>{{part11p}} </td> <td>{{quantity11p}} </td><td>{{incomingCycles11p}}</td><td>{{earnedHours11p}} </td><td>{{changeStatus11p}} </td><td WIDTH="350"></td></tr>
-
-       <tr><td>4</td> <td>{{part4}} </td> <td>{{quantity4}} </td><td>{{incomingCycles4}}</td><td>{{earnedHours4}} </td><td>{{changeStatus4}} </td><td WIDTH="350"></td></tr>  
-       <tr><td>{{hour4p}}</td> <td>{{part4p}} </td> <td>{{quantity4p}} </td><td>{{incomingCycles4p}}</td><td>{{earnedHours4p}} </td><td>{{changeStatus4p}} </td><td WIDTH="350"></td></tr>
-
-       <tr><td>5</td> <td>{{part5}} </td> <td>{{quantity5}} </td><td>{{incomingCycles5}}</td><td>{{earnedHours5}} </td><td>{{changeStatus5}} </td><td WIDTH="350"></td></tr>  
-       <tr><td>{{hour5p}}</td> <td>{{part5p}} </td> <td>{{quantity5p}} </td><td>{{incomingCycles5p}}</td><td>{{earnedHours5p}} </td><td>{{changeStatus5p}} </td><td WIDTH="350"></td></tr>
-
-       <tr><td>6</td> <td>{{part6}} </td> <td>{{quantity6}} </td><td>{{incomingCycles6}}</td><td>{{earnedHours6}} </td><td>{{changeStatus6}} </td><td WIDTH="350"></td></tr>  
-       <tr><td>{{hour6p}}</td> <td>{{part6p}} </td> <td>{{quantity6p}} </td><td>{{incomingCycles6p}}</td><td>{{earnedHours6p}} </td><td>{{changeStatus6p}} </td><td WIDTH="350"></td></tr>
-
-       <tr><td>7</td> <td>{{part7}} </td> <td>{{quantity7}} </td><td>{{incomingCycles7}}</td><td>{{earnedHours7}} </td><td>{{changeStatus7}} </td><td WIDTH="350"></td></tr>  
-       <tr><td>{{hour7p}}</td> <td>{{part7p}} </td> <td>{{quantity7p}} </td><td>{{incomingCycles7p}}</td><td>{{earnedHours7p}} </td><td>{{changeStatus7p}} </td><td WIDTH="350"></td></tr>
-
-       <tr><td>8</td> <td>{{part8}} </td> <td>{{quantity8}} </td><td>{{incomingCycles8}}</td><td>{{earnedHours8}} </td><td>{{changeStatus8}} </td><td WIDTH="350"></td></tr>  
-       <tr><td>{{hour8p}}</td> <td>{{part8p}} </td> <td>{{quantity8p}} </td><td>{{incomingCycles8p}}</td><td>{{earnedHours8p}} </td><td>{{changeStatus8p}} </td><td WIDTH="350"></td></tr>
+    {{>part4}}
+     {{>part5}}
+     {{>part6}}
    </table>
   
   
@@ -83,6 +61,8 @@
          </div> 
     <form action="{{pathFor 'shift1'}}">
    <span style="float:left;">
+    }
+    }
   <button class="btn btn-default " type="submit">Shift 1</button> </span> </form> 
   <form action="{{pathFor 'shift2'}}"><span style="float:left;">
   <button class="btn btn-default " type="submit">Shift 2</button> </span> </form>

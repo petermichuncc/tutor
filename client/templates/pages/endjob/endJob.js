@@ -4,7 +4,7 @@ Template.endjob.helpers({
     parts: function () {
 
      var Part = Parts.find().fetch().pop()
-    console.log("This is the part number" + Part.partnumber)
+   
    return Part.partnumber
   }
   
@@ -22,7 +22,8 @@ Template.endjob.helpers({
        month: moment().format("MM"),
           day: moment().format("DD"),
           hour: moment().format("HH"),
-          minute: moment().format("mm")
+          minute: moment().format("mm"),
+          press: Machines.find().fetch().pop().cellnum
          
       };
 
