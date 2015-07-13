@@ -20,7 +20,7 @@ statusgreen: function(){
             cycletimeP=Parts.find().fetch().pop().cycletimeP
             cycletimeQ=Parts.find().fetch().pop().cycletimeQ
            
-            if (cycletimeH>0)
+            if (cycletimeH>0 )
             {
               cycletime=cycletimeH
               console.log("H selected")
@@ -36,11 +36,7 @@ statusgreen: function(){
               cycletime=cycletimeQ
               console.log("Q selected")
             }
-            else
-            {
-              cycletime = 0
-            }    
-   
+           
 
 
 startseconds=moment(start).format("ss.SSS")
@@ -78,10 +74,12 @@ cycletimeNow= startseconds-prevseconds
         cycletimeH=Parts.find().fetch().pop().cycletimeH
             cycletimeP=Parts.find().fetch().pop().cycletimeP
             cycletimeQ=Parts.find().fetch().pop().cycletimeQ
-            if (cycletimeH>0)
+             if (cycletimeH>0)
             {
               cycletime=cycletimeH
+              console.log("H selected")
             }
+
 
             if ((cycletimeH<=0 || cycletimeH=="") && cycletimeP> 0)
             {
@@ -91,11 +89,7 @@ cycletimeNow= startseconds-prevseconds
             {
               cycletime=cycletimeQ
             }
-            else
-            {
-              cycletime = 0
-            }  
-
+            
 
 startseconds=moment(start).format("ss.SSS")
 startminutes=moment(start).format("mm")
@@ -142,11 +136,7 @@ stdcycletime= Number(10.5)
             {
               cycletime=cycletimeQ
             }
-            else
-            {
-              cycletime = 0
-            }  
-
+            
 
 startseconds=moment(start).format("ss.SSS")
 startminutes=moment(start).format("mm")
