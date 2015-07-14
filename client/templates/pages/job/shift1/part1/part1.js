@@ -1,4 +1,5 @@
-Meteor.subscribe('cycles-recent', moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"))
+
+  Meteor.subscribe('cycles-recent', moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"))
    Meteor.subscribe('parts');
 Meteor.subscribe('machines');
 
@@ -9,6 +10,7 @@ Meteor.subscribe('machines');
 
 hour1p: function () {
       num= Machines.find().fetch().pop().cellnum;
+    
      now="07"
      month=moment().format("MM")
     day=moment().format("DD")
@@ -47,6 +49,7 @@ hour1p: function () {
    },
 
 planned1: function (){
+          count= Parts.find({hour: now, month:month, day:day,press:num}).count()
           num= Machines.find().fetch().pop().cellnum;
           now="07"
           month=moment().format("MM")
@@ -55,9 +58,9 @@ planned1: function (){
           if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='object')
           {
           //I need if statements that determine what to set the cycletime equal time
-            cycletimeH=Parts.find({hour:now, month:month, day:day,press:num}).fetch().pop().cycletimeH
-            cycletimeP=Parts.find({hour:now, month:month, day:day,press:num}).fetch().pop().cycletimeP
-            cycletimeQ=Parts.find({hour:now, month:month, day:day,press:num}).fetch().pop().cycletimeQ
+            cycletimeH=Parts.find({hour:now, month:month, day:day,press:num},{sort: {minute: 1}, limit: 1}).fetch().pop().cycletimeH
+            cycletimeP=Parts.find({hour:now, month:month, day:day,press:num},{sort: {minute: 1}, limit: 1}).fetch().pop().cycletimeP
+            cycletimeQ=Parts.find({hour:now, month:month, day:day,press:num},{sort: {minute: 1}, limit: 1}).fetch().pop().cycletimeQ
             if (cycletimeH>0)
             {
               cycletime=cycletimeH
@@ -101,18 +104,18 @@ planned1: function (){
            if (cycletimeH>0)
             {
               cycletime=cycletimeH
-              console.log("In H")
+              
             }
 
             if ((cycletimeH<=0 || cycletimeH=="") && cycletimeP> 0)
             {
               cycletime=cycletimeP
-             console.log("In P")
+             
             }
             if ((cycletimeH<=0 || cycletimeH=="") && (cycletimeP<=0 || cycletimeP=="") && cycletimeQ!=0)
             {
               cycletime=cycletimeQ
-              console.log("In Q")
+              
             }
                 	
    					
@@ -128,6 +131,50 @@ planned1: function (){
        }
           
            },
+       planned1p: function (){
+           
+      
+     
+                num= Machines.find().fetch().pop().cellnum;
+          now="07"
+          month=moment().format("MM")
+          day=moment().format("DD")
+         timestamp= moment().format("YYYY-MM-DD 07:59:00.000")
+         count= Parts.find({hour: now, month:month, day:day,press:num}).count()
+         // console.log("THis is the count" + count)
+         // console.log ( "This is the type of part" + typeof Parts.findOne({hour:now, month:month, day:day}))
+          if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='object' && count >=2)
+          {
+          //fetch cycle time of the 2nd submitted job
+            cycletimeH=Parts.find({hour:now, month:month, day:day,press:num},{sort: {minute: 1}, limit: 2}).fetch().pop().cycletimeH
+            cycletimeP=Parts.find({hour:now, month:month, day:day,press:num},{sort: {minute: 1}, limit: 2}).fetch().pop().cycletimeP
+            cycletimeQ=Parts.find({hour:now, month:month, day:day,press:num},{sort: {minute: 1}, limit: 2}).fetch().pop().cycletimeQ
+            if (cycletimeH>0)
+            {
+              cycletime=cycletimeH
+              
+            }
+
+            if ((cycletimeH<=0 || cycletimeH=="") && cycletimeP> 0)
+            {
+              cycletime=cycletimeP
+              
+            }
+            if ((cycletimeH<=0 || cycletimeH=="") && (cycletimeP<=0 || cycletimeP=="") && cycletimeQ!=0)
+            {
+              cycletime=cycletimeQ
+              
+            }
+                
+   
+                      planned=1000/Number(cycletime)
+          
+              
+             return parseInt(planned)
+           }
+          
+          
+           },    
        planned2: function(){
         num= Machines.find().fetch().pop().cellnum;
         now="08"
@@ -137,9 +184,9 @@ planned1: function (){
           if(typeof Parts.findOne({hour:now, month:month, day:day,press:num}) ==='object')
           {
           //I need if statements that determine what to set the cycletime equal time
-            cycletimeH=Parts.find({hour:now, month:month, day:day,press:num}).fetch().pop().cycletimeH
-            cycletimeP=Parts.find({hour:now, month:month, day:day,press:num}).fetch().pop().cycletimeP
-            cycletimeQ=Parts.find({hour:now, month:month, day:day,press:num}).fetch().pop().cycletimeQ
+            cycletimeH=Parts.find({hour:now, month:month, day:day,press:num},{sort: {minute: 1}, limit: 1}).fetch().pop().cycletimeH
+            cycletimeP=Parts.find({hour:now, month:month, day:day,press:num},{sort: {minute: 1}, limit: 1}).fetch().pop().cycletimeP
+            cycletimeQ=Parts.find({hour:now, month:month, day:day,press:num},{sort: {minute: 1}, limit: 1}).fetch().pop().cycletimeQ
            if (cycletimeH>0)
             {
               cycletime=cycletimeH
@@ -203,6 +250,49 @@ planned1: function (){
            }
           
 },
+
+planned2p: function (){
+           
+                num= Machines.find().fetch().pop().cellnum;
+          now="08"
+          month=moment().format("MM")
+          day=moment().format("DD")
+         timestamp= moment().format("YYYY-MM-DD 08:59:00.000")
+         count= Parts.find({hour: now, month:month, day:day,press:num}).count()
+         console.log("THis is the count" + count)
+         console.log ( "This is the type of part" + typeof Parts.findOne({hour:now, month:month, day:day}))
+          if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='object' && count >=2)
+          {
+          //fetch cycle time of the 2nd submitted job
+            cycletimeH=Parts.find({hour:now, month:month, day:day,press:num},{sort: {minute: 1}, limit: 2}).fetch().pop().cycletimeH
+            cycletimeP=Parts.find({hour:now, month:month, day:day,press:num},{sort: {minute: 1}, limit: 2}).fetch().pop().cycletimeP
+            cycletimeQ=Parts.find({hour:now, month:month, day:day,press:num},{sort: {minute: 1}, limit: 2}).fetch().pop().cycletimeQ
+            if (cycletimeH>0)
+            {
+              cycletime=cycletimeH
+              
+            }
+
+            if ((cycletimeH<=0 || cycletimeH=="") && cycletimeP> 0)
+            {
+              cycletime=cycletimeP
+              
+            }
+            if ((cycletimeH<=0 || cycletimeH=="") && (cycletimeP<=0 || cycletimeP=="") && cycletimeQ!=0)
+            {
+              cycletime=cycletimeQ
+              
+            }
+                
+   
+                      planned=1000/Number(cycletime)
+          
+              
+             return parseInt(planned)
+           }
+          
+          
+           },    
 planned3: function(){
    num= Machines.find().fetch().pop().cellnum;
    now="09"
@@ -212,9 +302,9 @@ planned3: function(){
           if(typeof Parts.findOne({hour:now, month:month, day:day,press:num}) ==='object')
           {
           //I need if statements that determine what to set the cycletime equal time
-            cycletimeH=Parts.find({hour:now, month:month, day:day,press:num}).fetch().pop().cycletimeH
-            cycletimeP=Parts.find({hour:now, month:month, day:day,press:num}).fetch().pop().cycletimeP
-            cycletimeQ=Parts.find({hour:now, month:month, day:day,press:num}).fetch().pop().cycletimeQ
+            cycletimeH=Parts.find({hour:now, month:month, day:day,press:num},{sort: {minute: 1}, limit: 1}).fetch().pop().cycletimeH
+            cycletimeP=Parts.find({hour:now, month:month, day:day,press:num},{sort: {minute: 1}, limit: 1}).fetch().pop().cycletimeP
+            cycletimeQ=Parts.find({hour:now, month:month, day:day,press:num},{sort: {minute: 1}, limit: 1}).fetch().pop().cycletimeQ
            if (cycletimeH>0)
             {
               cycletime=cycletimeH
@@ -279,7 +369,50 @@ planned3: function(){
            }
           
 },
+planned3p: function (){
+           
+      
+     
+                num= Machines.find().fetch().pop().cellnum;
+          now="09"
+          month=moment().format("MM")
+          day=moment().format("DD")
+         timestamp= moment().format("YYYY-MM-DD 09:59:00.000")
+         count= Parts.find({hour: now, month:month, day:day,press:num}).count()
+         // console.log("THis is the count" + count)
+         // console.log ( "This is the type of part" + typeof Parts.findOne({hour:now, month:month, day:day}))
+          if(typeof Parts.findOne({hour:now, month:month, day:day}) ==='object' && count >=2)
+          {
+          //fetch cycle time of the 2nd submitted job
+            cycletimeH=Parts.find({hour:now, month:month, day:day,press:num},{sort: {minute: 1}, limit: 2}).fetch().pop().cycletimeH
+            cycletimeP=Parts.find({hour:now, month:month, day:day,press:num},{sort: {minute: 1}, limit: 2}).fetch().pop().cycletimeP
+            cycletimeQ=Parts.find({hour:now, month:month, day:day,press:num},{sort: {minute: 1}, limit: 2}).fetch().pop().cycletimeQ
+            if (cycletimeH>0)
+            {
+              cycletime=cycletimeH
+              
+            }
 
+            if ((cycletimeH<=0 || cycletimeH=="") && cycletimeP> 0)
+            {
+              cycletime=cycletimeP
+              
+            }
+            if ((cycletimeH<=0 || cycletimeH=="") && (cycletimeP<=0 || cycletimeP=="") && cycletimeQ!=0)
+            {
+              cycletime=cycletimeQ
+              
+            }
+                
+   
+                      planned=1000/Number(cycletime)
+          
+              
+             return parseInt(planned)
+           }
+          
+          
+           },    
 
 plannedc1: function (){
           //basically I need to multiply the earned hours by how many hours the job has gone for to get the planned 
@@ -334,30 +467,31 @@ plannedc1: function (){
             //I need to multiply the day of TS by 24 and multiply the day of now by 24
             //Then I need to add the hours of TS to 24 and add the hours of now to current day hours
             //Then subtract the two from each other then use this as the multiplier
-            timeDays=Number(Parts.find({timestamp: {$lt: timestamp}},{press:num}).fetch().pop().day)
+              timeDays=Number(Parts.find({timestamp: {$lt: timestamp}},{press:num}).fetch().pop().day)
             timeHour=Number(Parts.find({timestamp: {$lt: timestamp}},{press:num}).fetch().pop().hour)  + (Number(timeDays)*24)
              nowDays=Number(moment().format("DD"))
              nowHours=Number(now) + (Number(nowDays)*24)
              
             multiplier=nowHours - timeHour
+            multiplier = multiplier +1
           cycletimeH=Parts.find({timestamp: {$lt: timestamp}},{press:num}).fetch().pop().cycletimeH
           cycletimeP=Parts.find({timestamp: {$lt: timestamp}},{press:num}).fetch().pop().cycletimeP
           cycletimeQ=Parts.find({timestamp: {$lt: timestamp}},{press:num}).fetch().pop().cycletimeQ
            if (cycletimeH>0)
             {
               cycletime=cycletimeH
-              console.log("In H")
+              
             }
 
             if ((cycletimeH<=0 || cycletimeH=="") && cycletimeP> 0)
             {
               cycletime=cycletimeP
-             console.log("In P")
+             
             }
             if ((cycletimeH<=0 || cycletimeH=="") && (cycletimeP<=0 || cycletimeP=="") && cycletimeQ!=0)
             {
               cycletime=cycletimeQ
-              console.log("In Q")
+              
             }
                
    if (typeof Hours.find({timestamp: {$lt: timestamp}},{press:num}).timestamp === 'undefined')
@@ -369,6 +503,56 @@ plannedc1: function (){
              return parseInt(planned)*multiplier
            }
           
+           },
+ plannedc1p: function (){
+          //basically I need to multiply the earned hours by how many hours the job has gone for to get the planned 
+          // so if the job started this hour then just return the EH
+          //If the job started in a previous hour then count how many hours have passed?
+          //so how do I count hours since job was submitted
+          num= Machines.find().fetch().pop().cellnum;
+          now="07"
+          month=moment().format("MM")
+          day=moment().format("DD")
+         timestamp= moment().format("YYYY-MM-DD 07:59:00.000")
+
+          if(typeof Parts.findOne({hour:now, month:month, day:day,press:num}) ==='object')
+          {
+          //I need if statements that determine what to set the cycletime equal time
+            cycletimeH=Parts.find({hour:now, month:month, day:day,press:num}).fetch().pop().cycletimeH
+            cycletimeP=Parts.find({hour:now, month:month, day:day,press:num}).fetch().pop().cycletimeP
+            cycletimeQ=Parts.find({hour:now, month:month, day:day,press:num}).fetch().pop().cycletimeQ
+            if (cycletimeH>0)
+            {
+              cycletime=cycletimeH
+              
+            }
+
+            if ((cycletimeH<=0 || cycletimeH=="") && cycletimeP> 0)
+            {
+              cycletime=cycletimeP
+              
+            }
+            if ((cycletimeH<=0 || cycletimeH=="") && (cycletimeP<=0 || cycletimeP=="") && cycletimeQ!=0)
+            {
+              cycletime=cycletimeQ
+              
+            }
+               
+   
+                      planned=1000/Number(cycletime)
+          
+              
+             return parseInt(planned)
+           }
+           //no job submitted this hour and the end job hasn't been clicked after the last just was submitted
+           //I need to setup that logic.
+           
+
+     //part=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop()
+     
+  
+
+            
            },
        plannedc2: function(){
    num= Machines.find().fetch().pop().cellnum;
@@ -414,12 +598,13 @@ plannedc1: function (){
 
             if(typeof Parts.findOne({hour:now, month:month, day:day,press:num}) ==='undefined' && moment().format("HH") >=now)
           {
-            timeDays=Number(Parts.find({timestamp: {$lt: timestamp}},{press:num}).fetch().pop().day)
+              timeDays=Number(Parts.find({timestamp: {$lt: timestamp}},{press:num}).fetch().pop().day)
             timeHour=Number(Parts.find({timestamp: {$lt: timestamp}},{press:num}).fetch().pop().hour)  + (Number(timeDays)*24)
              nowDays=Number(moment().format("DD"))
              nowHours=Number(now) + (Number(nowDays)*24)
              
             multiplier=nowHours - timeHour
+            multiplier = multiplier +1
            cycletimeH=Parts.find({timestamp: {$lt: timestamp}},{press:num}).fetch().pop().cycletimeH
           cycletimeP=Parts.find({timestamp: {$lt: timestamp}},{press:num}).fetch().pop().cycletimeP
           cycletimeQ=Parts.find({timestamp: {$lt: timestamp}},{press:num}).fetch().pop().cycletimeQ
@@ -449,6 +634,57 @@ plannedc1: function (){
            }
           
 },
+
+ plannedc2p: function (){
+          //basically I need to multiply the earned hours by how many hours the job has gone for to get the planned 
+          // so if the job started this hour then just return the EH
+          //If the job started in a previous hour then count how many hours have passed?
+          //so how do I count hours since job was submitted
+          num= Machines.find().fetch().pop().cellnum;
+          now="08"
+          month=moment().format("MM")
+          day=moment().format("DD")
+         timestamp= moment().format("YYYY-MM-DD 07:59:00.000")
+
+          if(typeof Parts.findOne({hour:now, month:month, day:day,press:num}) ==='object')
+          {
+          //I need if statements that determine what to set the cycletime equal time
+            cycletimeH=Parts.find({hour:now, month:month, day:day,press:num}).fetch().pop().cycletimeH
+            cycletimeP=Parts.find({hour:now, month:month, day:day,press:num}).fetch().pop().cycletimeP
+            cycletimeQ=Parts.find({hour:now, month:month, day:day,press:num}).fetch().pop().cycletimeQ
+            if (cycletimeH>0)
+            {
+              cycletime=cycletimeH
+              
+            }
+
+            if ((cycletimeH<=0 || cycletimeH=="") && cycletimeP> 0)
+            {
+              cycletime=cycletimeP
+              
+            }
+            if ((cycletimeH<=0 || cycletimeH=="") && (cycletimeP<=0 || cycletimeP=="") && cycletimeQ!=0)
+            {
+              cycletime=cycletimeQ
+              
+            }
+               
+   
+                      planned=1000/Number(cycletime)
+          
+              
+             return parseInt(planned)
+           }
+           //no job submitted this hour and the end job hasn't been clicked after the last just was submitted
+           //I need to setup that logic.
+           
+
+     //part=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop()
+     
+  
+
+            
+           },
 plannedc3: function(){
    num= Machines.find().fetch().pop().cellnum;
    now="09"
@@ -499,6 +735,8 @@ plannedc3: function(){
              nowHours=Number(now) + (Number(nowDays)*24)
              
             multiplier=nowHours - timeHour
+            multiplier = multiplier +1
+
            cycletimeH=Parts.find({timestamp: {$lt: timestamp}},{press:num}).fetch().pop().cycletimeH
           cycletimeP=Parts.find({timestamp: {$lt: timestamp}},{press:num}).fetch().pop().cycletimeP
           cycletimeQ=Parts.find({timestamp: {$lt: timestamp}},{press:num}).fetch().pop().cycletimeQ
@@ -528,6 +766,56 @@ plannedc3: function(){
            }
           
 },
+ plannedc3p: function (){
+          //basically I need to multiply the earned hours by how many hours the job has gone for to get the planned 
+          // so if the job started this hour then just return the EH
+          //If the job started in a previous hour then count how many hours have passed?
+          //so how do I count hours since job was submitted
+          num= Machines.find().fetch().pop().cellnum;
+          now="09"
+          month=moment().format("MM")
+          day=moment().format("DD")
+         timestamp= moment().format("YYYY-MM-DD 07:59:00.000")
+
+          if(typeof Parts.findOne({hour:now, month:month, day:day,press:num}) ==='object')
+          {
+          //I need if statements that determine what to set the cycletime equal time
+            cycletimeH=Parts.find({hour:now, month:month, day:day,press:num}).fetch().pop().cycletimeH
+            cycletimeP=Parts.find({hour:now, month:month, day:day,press:num}).fetch().pop().cycletimeP
+            cycletimeQ=Parts.find({hour:now, month:month, day:day,press:num}).fetch().pop().cycletimeQ
+            if (cycletimeH>0)
+            {
+              cycletime=cycletimeH
+              
+            }
+
+            if ((cycletimeH<=0 || cycletimeH=="") && cycletimeP> 0)
+            {
+              cycletime=cycletimeP
+              
+            }
+            if ((cycletimeH<=0 || cycletimeH=="") && (cycletimeP<=0 || cycletimeP=="") && cycletimeQ!=0)
+            {
+              cycletime=cycletimeQ
+              
+            }
+               
+   
+                      planned=1000/Number(cycletime)
+          
+              
+             return parseInt(planned)
+           }
+           //no job submitted this hour and the end job hasn't been clicked after the last just was submitted
+           //I need to setup that logic.
+           
+
+     //part=Parts.find({timestamp: {$lt: timestamp}}).fetch().pop()
+     
+  
+
+            
+           },
 incomingcycles1: function () {
         //grab all cycles from today
       num= Machines.find().fetch().pop().cellnum;
@@ -540,7 +828,7 @@ incomingcycles1: function () {
            
    //Basically I need code to be run if there was NOT a end job submitted this hour
 if (typeof Hours.findOne({hour: now, month:month, day:day,press:num}) === 'undefined')
-{console.log("There is not a end job")
+{
 //all this is activated whenever a job is submitted in this hour
  if (typeof Parts.findOne({hour: now, month:month, day:day,press:num}) === 'object' && count===1)
       {
@@ -595,18 +883,15 @@ if (typeof Hours.findOne({hour: now, month:month, day:day,press:num}) === 'undef
     day=moment().format("DD")
       
      count= Parts.find({hour: now, month:month, day:day,press:num}).count()
-      //The start time will be time stamp of the most recent job
-      //the end time will be the end of the hour
-      //the time stamp of the most recent job will be 
+      if (typeof Hours.findOne({hour: now, month:month, day:day,press:num}) === 'undefined')
+      {
       if (typeof Parts.findOne({hour:now, month: month, day: day,press:num})=== 'object'  && count ===2)
       {
-        //Part = Parts.find({hour: '12'}).fetch().pop().timestamp
-        //I need the time stamp of the most recently submitted job
+              //I need the time stamp of the most recently submitted job
         //if there are 2 jobs submitted then this 2nd job will start at its time stamp and end at the end of the hour
        
-        return Cycles.find({PressNumber: num,AutoStatus: "1", CycleTimeStamp: {$gte: moment(part = Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 2}).fetch().pop()).format("YYYY-MM-DD 07:mm:ss.SSS"), $lt: moment().format("YYYY-MM-DD 08:00:00.000")}}).count() * Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 2}).fetch().pop().cavitation;
+        return Cycles.find({PressNumber: num,AutoStatus: "1", CycleTimeStamp: {$gte: moment(Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 2}).fetch().pop()).format("YYYY-MM-DD 07:mm:ss.SSS"), $lt: moment().format("YYYY-MM-DD 08:00:00.000")}}).count() * Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 2}).fetch().pop().cavitation;
          
-       
       }
         else if (typeof Parts.findOne({hour: now, month:month, day:day})=== 'object'  && count >2)
       {
@@ -618,7 +903,28 @@ if (typeof Hours.findOne({hour: now, month:month, day:day,press:num}) === 'undef
       }
      
 
+     }
+
+     if (typeof Hours.findOne({hour: now, month:month, day:day,press:num}) === 'object')
+     {
+     	//go until the job was submitted basically for all the if statements
+		if (typeof Parts.findOne({hour:now, month: month, day: day,press:num})=== 'object'  && count ===2)
+      {
+               
+        return Cycles.find({PressNumber: num,AutoStatus: "1", CycleTimeStamp: {$gte: moment(Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 2}).fetch().pop()).format("YYYY-MM-DD 07:mm:ss.SSS"), $lt: moment(Hours.find({hour: now, month:month, day:day,press:num}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS")}}).count() * Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 2}).fetch().pop().cavitation;
+         
+       
+      }
+        else if (typeof Parts.findOne({hour: now, month:month, day:day})=== 'object'  && count >2)
+      {
+
+        //if there are three job submissions.  this should start from its time stamp and end and the most recent time stamp
+        //at this point the second submission will be the second item in the collection or middle item
+        return Cycles.find({PressNumber: num,AutoStatus: "1", CycleTimeStamp: {$gte: moment(Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD 07:mm:ss.SSS"), $lt: moment(Hours.find({hour: now, month:month, day:day,press:num}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS")}}).count() * Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 2}).fetch().pop().cavitation;
+       
+      }
      
+     }
       },
           
     
@@ -682,32 +988,55 @@ if (typeof Hours.findOne({hour: now, month:month, day:day,press:num}) === 'undef
       
      incomingcycles2p: function () {
         num= Machines.find().fetch().pop().cellnum;
-       now="08"
-     month=moment().format("MM")
+     now="08"
+    month=moment().format("MM")
     day=moment().format("DD")
       
      count= Parts.find({hour: now, month:month, day:day,press:num}).count()
-      //The start time will be time stamp of the most recent job
-      //the end time will be the end of the hour
-      //the time stamp of the most recent job will be 
+      if (typeof Hours.findOne({hour: now, month:month, day:day,press:num}) === 'undefined')
+      {
       if (typeof Parts.findOne({hour:now, month: month, day: day,press:num})=== 'object'  && count ===2)
       {
         //Part = Parts.find({hour: '12'}).fetch().pop().timestamp
         //I need the time stamp of the most recently submitted job
         //if there are 2 jobs submitted then this 2nd job will start at its time stamp and end at the end of the hour
        
-        return Cycles.find({PressNumber: num, AutoStatus: "1", CycleTimeStamp: {$gte: moment(part = Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 2}).fetch().pop()).format("YYYY-MM-DD 08:mm:ss.SSS"), $lt: moment().format("YYYY-MM-DD 09:00:00.000")}}).count() * Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 2}).fetch().pop().cavitation;
+        return Cycles.find({PressNumber: num,AutoStatus: "1", CycleTimeStamp: {$gte: moment(part = Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 2}).fetch().pop()).format("YYYY-MM-DD 08:mm:ss.SSS"), $lt: moment().format("YYYY-MM-DD 09:00:00.000")}}).count() * Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 2}).fetch().pop().cavitation;
          
        
       }
-        else if (typeof Parts.findOne({hour:now, month: month, day: day})=== 'object'  && count >2)
+        else if (typeof Parts.findOne({hour: now, month:month, day:day})=== 'object'  && count >2)
       {
 
         //if there are three job submissions.  this should start from its time stamp and end and the most recent time stamp
         //at this point the second submission will be the second item in the collection or middle item
-        return Cycles.find({PressNumber: num, AutoStatus: "1", CycleTimeStamp: {$gte: moment(Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD 08:mm:ss.SSS"), $lt: moment(Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 3}).fetch().pop().timestamp).format("YYYY-MM-DD 08:mm:ss.SSS")}}).count() * Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 2}).fetch().pop().cavitation;
+        return Cycles.find({PressNumber: num,AutoStatus: "1", CycleTimeStamp: {$gte: moment(Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD 08:mm:ss.SSS"), $lt: moment(Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 3}).fetch().pop().timestamp).format("YYYY-MM-DD 08:mm:ss.SSS")}}).count() * Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 2}).fetch().pop().cavitation;
        
       }
+     
+
+     }
+
+     if (typeof Hours.findOne({hour: now, month:month, day:day,press:num}) === 'object')
+     {
+     	//go until the job was submitted basically for all the if statements
+		if (typeof Parts.findOne({hour:now, month: month, day: day,press:num})=== 'object'  && count ===2)
+      {
+               
+        return Cycles.find({PressNumber: num,AutoStatus: "1", CycleTimeStamp: {$gte: moment(Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 2}).fetch().pop()).format("YYYY-MM-DD 08:mm:ss.SSS"),  $lt: moment(Hours.find({hour: now, month:month, day:day,press:num}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS")}}).count() * Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 2}).fetch().pop().cavitation;
+         
+       
+      }
+        else if (typeof Parts.findOne({hour: now, month:month, day:day})=== 'object'  && count >2)
+      {
+
+        //if there are three job submissions.  this should start from its time stamp and end and the most recent time stamp
+        //at this point the second submission will be the second item in the collection or middle item
+        return Cycles.find({PressNumber: num,AutoStatus: "1", CycleTimeStamp: {$gte: moment(Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD 08:mm:ss.SSS"), $lt: moment(Hours.find({hour: now, month:month, day:day,press:num}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS")}}).count() * Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 2}).fetch().pop().cavitation;
+       
+      }
+     
+     }
     
       },
 
@@ -769,33 +1098,56 @@ if (typeof Hours.findOne({hour: now, month:month, day:day,press:num}) === 'undef
       },
       
       incomingcycles3p: function () {
-           num= Machines.find().fetch().pop().cellnum;
+          num= Machines.find().fetch().pop().cellnum;
      now="09"
-   month=moment().format("MM")
+    month=moment().format("MM")
     day=moment().format("DD")
       
      count= Parts.find({hour: now, month:month, day:day,press:num}).count()
-       //the time stamp of the most recent job will be 
+      if (typeof Hours.findOne({hour: now, month:month, day:day,press:num}) === 'undefined')
+      {
       if (typeof Parts.findOne({hour:now, month: month, day: day,press:num})=== 'object'  && count ===2)
-       {
-         //Part = Parts.find({hour: '12'}).fetch().pop().timestamp
-         //I need the time stamp of the most recently submitted job
-         //if there are 2 jobs submitted then this 2nd job will start at its time stamp and end at the end of the hour
+      {
+        //Part = Parts.find({hour: '12'}).fetch().pop().timestamp
+        //I need the time stamp of the most recently submitted job
+        //if there are 2 jobs submitted then this 2nd job will start at its time stamp and end at the end of the hour
        
-         return Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment(part = Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 2}).fetch().pop()).format("YYYY-MM-DD 09:mm:ss.SSS"), $lt: moment().format("YYYY-MM-DD 10:00:00.000")}}).count() * Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 2}).fetch().pop().cavitation;
+        return Cycles.find({PressNumber: num,AutoStatus: "1", CycleTimeStamp: {$gte: moment(part = Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 2}).fetch().pop()).format("YYYY-MM-DD 09:mm:ss.SSS"), $lt: moment().format("YYYY-MM-DD 10:00:00.000")}}).count() * Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 2}).fetch().pop().cavitation;
          
        
-       }
-         else if (typeof Parts.findOne({hour:now, month: month, day: day,press:num})=== 'object'  && count >2)
-       {
+      }
+        else if (typeof Parts.findOne({hour: now, month:month, day:day})=== 'object'  && count >2)
+      {
 
-         //if there are three job submissions.  this should start from its time stamp and end and the most recent time stamp
-         //at this point the second submission will be the second item in the collection or middle item
-         return Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment(Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD 09:mm:ss.SSS"), $lt: moment(Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 3}).fetch().pop().timestamp).format("YYYY-MM-DD 09:mm:ss.SSS")}}).count() * Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 2}).fetch().pop().cavitation;
+        //if there are three job submissions.  this should start from its time stamp and end and the most recent time stamp
+        //at this point the second submission will be the second item in the collection or middle item
+        return Cycles.find({PressNumber: num,AutoStatus: "1", CycleTimeStamp: {$gte: moment(Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD 09:mm:ss.SSS"), $lt: moment(Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 3}).fetch().pop().timestamp).format("YYYY-MM-DD 09:mm:ss.SSS")}}).count() * Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 2}).fetch().pop().cavitation;
        
-       }
+      }
      
 
+     }
+
+     if (typeof Hours.findOne({hour: now, month:month, day:day,press:num}) === 'object')
+     {
+     	//go until the job was submitted basically for all the if statements
+		if (typeof Parts.findOne({hour:now, month: month, day: day,press:num})=== 'object'  && count ===2)
+      {
+               
+        return Cycles.find({PressNumber: num,AutoStatus: "1", CycleTimeStamp: {$gte: moment(Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 2}).fetch().pop()).format("YYYY-MM-DD 09:mm:ss.SSS"),$lt: moment(Hours.find({hour: now, month:month, day:day,press:num}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS")}}).count() * Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 2}).fetch().pop().cavitation;
+         
+       
+      }
+        else if (typeof Parts.findOne({hour: now, month:month, day:day})=== 'object'  && count >2)
+      {
+
+        //if there are three job submissions.  this should start from its time stamp and end and the most recent time stamp
+        //at this point the second submission will be the second item in the collection or middle item
+        return Cycles.find({PressNumber: num,AutoStatus: "1", CycleTimeStamp: {$gte: moment(Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD 09:mm:ss.SSS"), $lt: moment(Hours.find({hour: now, month:month, day:day,press:num}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS")}}).count() * Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 2}).fetch().pop().cavitation;
+       
+      }
+     
+     }
      
        },
 
@@ -1134,11 +1486,7 @@ if (typeof Hours.findOne({hour: now, month:month, day:day,press:num}) === 'undef
             },
 earnedhours1p: function() {
      
-          earnedhours = Number(incomingcycles1p())/planned
-          if(earnedhours >= 0)
-             {
-             return earnedhours
-             } 
+         
             },
 
 
@@ -1279,16 +1627,15 @@ if (typeof Hours.findOne({hour: now, month:month, day:day,press:num}) === 'undef
               
      
 earnedhours2p: function() {
-      planned=planned2p()
-          earnedhours = Number(incomingcycles/planned)
+     
           
             },
 earnedhours3: function() {
          num= Machines.find().fetch().pop().cellnum;
-         now="10"
+         now="09"
           month=moment().format("MM")
           day=moment().format("DD")
-         timestamp= moment().format("YYYY-MM-DD 10:59:00.000")
+         timestamp= moment().format("YYYY-MM-DD 09:59:00.000")
           if(typeof Parts.findOne({hour:now, month:month, day:day,press:num}) ==='object')
           {
           //I need if statements that determine what to set the cycletime equal time
@@ -1356,42 +1703,38 @@ earnedhours3: function() {
               
              
            }
-          //incoming cycles
+        
 
- 
-           
-     //grab all cycles from today
-     
      count= Parts.find({hour: now, month:month, day:day,press:num}).count()
-           
-   //Basically I need code to be run if there was NOT a end job submitted this hour
-if (typeof Hours.findOne({hour: now, month:month, day:day,press:num}).timestamp === 'undefined')
-{
+  //If ther was a job submitted this hour then
+  if (typeof Hours.findOne({hour: now, month:month, day:day,press:num}) === 'undefined')
+ {
 //all this is activated whenever a job is submitted in this hour
- if (typeof Parts.findOne({hour: now, month:month, day:day,press:num}) === 'object' && count===1)
-      {
-   incomingcycles= Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment(Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 1}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment().format("YYYY-MM-DD 08:00:00.000")}}).count() * Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
-  }
-  else if (typeof Parts.findOne({hour: now, month:month, day:day,press:num}) === 'object' && count>=2)
-      {
-        //the start time is same.  The end time will be the most recent job
+  if (typeof Parts.findOne({hour: now, month:month, day:day,press:num}) === 'object' && count===1)
+       {
+    incomingcycles= Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment(Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 1}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment().format("YYYY-MM-DD 10:00:00.000")}}).count() * Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
+   }
+   else if (typeof Parts.findOne({hour: now, month:month, day:day,press:num}) === 'object' && count>=2)
+       {
+         //the start time is same.  The end time will be the most recent job
 
     incomingcycles= Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment(Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 1}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment(Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS")}}).count() * Parts.find({hour:now,press:num}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
-  }
+   }
  
 
-
- if (typeof Parts.findOne({hour: now, month:month, day:day,press:num}) === 'undefined' && moment().format("mm") >=now)
-{
-  //multiply it by the cavitation of the the job less than the current hour
-     incomingcycles= Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 07:00:00.000"), $lt: moment().format("YYYY-MM-DD 08:00:00.000")}}).count() * Parts.find({timestamp: {$lt: timestamp}},{press:num}).fetch().pop().cavitation;
-  
-    }
-
-    }
- if (typeof Hours.findOne({hour: now, month:month, day:day,press:num}).timestamp === 'object')
+//This bit of code is different
+//so there is no job this hour
+  if (typeof Parts.findOne({hour: now, month:month, day:day,press:num}) === 'undefined' && moment().format("mm") >=now)
  {
-//run this code when there is an end job in this hour
+   //This needs to be setup to multiply the cycles by the last submitted Part so fetch().pop()
+     incomingcycles= Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment(Parts.find({timestamp: {$lt: timestamp}},{press:num}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment().format("YYYY-MM-DD 10:00:00.000")}}).count() * Parts.find({timestamp: {$lt: timestamp}},{press:num}).fetch().pop().cavitation;
+  
+     }
+     }
+//This code is run if there is an end job sent
+if (typeof Hours.findOne({hour: now, month:month, day:day,press:num}) === 'object')
+ {
+//run this code when there is a job started in this hour
  if (typeof Parts.findOne({hour: now, month:month, day:day,press:num}) === 'object' && count===1)
       {
     incomingcycles= Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment(Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 1}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment(Hours.find({hour: now, month:month, day:day,press:num}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS")}}).count() * Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
@@ -1403,15 +1746,15 @@ if (typeof Hours.findOne({hour: now, month:month, day:day,press:num}).timestamp 
     incomingcycles= Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment(Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 1}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment(Parts.find({hour:now, month: month, day: day,press:num}, {sort: {minute: 1}, limit: 2}).fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS")}}).count() * Parts.find({hour:now,press:num}, {sort: {minute: 1}, limit: 1}).fetch().pop().cavitation;
   }
  
-//This find the last submitted part prior to this hour
 
- if (typeof Parts.findOne({hour: now, month:month, day:day,press:num}) === 'undefined')
+//if there is not a job submitted this hour
+ if (typeof Parts.findOne({hour: now, month:month, day:day,press:num}) === 'undefined' && moment().format("mm")>now)
 {
   //This needs to be setup to multiply the cycles by the last submitted Part so fetch().pop()
-     incomingcycles= Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment().format("YYYY-MM-DD 10:00:00.000"), $lt: moment(Hours.find({hour: now, month:month, day:day,press:num}).fetch().pop().timestamp).format("YYYY-MM-DD 10:mm:ss.SSS")}}).count() * Parts.find({timestamp: {$lt: timestamp}},{press:num}).fetch().pop().cavitation;
+    incomingcycles= Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment(Parts.find({timestamp: {$lt: timestamp}},{press:num}).fetch().pop()).format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment(Hours.find({hour: now, month:month, day:day,press:num}).fetch().pop().timestamp).format("YYYY-MM-DD 09:mm:ss.SSS")}}).count() * Parts.find({timestamp: {$lt: timestamp}},{press:num}).fetch().pop().cavitation;
   
     }
-    } 
+    }  
 
            earnedhours = Number(incomingcycles)/planned
               
@@ -1428,11 +1771,11 @@ earnedhours3p: function() {
             changeStatus1: function() {
       
             
-        if (earnedhours1() >=1)
+        if (earnedhours >=1)
        {
          return "Green"
       }
-      else if (earnedhours1() <1)
+      else if (earnedhours <1)
        {
 
         return "Yellow"
@@ -1441,100 +1784,100 @@ earnedhours3p: function() {
 
 
      },
-    changeStatus1p: function() {
+//     changeStatus1p: function() {
      
        
-       if (earnedhours1p() >=1 && count>1)
-      { 
+//        if (earnedhours >=1 && count>1)
+//       { 
          
-    return "Green"
+//     return "Green"
     
-      }
+//       }
 
-      else if (earnedhours1p() <1&& count>1)
-  {
+//       else if (earnedhours <1&& count>1)
+//   {
  
-    return "Yellow"
+//     return "Yellow"
    
- }
-      // }
-    },
+//  }
+//       // }
+//     },
     
 
-    changeStatus2: function() {
+//     changeStatus2: function() {
      
             
-       if (earnedhours2() >=1)
-      {
-        return "Green"
-      }
+//        if (earnedhours >=1)
+//       {
+//         return "Green"
+//       }
 
-      else if (earnedhours2() <1)
-      {
+//       else if (earnedhours <1)
+//       {
 
-        return "Yellow"
-      }
-
-
+//         return "Yellow"
+//       }
 
 
-    },
-changeStatus2p: function() {
+
+
+//     },
+// changeStatus2p: function() {
  
      
        
-       if (earnedhours2p() >=1 && count>1)
-      { 
+//        if (earnedhours >=1 && count>1)
+//       { 
          
-    return "Green"
+//     return "Green"
     
-      }
+//       }
 
-      else if (earnedhours2p() <1&& count>1)
-  {
+//       else if (earnedhours2p() <1&& count>1)
+//   {
  
-    return "Yellow"
+//     return "Yellow"
    
- }
-      // }
-    },
-changeStatus3: function() {
+//  }
+//       // }
+//     },
+// changeStatus3: function() {
         
    
             
-       if (earnedhours3() >=1)
-      {
-        return "Green"
-      }
+//        if (earnedhours >=1)
+//       {
+//         return "Green"
+//       }
 
-      else if (earnedhours3() <1)
-      {
+//       else if (earnedhours <1)
+//       {
 
-        return "Yellow"
-      }
-
-
+//         return "Yellow"
+//       }
 
 
-    },
-changeStatus3p: function() {
+
+
+//     },
+// changeStatus3p: function() {
    
        
-       if (earnedhours3p() >=1)
-      { 
+//        if (earnedhours3>=1)
+//       { 
          
-    return "Green"
+//     return "Green"
     
-      }
+//       }
 
-      else if (earnedhours3p() <1)
-  {
+//       else if (earnedhours3 <1)
+//   {
  
-    return "Yellow"
+//     return "Yellow"
    
- }
-      // }
-    },
+//  }
+//       // }
+//     },
 
     part1: function ()
    {

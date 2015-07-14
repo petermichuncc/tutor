@@ -1,25 +1,24 @@
-Meteor.subscribe('cycles-recent', moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000"))
+
+Meteor.subscribe('cycles-recent', moment().subtract(1, 'hours').format("YYYY-MM-DD HH:mm:ss.SSS"))
    Meteor.subscribe('parts');
 Meteor.subscribe('machines');
-
-
-
-
 
 Template.countdownbar.helpers({
 
  percent: function(){
-    
+     num= Machines.find().fetch().pop().cellnum;
+     
         //change percent to be how many hours out of 24 hours
-          num= Machines.find().fetch().pop().cellnum;
- count = Cycles.find({PressNumber: num, AutoStatus: "1", CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).subtract(60,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
          
-         // estimatedTime = (Number(Parts.find().fetch().pop().quantity) - Number(count))  / Number(Parts.find().fetch().pop().cavitation);
-          estimatedTime = (Number(Parts.find().fetch().pop().quantity)) / Number(Parts.find().fetch().pop().cavitation);
+    month=moment().format("MM")
+   
+      timestamp= moment().format("YYYY-MM-DD 08:59:00.000")
+   num= Machines.find().fetch().pop().cellnum;
+  estimatedTime = (Number(Parts.find({press:num,month:month}).fetch().pop().quantity)) / Number(Parts.find().fetch().pop().cavitation);
          
          // //basically take the quantity divided by cavitation and multiply this by 
-        start =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).CycleTimeStamp
-       next =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: moment(start.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).CycleTimeStamp
+        start =moment(Parts.find({press:num,month:month}).fetch().pop().timestamp.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")
+        next =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt:  start}}).CycleTimeStamp
         startseconds=moment(start).format("ss.SSS")
         startminutes=moment(start).format("mm")
         startseconds=Number(startseconds)+ Number(startminutes)*60
@@ -42,13 +41,13 @@ Template.countdownbar.helpers({
         //Then i need to subtract this count from the total
         //Then i need to divide by the cavitation
 
-        cycles= Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment().format("YYYY-MM-DD HH:mm:ss.SSS")}}).count() * Parts.find().fetch().pop().cavitation;
+        cycles= Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment(Parts.find({press:num,month:month}).fetch().pop().timestamp.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).count() * Parts.find({press:num,month:month}).fetch().pop().cavitation;
         cycles = Number(cycles)
         cycles = cycles/60
         cycles = cycles/60
 
         
-        total= (estimatedhours - cycles)/ Parts.find().fetch().pop().cavitation
+        total= (estimatedhours - cycles)/ Parts.find({press:num,month:month}).fetch().pop().cavitation
        
          if (total <=0)
          {
@@ -71,14 +70,13 @@ Template.countdownbar.helpers({
    },
 hour: function(){
     num= Machines.find().fetch().pop().cellnum;
- count = Cycles.find({PressNumber: num, AutoStatus: "1", CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).subtract(60,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()
-         
+      month=moment().format("MM")
          // estimatedTime = (Number(Parts.find().fetch().pop().quantity) - Number(count))  / Number(Parts.find().fetch().pop().cavitation);
-          estimatedTime = (Number(Parts.find().fetch().pop().quantity)) / Number(Parts.find().fetch().pop().cavitation);
-         
+          estimatedTime = (Number(Parts.find({press:num,month:month}).fetch().pop().quantity)) / Number(Parts.find({press:num,month:month}).fetch().pop().cavitation);
+          
          // //basically take the quantity divided by cavitation and multiply this by 
-        start =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).CycleTimeStamp
-       next =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: moment(start.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).CycleTimeStamp
+        start =moment(Parts.find({press:num,month:month}).fetch().pop().timestamp.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")
+        next = Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt:  start}}).CycleTimeStamp
         startseconds=moment(start).format("ss.SSS")
         startminutes=moment(start).format("mm")
         startseconds=Number(startseconds)+ Number(startminutes)*60
@@ -100,13 +98,13 @@ hour: function(){
           estimatedhours=0;
          }
          estimatedhours
-          cycles= Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp).format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment().format("YYYY-MM-DD HH:mm:ss.SSS")}}).count() * Parts.find().fetch().pop().cavitation;
+          cycles= Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment(Parts.find({press:num,month:month}).fetch().pop().timestamp.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).count() * Parts.find({press:num,month:month}).fetch().pop().cavitation;
         
         cycles = Number(cycles)
         cycles = cycles/60
         cycles = cycles/60
         
-        total= (estimatedhours - cycles)/ Parts.find().fetch().pop().cavitation
+        total= (estimatedhours - cycles)/ Parts.find({press:num,month:month}).fetch().pop().cavitation
        total = parseInt(total)
          if (total <=0)
          {

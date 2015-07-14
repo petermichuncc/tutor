@@ -27,11 +27,11 @@ Meteor.publish('submissions', function() {
 // return Cycles.find({CycleTimeStamp: {$gte: startTime}});
 // });
 
-Meteor.publish('cycles-recent', function (startTime) {
+Meteor.publish('cycles-recent', function (startTime, pressnumber) {
+Cycles.remove({CycleTimeStamp: {$lt: moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000")}})
 
-return Cycles.find({CycleTimeStamp: {$gte: startTime}});
+return Cycles.find({CycleTimeStamp: {$gte: startTime},AutoStatus: '1' });
 });
-
 
 // Meteor.publish('cycles-recent', function (startTime, endTime) {
 
