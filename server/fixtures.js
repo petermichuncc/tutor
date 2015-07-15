@@ -21,7 +21,13 @@ Entries.insert(
   cycletime3: "0"
  });
 }
-
+if (Hours.find().count() === 0) {
+  Hours.insert(
+    {
+     timestamp: moment.format("")
+       });
+ 
+}
 if (Workcenters.find().count() === 0) {
   Workcenters.insert(
     {
