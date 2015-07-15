@@ -14,15 +14,59 @@ width:200px;
 
 }
 table{
-	width: 100%;
+  width: 100%;
     font-size: 20px;
+cellspacing:0;
+cellpadding:0;
+
+ border-collapse: collapse;
+  border-spacing: 0;
+border-spacing: 0;
+}
+
+#machinenumber
+{
+
+  color:black;
+}
+table#parts
+{
+cellspacing:0;
+cellpadding:0;
+
+ border-collapse: collapse;
+  border-spacing: 0;
+border-spacing: 0;
+}
+table.parts
+{
+
+width:"3000";
+cellspacing:0;
+cellpadding:0;
+
+ border-collapse: collapse;
+  border-spacing: 0;
+border-spacing: 0;
+
+
 }
 table th{ 
-	padding: 2%;
+	cellspacing:0;
+cellpadding:0;
+
+ border-collapse: collapse;
+  border-spacing: 0;
+border-spacing: 0;
         font-size: 15px;
 }
 table td{
-	padding: 2%;
+    cellspacing:0;
+cellpadding:0;
+
+ border-collapse: collapse;
+  border-spacing: 0;
+border-spacing: 0;
 }
 
 table.display{
@@ -194,8 +238,12 @@ input[type="submit"]:active{
 } 
 
 progress {
+    -webkit-appearance: progress-bar;
+    box-sizing: border-box;
+    display: inline-block;
+    vertical-align: -0.2em;
 	width: 100%;
-	height: 15px;
+	height: 20px;
 }
 
 #inmanual {

@@ -6,61 +6,70 @@ Meteor.subscribe('machines');
 Template.countdownbar.helpers({
 
  percent: function(){
-     num= Machines.find().fetch().pop().cellnum;
+    num= Machines.find().fetch().pop().cellnum;
      
-        //change percent to be how many hours out of 24 hours
-         
     month=moment().format("MM")
    
       timestamp= moment().format("YYYY-MM-DD 08:59:00.000")
    num= Machines.find().fetch().pop().cellnum;
-  estimatedTime = (Number(Parts.find({press:num,month:month}).fetch().pop().quantity)) / Number(Parts.find().fetch().pop().cavitation);
-         
-         // //basically take the quantity divided by cavitation and multiply this by 
-        start =moment(Parts.find({press:num,month:month}).fetch().pop().timestamp.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")
-        next =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt:  start}}).CycleTimeStamp
-        startseconds=moment(start).format("ss.SSS")
-        startminutes=moment(start).format("mm")
-        startseconds=Number(startseconds)+ Number(startminutes)*60
-        nextseconds=moment(next).format("ss.SSS")
-        nextminutes=moment(next).format("mm")
-        nextseconds=Number(nextseconds) + Number(nextminutes)*60
-        cycletime= nextseconds-startseconds
-   estimatedTime=estimatedTime * cycletime
-
-         estimatedminutes=parseInt(estimatedTime/60);
-         if (estimatedminutes <=0)
-         {
-          totaltime=0;
-         }
-             
-        estimatedhours = estimatedminutes/60;
-        estimatedhours = parseInt(estimatedhours)//this is the total time
-        //I need to subtract the actual cycles coming from the total hours
-        //Therefore I need to take a count of the actual cycles and multiply this by the cycle time
-        //Then i need to subtract this count from the total
-        //Then i need to divide by the cavitation
-
-        cycles= Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment(Parts.find({press:num,month:month}).fetch().pop().timestamp.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).count() * Parts.find({press:num,month:month}).fetch().pop().cavitation;
-        cycles = Number(cycles)
-        cycles = cycles/60
-        cycles = cycles/60
-
-        
-        total= (estimatedhours - cycles)/ Parts.find({press:num,month:month}).fetch().pop().cavitation
+     //figure out cycle time
+        start =Cycles.find({PressNumber: num, AutoStatus:'1', CycleTimeStamp: {$gte: moment(Parts.find({press:num, month:month}).fetch().pop().timestamp.toString()).subtract(75,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).fetch().pop().CycleTimeStamp
        
-         if (total <=0)
-         {
-          total=0;
-         }
-         if (total >24)
-         {
-          total=24
-         }
+        prev =Cycles.find({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: moment(Parts.find({press:num, month:month}).fetch().pop().timestamp.toString()).subtract(100,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment(start.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).fetch().pop().CycleTimeStamp
+        
+        //I should always compare with the most recently submitted job
+        
+            cycletimeH=Parts.find({press:num, month:month}).fetch().pop().cycletimeH
+            cycletimeP=Parts.find({press:num, month:month}).fetch().pop().cycletimeP
+            cycletimeQ=Parts.find({press:num, month:month}).fetch().pop().cycletimeQ
+           
+            if (cycletimeH>0 )
+            {
+              cycletime=cycletimeH
+             
+            }
 
-         
-          percent=(total/24) * 100
-         
+            if ((cycletimeH<=0 || cycletimeH=="") && cycletimeP> 0)
+            {
+              cycletime=cycletimeP
+              
+            }
+            if ((cycletimeH<=0 || cycletimeH=="") && (cycletimeP<=0 || cycletimeP=="") && cycletimeQ!=0)
+            {
+              cycletime=cycletimeQ
+              
+            }
+           
+
+
+startseconds=moment(start).format("ss.SSS")
+startminutes=moment(start).format("mm")
+startseconds=Number(startseconds)+ Number(startminutes)*60
+prevseconds=moment(prev).format("ss.SSS")
+prevminutes=moment(prev).format("mm")
+prevseconds=Number(prevseconds) + Number(prevminutes)*60
+cycletimeNow= startseconds-prevseconds
+// console.log("This is the cycletime" + cycletime)
+ piecesPerHour= (3600/cycletimeNow) * Parts.find({press:num, month:month}).fetch().pop().cavitation  //this is the pieces per hour
+          amountMade=Cycles.find({PressNumber: num, AutoStatus:'1', CycleTimeStamp: {$gte: moment(Parts.find({press:num, month:month}).fetch().pop().timestamp.toString()).subtract(75,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()* Parts.find({press:num, month:month}).fetch().pop().cavitation
+          
+        hoursRemaining=(Parts.find({press:num, month:month}).fetch().pop().quantity - amountMade)/piecesPerHour
+ total=Parts.find({press:num, month:month}).fetch().pop().quantity/piecesPerHour
+
+    if (hoursRemaining >24)
+    {
+      hoursRemaining=24
+    }
+     if (hoursRemaining <0)
+    {
+      hoursRemaining=0
+    }
+          percent=hoursRemaining/24
+          percent=percent*100
+                 //I need the percent to be based out of 24 hours
+                 //basically divide the hours remaining by 24
+                 //if the hours remaining is over 24 then set it equal to 24
+
          if (percent<=0)
           {
 
@@ -69,55 +78,65 @@ Template.countdownbar.helpers({
           return percent;
    },
 hour: function(){
-    num= Machines.find().fetch().pop().cellnum;
-      month=moment().format("MM")
-         // estimatedTime = (Number(Parts.find().fetch().pop().quantity) - Number(count))  / Number(Parts.find().fetch().pop().cavitation);
-          estimatedTime = (Number(Parts.find({press:num,month:month}).fetch().pop().quantity)) / Number(Parts.find({press:num,month:month}).fetch().pop().cavitation);
-          
-         // //basically take the quantity divided by cavitation and multiply this by 
-        start =moment(Parts.find({press:num,month:month}).fetch().pop().timestamp.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")
-        next = Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt:  start}}).CycleTimeStamp
-        startseconds=moment(start).format("ss.SSS")
-        startminutes=moment(start).format("mm")
-        startseconds=Number(startseconds)+ Number(startminutes)*60
-        nextseconds=moment(next).format("ss.SSS")
-        nextminutes=moment(next).format("mm")
-        nextseconds=Number(nextseconds) + Number(nextminutes)*60
-        cycletime= nextseconds-startseconds
-   estimatedTime=estimatedTime * cycletime
-
-         estimatedminutes=parseInt(estimatedTime/60);
-         
+   num= Machines.find().fetch().pop().cellnum;
+     
+    month=moment().format("MM")
+   
+      timestamp= moment().format("YYYY-MM-DD 08:59:00.000")
+   num= Machines.find().fetch().pop().cellnum;
+     //figure out cycle time
+        start =Cycles.find({PressNumber: num, AutoStatus:'1', CycleTimeStamp: {$gte: moment(Parts.find({press:num, month:month}).fetch().pop().timestamp.toString()).subtract(75,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).fetch().pop().CycleTimeStamp
+       
+        prev =Cycles.find({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: moment(Parts.find({press:num, month:month}).fetch().pop().timestamp.toString()).subtract(100,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment(start.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).fetch().pop().CycleTimeStamp
+        
+        //I should always compare with the most recently submitted job
+        
+            cycletimeH=Parts.find({press:num, month:month}).fetch().pop().cycletimeH
+            cycletimeP=Parts.find({press:num, month:month}).fetch().pop().cycletimeP
+            cycletimeQ=Parts.find({press:num, month:month}).fetch().pop().cycletimeQ
            
-        estimatedhours = estimatedminutes/60;
-        estimatedhours = parseInt(estimatedhours)
+            if (cycletimeH>0 )
+            {
+              cycletime=cycletimeH
+             
+            }
+
+            if ((cycletimeH<=0 || cycletimeH=="") && cycletimeP> 0)
+            {
+              cycletime=cycletimeP
+              
+            }
+            if ((cycletimeH<=0 || cycletimeH=="") && (cycletimeP<=0 || cycletimeP=="") && cycletimeQ!=0)
+            {
+              cycletime=cycletimeQ
+              
+            }
+           
 
 
-         if (estimatedhours <=0)
+startseconds=moment(start).format("ss.SSS")
+startminutes=moment(start).format("mm")
+startseconds=Number(startseconds)+ Number(startminutes)*60
+prevseconds=moment(prev).format("ss.SSS")
+prevminutes=moment(prev).format("mm")
+prevseconds=Number(prevseconds) + Number(prevminutes)*60
+cycletimeNow= startseconds-prevseconds
+// console.log("This is the cycletime" + cycletime)
+ piecesPerHour= (3600/cycletimeNow) * Parts.find({press:num, month:month}).fetch().pop().cavitation  //this is the pieces per hour
+          amountMade=Cycles.find({PressNumber: num, AutoStatus:'1', CycleTimeStamp: {$gte: moment(Parts.find({press:num, month:month}).fetch().pop().timestamp.toString()).subtract(75,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()* Parts.find({press:num, month:month}).fetch().pop().cavitation
+          
+        hoursRemaining=(Parts.find({press:num, month:month}).fetch().pop().quantity - amountMade)/piecesPerHour
+
+         
+         if (hoursRemaining <=0)
          {
-          estimatedhours=0;
+          hoursRemaining=0;
          }
-         estimatedhours
-          cycles= Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: moment(Parts.find({press:num,month:month}).fetch().pop().timestamp.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).count() * Parts.find({press:num,month:month}).fetch().pop().cavitation;
-        
-        cycles = Number(cycles)
-        cycles = cycles/60
-        cycles = cycles/60
-        
-        total= (estimatedhours - cycles)/ Parts.find({press:num,month:month}).fetch().pop().cavitation
-       total = parseInt(total)
-         if (total <=0)
-         {
-          total=0;
-         }
-         if (total >24)
-         {
-          total=24
-         }
+         //convert the hours remaining to 
 
         
         //change percent to be how many hours out of 24 hours
-        return total;
+        return hoursRemaining
    }
 
 

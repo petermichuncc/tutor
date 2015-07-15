@@ -48,7 +48,11 @@ prevminutes=moment(prev).format("mm")
 prevseconds=Number(prevseconds) + Number(prevminutes)*60
 cycletimeNow= startseconds-prevseconds
 // console.log("This is the cycletime" + cycletime)
- 
+ cycletimeNow= (3600/cycletimeNow) * Parts.find({press:num, month:month}).fetch().pop().cavitation  //this is the pieces per hour
+
+
+
+
  if (cycletimeNow>=cycletime)
      {
      return true
@@ -64,7 +68,8 @@ cycletimeNow= startseconds-prevseconds
 
 
  statusyellow: function(){
-   month=moment().format("MM")
+     
+    month=moment().format("MM")
    
       timestamp= moment().format("YYYY-MM-DD 08:59:00.000")
    num= Machines.find().fetch().pop().cellnum;
@@ -82,20 +87,21 @@ cycletimeNow= startseconds-prevseconds
             if (cycletimeH>0 )
             {
               cycletime=cycletimeH
-              
+             
             }
 
             if ((cycletimeH<=0 || cycletimeH=="") && cycletimeP> 0)
             {
               cycletime=cycletimeP
-             
+              
             }
             if ((cycletimeH<=0 || cycletimeH=="") && (cycletimeP<=0 || cycletimeP=="") && cycletimeQ!=0)
             {
               cycletime=cycletimeQ
               
             }
-            
+           
+
 
 startseconds=moment(start).format("ss.SSS")
 startminutes=moment(start).format("mm")
@@ -105,7 +111,8 @@ prevminutes=moment(prev).format("mm")
 prevseconds=Number(prevseconds) + Number(prevminutes)*60
 cycletimeNow= startseconds-prevseconds
 // console.log("This is the cycletime" + cycletime)
-stdcycletime= Number(10.5)
+ cycletimeNow= (3600/cycletimeNow) * Parts.find({press:num, month:month}).fetch().pop().cavitation  //this is the pieces per hour
+
  if (cycletimeNow<cycletime )
      {
      return true
@@ -118,11 +125,12 @@ stdcycletime= Number(10.5)
  },
    statuswhite: function(){
      // setInterval(function(){ 
+      
     month=moment().format("MM")
    
       timestamp= moment().format("YYYY-MM-DD 08:59:00.000")
    num= Machines.find().fetch().pop().cellnum;
-      //figure out cycle time
+     //figure out cycle time
         start =Cycles.find({PressNumber: num, AutoStatus:'1', CycleTimeStamp: {$gte: moment(Parts.find({press:num, month:month}).fetch().pop().timestamp.toString()).subtract(75,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).fetch().pop().CycleTimeStamp
        
         prev =Cycles.find({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: moment(Parts.find({press:num, month:month}).fetch().pop().timestamp.toString()).subtract(100,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS"), $lt: moment(start.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).fetch().pop().CycleTimeStamp
@@ -136,7 +144,7 @@ stdcycletime= Number(10.5)
             if (cycletimeH>0 )
             {
               cycletime=cycletimeH
-              
+             
             }
 
             if ((cycletimeH<=0 || cycletimeH=="") && cycletimeP> 0)
@@ -149,6 +157,8 @@ stdcycletime= Number(10.5)
               cycletime=cycletimeQ
               
             }
+           
+
 
 startseconds=moment(start).format("ss.SSS")
 startminutes=moment(start).format("mm")
@@ -158,6 +168,8 @@ prevminutes=moment(prev).format("mm")
 prevseconds=Number(prevseconds) + Number(prevminutes)*60
 cycletimeNow= startseconds-prevseconds
 // console.log("This is the cycletime" + cycletime)
+ cycletimeNow= (3600/cycletimeNow) * Parts.find({press:num, month:month}).fetch().pop().cavitation  //this is the pieces per hour
+
 
 
       if (!(cycletimeNow>=cycletime) && !(cycletimeNow<cycletime))

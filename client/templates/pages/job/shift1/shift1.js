@@ -5,11 +5,11 @@ Meteor.subscribe('machines');
  Meteor.subscribe('hours');
 
 Template.shift1.helpers({
-   calculateTime: function () {
+   // calculateTime: function () {
         
- num= Machines.find().fetch().pop().cellnum;
+ // num= Machines.find().fetch().pop().cellnum;
 
-     estimatedTime = (Number(Parts.find().fetch().pop().quantity)) / Number(Parts.find().fetch().pop().cavitation);
+ //     estimatedTime = (Number(Parts.find().fetch().pop().quantity)) / Number(Parts.find().fetch().pop().cavitation);
          
          // //basically take the quantity divided by cavitation and multiply this by 
    //      start =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gte: moment(Parts.find().fetch().pop().timestamp.toString()).format("YYYY-MM-DD HH:mm:ss.SSS")}}).CycleTimeStamp
@@ -43,23 +43,23 @@ Template.shift1.helpers({
 
 //   estimatedminutes=0;
 // }         
-        estimatedhours = estimatedminutes/60;
-        estimatedhours = parseInt(estimatedhours)
+//         estimatedhours = estimatedminutes/60;
+//         estimatedhours = parseInt(estimatedhours)
         
        
 
-       estimatedminutesleft=estimatedminutes%60;
-      finishtime=moment(Parts.find().fetch().pop().timestamp.toString()).add(estimatedhours, 'hours').format("YYYY-MM-DD HH:mm:ss.SSS")
-      finishtime = moment(finishtime).add(estimatedminutesleft, 'minutes').format("YYYY-MM-DD HH:mm:ss.SSS")
+//        estimatedminutesleft=estimatedminutes%60;
+//       finishtime=moment(Parts.find().fetch().pop().timestamp.toString()).add(estimatedhours, 'hours').format("YYYY-MM-DD HH:mm:ss.SSS")
+//       finishtime = moment(finishtime).add(estimatedminutesleft, 'minutes').format("YYYY-MM-DD HH:mm:ss.SSS")
       
-//        if (estimatedhours===1)
-//          {
-//          return estimatedhours.toString().concat(" hour left and ",estimatedminutesleft," minutes left");
-// }
- return finishtime.toString();
+// //        if (estimatedhours===1)
+// //          {
+// //          return estimatedhours.toString().concat(" hour left and ",estimatedminutesleft," minutes left");
+// // }
+//  return finishtime.toString();
 
 
-     },
+//      },
    
   
    
