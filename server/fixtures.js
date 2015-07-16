@@ -24,9 +24,179 @@ Entries.insert(
 if (Hours.find().count() === 0) {
   Hours.insert(
     {
-     timestamp: moment.format("")
+      press:"1",
+      month:moment().format("MM"),
+
+     timestamp: moment().format("2014-06-24 01:02:03.444")
        });
- 
+  Hours.insert(
+    {
+      press:"2",
+      month:moment().format("MM"),
+
+     timestamp: moment().format("2014-06-24 01:02:03.444")
+       });
+  Hours.insert(
+    {
+      press:"3",
+      month:moment().format("MM"),
+
+     timestamp: moment().format("2014-06-24 01:02:03.444")
+       });
+  Hours.insert(
+    {
+      press:"4",
+      month:moment().format("MM"),
+
+     timestamp: moment().format("2014-06-24 01:02:03.444")
+       });
+  Hours.insert(
+    {
+      press:"5",
+      month:moment().format("MM"),
+
+     timestamp: moment().format("2014-06-24 01:02:03.444")
+       });
+  Hourss.insert(
+    {
+      press:"6",
+      month:moment().format("MM"),
+
+     timestamp: moment().format("2014-06-24 01:02:03.444")
+       });
+  Hours.insert(
+    {
+      press:"7",
+      month:moment().format("MM"),
+
+     timestamp: moment().format("2014-06-24 01:02:03.444")
+       });
+  Hours.insert(
+    {
+      press:"8",
+      month:moment().format("MM"),
+
+     timestamp: moment().format("2014-06-24 01:02:03.444")
+       });
+  Hours.insert(
+    {
+      press:"9",
+      month:moment().format("MM"),
+
+     timestamp: moment().format("2014-06-24 01:02:03.444")
+       });
+  Hours.insert(
+    {
+      press:"10",
+      month:moment().format("MM"),
+
+     timestamp: moment().format("2014-06-24 01:02:03.444")
+       });
+  Hours.insert(
+    {
+      press:"11",
+      month:moment().format("MM"),
+
+     timestamp: moment().format("2014-06-24 01:02:03.444")
+       });
+  Hours.insert(
+    {
+      press:"12",
+      month:moment().format("MM"),
+
+     timestamp: moment().format("2014-06-24 01:02:03.444")
+       });
+  Hours.insert(
+    {
+      press:"13",
+      month:moment().format("MM"),
+
+     timestamp: moment().format("2014-06-24 01:02:03.444")
+       });
+  Hours.insert(
+    {
+      press:"14",
+      month:moment().format("MM"),
+
+     timestamp: moment().format("2014-06-24 01:02:03.444")
+       });
+  Hours.insert(
+    {
+      press:"15",
+      month:moment().format("MM"),
+
+     timestamp: moment().format("2014-06-24 01:02:03.444")
+       });
+  Hours.insert(
+    {
+      press:"16",
+      month:moment().format("MM"),
+
+     timestamp: moment().format("2014-06-24 01:02:03.444")
+       });
+  Hours.insert(
+    {
+      press:"17",
+      month:moment().format("MM"),
+
+     timestamp: moment().format("2014-06-24 01:02:03.444")
+       });
+  Hours.insert(
+    {
+      press:"18",
+      month:moment().format("MM"),
+
+     timestamp: moment().format("2014-06-24 01:02:03.444")
+       });
+  Hours.insert(
+    {
+      press:"19",
+      month:moment().format("MM"),
+
+     timestamp: moment().format("2014-06-24 01:02:03.444")
+       });
+  Hours.insert(
+    {
+      press:"20",
+      month:moment().format("MM"),
+
+     timestamp: moment().format("2014-06-24 01:02:03.444")
+       });
+  Hours.insert(
+    {
+      press:"21",
+      month:moment().format("MM"),
+
+     timestamp: moment().format("2014-06-24 01:02:03.444")
+       });
+  Hours.insert(
+    {
+      press:"22",
+      month:moment().format("MM"),
+
+     timestamp: moment().format("2014-06-24 01:02:03.444")
+       });
+  Hours.insert(
+    {
+      press:"23",
+      month:moment().format("MM"),
+
+     timestamp: moment().format("2014-06-24 01:02:03.444")
+       });
+ Hours.insert(
+    {
+      press:"24",
+      month:moment().format("MM"),
+
+     timestamp: moment().format("2014-06-24 01:02:03.444")
+       });
+ Hours.insert(
+    {
+      press:"25",
+      month:moment().format("MM"),
+
+     timestamp: moment().format("2014-06-24 01:02:03.444")
+       });
 }
 if (Workcenters.find().count() === 0) {
   Workcenters.insert(
