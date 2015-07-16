@@ -127,6 +127,7 @@ cycletimeNow= startseconds-prevseconds
           
         hoursRemaining=(Parts.find({press:num, month:month}).fetch().pop().quantity - amountMade)/piecesPerHour
 
+         //I need to show hours and minutes remaining
          
          if (hoursRemaining <=0)
          {

@@ -1,0 +1,185 @@
+{
+  "format": "web-program-pre1",
+  "manifest": [
+    {
+      "path": "4c67e3f06b20c14d619ae4de3f24194c4d0ad023.js",
+      "where": "client",
+      "type": "js",
+      "cacheable": true,
+      "url": "/4c67e3f06b20c14d619ae4de3f24194c4d0ad023.js",
+      "size": 1589708,
+      "hash": "4c67e3f06b20c14d619ae4de3f24194c4d0ad023"
+    },
+    {
+      "path": "c5f4832fe28898062c1bbb3054937344f140fdc5.css",
+      "where": "client",
+      "type": "css",
+      "cacheable": true,
+      "url": "/c5f4832fe28898062c1bbb3054937344f140fdc5.css?meteor_css_resource=true",
+      "size": 175142,
+      "hash": "c5f4832fe28898062c1bbb3054937344f140fdc5"
+    },
+    {
+      "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.eot",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.eot",
+      "size": 20127,
+      "hash": "86b6f62b7853e67d3e635f6512a5a5efc58ea3c3"
+    },
+    {
+      "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.svg",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.svg",
+      "size": 108738,
+      "hash": "de51a8494180a6db074af2dee2383f0a363c5b08"
+    },
+    {
+      "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.ttf",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.ttf",
+      "size": 45404,
+      "hash": "44bc1850f570972267b169ae18f1cb06b611ffa2"
+    },
+    {
+      "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff",
+      "size": 23424,
+      "hash": "278e49a86e634da6f2a02f3b47dd9d2a8f26210f"
+    },
+    {
+      "path": "packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff2",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/twbs_bootstrap/dist/fonts/glyphicons-halflings-regular.woff2",
+      "size": 18028,
+      "hash": "ca35b697d99cae4d1b60f2d60fcd37771987eb07"
+    },
+    {
+      "path": "packages/sebdah_autocompletion/css/jquery-ui-smoothness/images/ui-bg_flat_0_aaaaaa_40x100.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/sebdah_autocompletion/css/jquery-ui-smoothness/images/ui-bg_flat_0_aaaaaa_40x100.png",
+      "size": 212,
+      "hash": "91df92424d8167c443b24a6e6a65db5464c062bb"
+    },
+    {
+      "path": "packages/sebdah_autocompletion/css/jquery-ui-smoothness/images/ui-bg_flat_75_ffffff_40x100.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/sebdah_autocompletion/css/jquery-ui-smoothness/images/ui-bg_flat_75_ffffff_40x100.png",
+      "size": 208,
+      "hash": "67ee84a7d08b2d7118bc845971565e0c221fb538"
+    },
+    {
+      "path": "packages/sebdah_autocompletion/css/jquery-ui-smoothness/images/ui-bg_glass_55_fbf9ee_1x400.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/sebdah_autocompletion/css/jquery-ui-smoothness/images/ui-bg_glass_55_fbf9ee_1x400.png",
+      "size": 335,
+      "hash": "08d10529cf43036a0d07ecc77843205ae05d964a"
+    },
+    {
+      "path": "packages/sebdah_autocompletion/css/jquery-ui-smoothness/images/ui-bg_glass_65_ffffff_1x400.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/sebdah_autocompletion/css/jquery-ui-smoothness/images/ui-bg_glass_65_ffffff_1x400.png",
+      "size": 207,
+      "hash": "dde181997d44e00ce13e26034a66ff1d719bb398"
+    },
+    {
+      "path": "packages/sebdah_autocompletion/css/jquery-ui-smoothness/images/ui-bg_glass_75_dadada_1x400.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/sebdah_autocompletion/css/jquery-ui-smoothness/images/ui-bg_glass_75_dadada_1x400.png",
+      "size": 262,
+      "hash": "8050694813a0bbd4f800c92a62302f85811efd68"
+    },
+    {
+      "path": "packages/sebdah_autocompletion/css/jquery-ui-smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/sebdah_autocompletion/css/jquery-ui-smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png",
+      "size": 262,
+      "hash": "99497b79189e18f567eb9bc80451e101b8e326f9"
+    },
+    {
+      "path": "packages/sebdah_autocompletion/css/jquery-ui-smoothness/images/ui-bg_glass_95_fef1ec_1x400.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/sebdah_autocompletion/css/jquery-ui-smoothness/images/ui-bg_glass_95_fef1ec_1x400.png",
+      "size": 332,
+      "hash": "46840bee9ca8c20c9a677c60e8939705e24a1ee0"
+    },
+    {
+      "path": "packages/sebdah_autocompletion/css/jquery-ui-smoothness/images/ui-bg_highlight-soft_75_cccccc_1x100.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/sebdah_autocompletion/css/jquery-ui-smoothness/images/ui-bg_highlight-soft_75_cccccc_1x100.png",
+      "size": 280,
+      "hash": "7d75b709916d5117e53eae418d27ba6c554eafb5"
+    },
+    {
+      "path": "packages/sebdah_autocompletion/css/jquery-ui-smoothness/images/ui-icons_222222_256x240.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/sebdah_autocompletion/css/jquery-ui-smoothness/images/ui-icons_222222_256x240.png",
+      "size": 6922,
+      "hash": "692a53cad7f748bc7b691b98b9116ce3269cd22b"
+    },
+    {
+      "path": "packages/sebdah_autocompletion/css/jquery-ui-smoothness/images/ui-icons_2e83ff_256x240.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/sebdah_autocompletion/css/jquery-ui-smoothness/images/ui-icons_2e83ff_256x240.png",
+      "size": 4549,
+      "hash": "a57a7f1775369985c3335c351575df127c6cfea2"
+    },
+    {
+      "path": "packages/sebdah_autocompletion/css/jquery-ui-smoothness/images/ui-icons_454545_256x240.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/sebdah_autocompletion/css/jquery-ui-smoothness/images/ui-icons_454545_256x240.png",
+      "size": 6992,
+      "hash": "6cb0b3a5c3cb2ee9fbaef3cb156c06bb4f15fc82"
+    },
+    {
+      "path": "packages/sebdah_autocompletion/css/jquery-ui-smoothness/images/ui-icons_888888_256x240.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/sebdah_autocompletion/css/jquery-ui-smoothness/images/ui-icons_888888_256x240.png",
+      "size": 6999,
+      "hash": "d0144b794640e1126f782b5332c8539fe2d3aef4"
+    },
+    {
+      "path": "packages/sebdah_autocompletion/css/jquery-ui-smoothness/images/ui-icons_cd0a0a_256x240.png",
+      "where": "client",
+      "type": "asset",
+      "cacheable": false,
+      "url": "/packages/sebdah_autocompletion/css/jquery-ui-smoothness/images/ui-icons_cd0a0a_256x240.png",
+      "size": 4549,
+      "hash": "ba54b02521c09485695a9f409ba3e6ff7ede90ad"
+    }
+  ]
+}

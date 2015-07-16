@@ -57,7 +57,7 @@ if (Hours.find().count() === 0) {
 
      timestamp: moment().format("2014-06-24 01:02:03.444")
        });
-  Hourss.insert(
+  Hours.insert(
     {
       press:"6",
       month:moment().format("MM"),
