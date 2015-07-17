@@ -1,5 +1,5 @@
 
-Meteor.subscribe('cycles-recent', moment().subtract(1, 'hours').format("YYYY-MM-DD HH:mm:ss.SSS"))
+Meteor.subscribe('cycles-recent', moment().subtract(1, 'day').format("YYYY-MM-DD 23:mm:ss.SSS"))
    Meteor.subscribe('parts');
 Meteor.subscribe('machines');
 
@@ -10,8 +10,7 @@ Template.countdownbar.helpers({
      
     month=moment().format("MM")
    
-      timestamp= moment().format("YYYY-MM-DD 08:59:00.000")
-   num= Machines.find().fetch().pop().cellnum;
+      
      //figure out cycle time
         start =Cycles.find({PressNumber: num, AutoStatus:'1', CycleTimeStamp: {$gte: moment(Parts.find({press:num, month:month}).fetch().pop().timestamp.toString()).subtract(75,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).fetch().pop().CycleTimeStamp
        
@@ -82,7 +81,7 @@ hour: function(){
      
     month=moment().format("MM")
    
-      timestamp= moment().format("YYYY-MM-DD 08:59:00.000")
+      
    num= Machines.find().fetch().pop().cellnum;
      //figure out cycle time
         start =Cycles.find({PressNumber: num, AutoStatus:'1', CycleTimeStamp: {$gte: moment(Parts.find({press:num, month:month}).fetch().pop().timestamp.toString()).subtract(75,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).fetch().pop().CycleTimeStamp
@@ -124,20 +123,27 @@ cycletimeNow= startseconds-prevseconds
 // console.log("This is the cycletime" + cycletime)
  piecesPerHour= (3600/cycletimeNow) * Parts.find({press:num, month:month}).fetch().pop().cavitation  //this is the pieces per hour
           amountMade=Cycles.find({PressNumber: num, AutoStatus:'1', CycleTimeStamp: {$gte: moment(Parts.find({press:num, month:month}).fetch().pop().timestamp.toString()).subtract(75,'seconds').format("YYYY-MM-DD HH:mm:ss.SSS")}}).count()* Parts.find({press:num, month:month}).fetch().pop().cavitation
-          
+
         hoursRemaining=(Parts.find({press:num, month:month}).fetch().pop().quantity - amountMade)/piecesPerHour
 
          //I need to show hours and minutes remaining
-         
-         if (hoursRemaining <=0)
+         // Therefore I need to convert the decimal portion of the hours to minutes
+          if (hoursRemaining <=0)
          {
           hoursRemaining=0;
          }
-         //convert the hours remaining to 
+
+         hours=parseInt(hoursRemaining)
+         minutes= hoursRemaining % 1
+         minutes = minutes * 60
+         minutes = minutes.toFixed(1)
 
         
+         //convert the hours remaining to 
+          
+        
         //change percent to be how many hours out of 24 hours
-        return hoursRemaining
+        return hours.toString().concat(" hours and ",minutes," minutes left")
    }
 
 

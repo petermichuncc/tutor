@@ -172,7 +172,7 @@ cycletimeNow= startseconds-prevseconds
 
 
 
-      if (!(cycletimeNow>=cycletime) && !(cycletimeNow<cycletime))
+      if (cycletimeNow>=0 || cycletimeNow=== null)
      {
      return true
    }
