@@ -1,0 +1,23 @@
+<template name="button1">
+
+<!---Basically make 25 of these that are buttons that change colors -->
+
+
+ {{#if statusgreen}}
+     
+<button id="statusgreen" type="submit" class="btn btn-default"> Workcenter:1 </button> 
+        
+  
+     {{else}}
+{{#if statuswhite}}
+    <button id="statuswhite" type="submit" class="btn btn-default"> Workcenter:1 </button> 
+ {{else}}
+ {{#if statusyellow}}
+     <button id="statusyellow" type="submit" class="btn btn-default"> Workcenter:1 </button> 
+     
+
+ 
+     {{/if}}
+     {{/if}}
+    {{/if}}
+</template>

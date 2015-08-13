@@ -1,0 +1,42 @@
+<template name="jobstatus1">
+
+<!-- <div class="{{#if status}} col-xs-6 col-sm-3 center-block idle{{else}}col-xs-6 col-sm-3 center-block running{{/if}}">
+<a href="{{pathFor 'workCenterPage'}}">{{name}}</a><br />
+{{partnumber}}<br />
+</div> -->
+
+
+<!-- <div id="{{#if status}}statusgreen {{else}}status {{/if}}" > 
+{{changeStatus}}
+        Workcenter:{{>workcenter}}<br/><br/>
+        <span id="label">Fetching status...</span>
+     </div>
+ -->
+ {{#if statusgreen}}
+     <div id="statusgreen"> 
+
+        Workcenter:{{>workcenter}}<br/><br/>
+        <span id="label">At or above cycle</span>
+     </div>
+  
+     {{else}}
+{{#if statuswhite}}
+     <div id="statuswhite"> 
+
+        Workcenter:{{>workcenter}}<br/><br/>
+        <span id="label">Idle/Not running</span>
+     </div>
+ {{else}}
+ {{#if statusyellow}}
+     <div id="statusyellow" > 
+
+        Workcenter:{{>workcenter}}<br/><br/>
+        <span id="label">Below cycle</span>
+     </div>
+     
+
+ 
+     {{/if}}
+     {{/if}}
+    {{/if}}
+</template>
