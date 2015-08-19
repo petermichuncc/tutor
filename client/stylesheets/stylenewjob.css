@@ -13,6 +13,37 @@ width:200px;
 
 
 }
+.container {
+    width: 100%;
+}
+#label
+{
+
+font-size: 200% ;
+
+}
+#time
+{
+
+font-size: 150% ;
+
+}
+#eh { text-align: center; }
+
+.item {
+    width: 4%;
+    border: 1px solid black;
+    background-color: white;
+    border-radius: 3px;
+    margin-right: 2px;
+    float: left;
+    display: block;
+    height: 30px;
+}
+
+.filled {
+    background-color: #00FFFF !important;
+}
 table{
   width: 100%;
     font-size: 20px;
@@ -107,6 +138,7 @@ text-shadow: 0.1em 0.1em 0.05em #000;
 }
 
 a.nav:link, a.nav:visited{
+    font-size:xx-large;
     position: relative;
 	display: block;
 	height: 3%;
@@ -119,9 +151,10 @@ a.nav:link, a.nav:visited{
 	padding-top: 15%;
     padding-bottom: 15%;
 	padding-left: 15%;
-    font-size: 90%;
+    font-size: 150%;
 }
 a.nav:active{
+   font-size:xx-large;
     position: relative;
 	display: block;
 	background: #333333;
@@ -135,7 +168,7 @@ a.nav:active{
 	padding-top: 15%;
     padding-bottom: 15%;
 	padding-left: 15%;
-    font-size: 90%;
+    font-size: 150%;
 }
 
 textarea{

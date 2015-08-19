@@ -1,0 +1,30 @@
+<template name="jobstatus19">
+<!-- change the div to a button-->
+
+ {{#if statusgreen}}
+     <button id="statusgreen"> 
+
+        <span id="label">Workcenter: 3100E </span><br/><br/>
+        <span id="label">At or above cycle</span>
+     </button>
+  
+    
+ {{else}}
+ {{#if statusyellow}}
+     <button id="statusyellow" > 
+
+        <span id="label"> Workcenter: 3100E </span><br/><br/>
+        <span id="label">Below cycle</span>
+     </button>
+      {{else}}
+
+     <button id="statuswhite"> 
+
+       <span id="label"> Workcenter: 3100E </span><br/><br/>
+        <span id="label">Idle/Not running</span>
+     </button>
+
+ 
+     {{/if}}
+    {{/if}}
+</template>

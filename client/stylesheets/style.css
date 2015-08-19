@@ -99,6 +99,7 @@ color:black;
 
 }
 a.nav:link, a.nav:visited{
+  font-size:large;
     position: relative;
   display: block;
   height: 3%;
@@ -114,6 +115,7 @@ a.nav:link, a.nav:visited{
     font-size: 90%;
 }
 a.nav:active{
+  font-size:large;
     position: relative;
   display: block;
   background: #333333;
@@ -209,10 +211,11 @@ textarea{
 #statuswhite{
   border:#222222 1px solid;
     overflow: hidden;
-    background: #E0E0E0    ;
+    background: #FFFAFA    ;
     box-shadow: 5px 5px 15px #888888;
   font-size: 10px;
   padding: 1%;
+  color: black;
 }
 #statusgreen{
   border:#222222 1px solid;
@@ -229,6 +232,49 @@ textarea{
     box-shadow: 5px 5px 15px #888888;
   font-size: 10px;
   padding: 1%;
+}
+.circleBase {
+    border-radius: 50%;
+    border: 1px solid black;
+}
+
+.typeg {
+    width: 40px;
+    height: 40px;
+    background: green;
+     margin-bottom: 5px;
+     margin-top: 2px;
+}
+.typey {
+    width: 40px;
+    height: 40px;
+    background: #F7FC12;
+     margin-bottom: 5px;
+     margin-top: 2px;
+}
+#statusg{
+  border:#222222 1px solid;
+    overflow: hidden;
+    background: green;
+    box-shadow: 5px 5px 15px #888888;
+  font-size: 10px;
+   max-height: 50px;
+    background-size: 75% 100%;
+  
+}
+#statusy{
+  border:#222222 1px solid;
+    overflow: hidden;
+    background: #F7FC12;
+    box-shadow: 5px 5px 15px #888888;
+  font-size: 10px;
+    
+  max-height: 50px;
+}
+.circle
+{
+    border-radius:50%;
+    background:#000;
 }
 option.id
 {
