@@ -1,12 +1,14 @@
  Meteor.subscribe('cycles-recent', moment().subtract(1, 'hours').format("YYYY-MM-DD HH:mm:ss.SSS"))
 
  Meteor.subscribe('parts');
- 
+
  Template.jobstatus2.helpers({
  
 statusgreen: function(){
    
-     var num= "2"
+   console.log("this is the press number in press 2" + num)
+
+    
    var month=moment().format("MM")
       
    
@@ -78,7 +80,7 @@ var cycletimeNow= startseconds-prevseconds
 
 
  statusyellow: function(){
-   var num= "2"
+   
   
      
    var month=moment().format("MM")

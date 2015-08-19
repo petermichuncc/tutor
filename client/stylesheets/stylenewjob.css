@@ -19,7 +19,7 @@ width:200px;
 #label
 {
 
-font-size: 150% ;
+font-size: 100% ;
 
 }
 #lefttab
@@ -39,8 +39,8 @@ font-size: 150% ;
 
 }
 .rectangle {
-    width: 100px;
-    height: 180px;
+    width: 75px;
+    height: 150px;
    
 }
 #eh { text-align: center; }
