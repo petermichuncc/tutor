@@ -1,30 +1,30 @@
  Meteor.subscribe('cycles-recent', moment().subtract(1, 'hours').format("YYYY-MM-DD HH:mm:ss.SSS"))
 
  Meteor.subscribe('parts');
-  num= "2"
+ 
  Template.jobstatus2.helpers({
  
 statusgreen: function(){
    
-     
-    month=moment().format("MM")
+     var num= "2"
+   var month=moment().format("MM")
       
    
      //figure out cycle time
-        start =Cycles.find({PressNumber: num, AutoStatus:'1', CycleTimeStamp: {$gte: Parts.find({press:num, month:month}).fetch().pop().timestamp.toString()}}).fetch().pop().CycleTimeStamp
+       var start =Cycles.find({PressNumber: num, AutoStatus:'1', CycleTimeStamp: {$gte: Parts.find({press:num, month:month}).fetch().pop().timestamp.toString()}}).fetch().pop().CycleTimeStamp
        
-        prev =Cycles.find({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: Parts.find({press:num, month:month}).fetch().pop().timestamp.toString(), $lt: start}}).fetch().pop().CycleTimeStamp
-        
+       var prev =Cycles.find({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: Parts.find({press:num, month:month}).fetch().pop().timestamp.toString(), $lt: start}}).fetch().pop().CycleTimeStamp
+         
         //I should always compare with the most recently submitted job
         
            
          
-            cycletimeH=Parts.find({press:num, month:month}).fetch().pop().cycletimeH
+           var cycletimeH=Parts.find({press:num, month:month}).fetch().pop().cycletimeH
           
         
-            cycletimeP=Parts.find({press:num, month:month}).fetch().pop().cycletimeP
+           var cycletimeP=Parts.find({press:num, month:month}).fetch().pop().cycletimeP
           
-            cycletimeQ=Parts.find({press:num, month:month}).fetch().pop().cycletimeQ
+           var cycletimeQ=Parts.find({press:num, month:month}).fetch().pop().cycletimeQ
           
            
             if (cycletimeH>0 )
@@ -46,17 +46,17 @@ statusgreen: function(){
            
 
 
-startseconds=moment(start).format("ss.SSS")
+var startseconds=moment(start).format("ss.SSS")
 // startminutes=moment(start).format("mm")
 
-startminutes=moment(start).format("mm")
+var startminutes=moment(start).format("mm")
 startseconds=Number(startseconds)+ Number(startminutes)*60
-prevseconds=moment(prev).format("ss.SSS")
+var prevseconds=moment(prev).format("ss.SSS")
 // prevminutes=moment(prev).format("mm")
-prevminutes=moment(prev).format("mm")
+var prevminutes=moment(prev).format("mm")
 
 prevseconds=Number(prevseconds) + Number(prevminutes)*60
-cycletimeNow= startseconds-prevseconds
+var cycletimeNow= startseconds-prevseconds
 // console.log("This is the cycletime" + cycletime)
  cycletimeNow= (3600/cycletimeNow) * Parts.find({press:num, month:month}).fetch().pop().cavitation  //this is the pieces per hour
 
@@ -78,25 +78,27 @@ cycletimeNow= startseconds-prevseconds
 
 
  statusyellow: function(){
+   var num= "2"
+  
      
-    month=moment().format("MM")
+   var month=moment().format("MM")
    
 
      //figure out cycle time
-        start =Cycles.find({PressNumber: num, AutoStatus:'1', CycleTimeStamp: {$gte: Parts.find({press:num, month:month}).fetch().pop().timestamp.toString()}}).fetch().pop().CycleTimeStamp
+       var start =Cycles.find({PressNumber: num, AutoStatus:'1', CycleTimeStamp: {$gte: Parts.find({press:num, month:month}).fetch().pop().timestamp.toString()}}).fetch().pop().CycleTimeStamp
        
-        prev =Cycles.find({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: Parts.find({press:num, month:month}).fetch().pop().timestamp.toString(), $lt: start}}).fetch().pop().CycleTimeStamp
+       var prev =Cycles.find({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: Parts.find({press:num, month:month}).fetch().pop().timestamp.toString(), $lt: start}}).fetch().pop().CycleTimeStamp
         
         //I should always compare with the most recently submitted job
         
          
-            cycletimeH=Parts.find({press:num, month:month}).fetch().pop().cycletimeH
+           var cycletimeH=Parts.find({press:num, month:month}).fetch().pop().cycletimeH
          
          
-            cycletimeP=Parts.find({press:num, month:month}).fetch().pop().cycletimeP
+           var cycletimeP=Parts.find({press:num, month:month}).fetch().pop().cycletimeP
           
          
-            cycletimeQ=Parts.find({press:num, month:month}).fetch().pop().cycletimeQ
+           var cycletimeQ=Parts.find({press:num, month:month}).fetch().pop().cycletimeQ
           
            
             if (cycletimeH>0 )
@@ -118,16 +120,16 @@ cycletimeNow= startseconds-prevseconds
            
 
 
-startseconds=moment(start).format("ss.SSS")
+var startseconds=moment(start).format("ss.SSS")
 // startminutes=moment(start).format("mm")
 
-startminutes=moment(start).format("mm")
-startseconds=Number(startseconds)+ Number(startminutes)*60
-prevseconds=moment(prev).format("ss.SSS")
+var startminutes=moment(start).format("mm")
+var startseconds=Number(startseconds)+ Number(startminutes)*60
+var prevseconds=moment(prev).format("ss.SSS")
 // prevminutes=moment(prev).format("mm")
-prevminutes=moment(prev).format("mm")
+var prevminutes=moment(prev).format("mm")
 prevseconds=Number(prevseconds) + Number(prevminutes)*60
-cycletimeNow= startseconds-prevseconds
+var cycletimeNow= startseconds-prevseconds
 // console.log("This is the cycletime" + cycletime)
  cycletimeNow= (3600/cycletimeNow) * Parts.find({press:num, month:month}).fetch().pop().cavitation  //this is the pieces per hour
 

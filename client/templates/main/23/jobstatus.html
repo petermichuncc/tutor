@@ -2,7 +2,7 @@
 <!-- change the div to a button-->
 
  {{#if statusgreen}}
-     <button id="statusgreen"> 
+     <button id="statusgreen" class="rectangle"> 
 
         <span id="label">Workcenter: 3101H </span><br/><br/>
         <span id="label">At or above cycle</span>
@@ -11,14 +11,14 @@
     
  {{else}}
  {{#if statusyellow}}
-     <button id="statusyellow" > 
+     <button id="statusyellow" class="rectangle"> 
 
         <span id="label"> Workcenter: 3101H </span><br/><br/>
         <span id="label">Below cycle</span>
      </button>
       {{else}}
 
-     <button id="statuswhite"> 
+     <button id="statuswhite" class="rectangle"> 
 
        <span id="label"> Workcenter: 3101H </span><br/><br/>
         <span id="label">Idle/Not running</span>

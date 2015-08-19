@@ -19,14 +19,29 @@ width:200px;
 #label
 {
 
-font-size: 200% ;
+font-size: 150% ;
 
+}
+#lefttab
+{
+
+padding-left:25em;
+}
+#tabspace
+{
+
+padding-left:10em;
 }
 #time
 {
 
 font-size: 150% ;
 
+}
+.rectangle {
+    width: 100px;
+    height: 180px;
+   
 }
 #eh { text-align: center; }
 
