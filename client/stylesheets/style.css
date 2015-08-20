@@ -237,6 +237,11 @@ textarea{
     border-radius: 100%;
     border: 1px solid black;
 }
+.right
+{
+   position: absolute;
+    left: 490px;
+}
 
 .typeg {
     width: 40px;
@@ -251,9 +256,9 @@ textarea{
     background: red;
      margin-bottom: 5px;
      margin-top: 2px;
-    margin: auto;
     
-   padding-right:50px;
+    
+   
     padding: 10px;
 }
 #statusg{
