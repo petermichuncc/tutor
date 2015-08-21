@@ -1,11 +1,11 @@
  Meteor.subscribe('cycles-recent', moment().subtract(1, 'hours').format("YYYY-MM-DD HH:mm:ss.SSS"))
 
  Meteor.subscribe('parts');
-
+var num="1"
  Template.jobstatus1.helpers({
  
 statusgreen: function(){
-   num="1"
+   
      // var num= "1"
    var month=moment().format("MM")
       

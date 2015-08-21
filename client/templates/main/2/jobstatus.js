@@ -1,12 +1,12 @@
  Meteor.subscribe('cycles-recent', moment().subtract(1, 'hours').format("YYYY-MM-DD HH:mm:ss.SSS"))
 
  Meteor.subscribe('parts');
-
+var num="2"
  Template.jobstatus2.helpers({
  
 statusgreen: function(){
    
-   console.log("this is the press number in press 2" + num)
+  
 
     
    var month=moment().format("MM")
