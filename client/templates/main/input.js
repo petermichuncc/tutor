@@ -1,16 +1,16 @@
 var num = "1"
 
 
-Template.table.events({
+Template.input.events({
 "submit .workcenterSelection": function(event){
 event.defaultPrevented;
 console.log(event);
 var text = $( "#someId" ).val();
 
 var post = {
-      partnumber: $( "#partnumber" ).val(),
-       quantity: $( "#quantity" ).val(),
-       initials: $( "#initials" ).val(),
+      starttime: $( "#starttime" ).val(),
+       endtime: $( "#endtime" ).val(),
+       press: $( "#press" ).val(),
         timestamp: moment().format("YYYY-MM-DD HH:mm:ss.SSS")
         
      };
@@ -22,10 +22,9 @@ var post = {
 
 
 	Router.go('output');
-}
+
 
 return false;
-
 }
 });
 

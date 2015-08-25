@@ -1,6 +1,6 @@
 <template name="input">
  <head>
-<title>new job</title>
+<title>new query</title>
 </head>
 
 <body>
@@ -22,16 +22,16 @@
         <tr>
         <td>Start time:</td> <td> 
           <div class="form-group">
-            <label for="start"></label>
-            <input type="start" name="start" required class="form-control" id="start" placeholder="Enter the start time (YYYY-MM-DD)">
+            <label for="starttime"></label>
+            <input type="starttime" name="starttime" required class="form-control" id="starttime" placeholder="YYYY-MM-DD">
           </div>
           </td>
         </tr>
         <tr>
         <td>End time:</td> <td> 
           <div class="form-group">
-            <label for="end"></label>
-            <input type="end" name="end" required class="form-control" id="end" placeholder="Enter the end time (YYYY-MM-DD)">
+            <label for="endtime"></label>
+            <input type="endtime" name="endtime" required class="form-control" id="endtime" placeholder="YYYY-MM-DD">
           </div>
           </td>
         </tr>
@@ -39,7 +39,7 @@
         <td>Press number:</td> <td> 
           <div class="form-group">
             <label for="press"></label>
-            <input type="press" name="press" required class="form-control" id="press" placeholder="Enter the press number">
+            <input type="press" name="press" required class="form-control" id="press" placeholder="Press number">
           </div>
           </td>
         </tr>
@@ -48,7 +48,7 @@
         
       </table>
       
-       <button type="submit" class="btn btn-default" onclick="alert('Make sure the machine is in Automatic before continuing')">Select</button>
+       <button type="submit" class="btn btn-default">Select</button>
       <!-- <input type="submit" value="Submit" class="btn btn-primary"/> -->
 
       </form>

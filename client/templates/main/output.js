@@ -1,28 +1,89 @@
-
-
-
-Meteor.subscribe('cycles-recent', moment().subtract(5, 'days').format("YYYY-MM-DD 23:00:00.000"))
    Meteor.subscribe('parts');
-
 Meteor.subscribe('hours');
 Meteor.subscribe('incomingcycles');
  Meteor.subscribe('earnedhours');
 Meteor.subscribe('planneds');
-Meteor.subscribe('reasons');
+Meteor.subscribe('earnedhours');
+// Meteor.subscribe('reasons');
+Meteor.subscribe('queries');
 var num = "1"
-Template.shift1.helpers({
+Template.output.helpers({
     
  
 planned: function (){
-          //planned will be multiplier by the time the actual actually runs
+          //basically I need to know the start time and end time
+          //these can be retrieved from the most recently submitted 
 
-          //basically I will set the planned data equal to the most recently submitted data into the query database
-          //so I will need to know the press number, the start and end date, 
+          var start=Queries.find().fetch().pop().starttime
+          var end=Queries.find().fetch().pop().endtime
+           var pressnum=Queries.find().fetch().pop().press
+          start=moment(start).format("YYYY-MM-DD 00:00:00.000")
+             end=moment(end).format("YYYY-MM-DD 24:59:99.999")
+           return Planneds.find({timestamp: {$gt: start,$lt: end}, press:pressnum})
+          
+           },
+ actual: function (){
+          //
+           var start=Queries.find().fetch().pop().starttime
+          var end=Queries.find().fetch().pop().endtime
+           var pressnum=Queries.find().fetch().pop().press
+          start=moment(start).format("YYYY-MM-DD 00:00:00.000")
+             end=moment(end).format("YYYY-MM-DD 24:59:99.999")
+           return Incomingcycles.find({timestamp: {$gt: start,$lt: end}, press:pressnum})
+           
+          
+           },
+ earnedhours: function (){
+          //
+          var start=Queries.find().fetch().pop().starttime
+          var end=Queries.find().fetch().pop().endtime
+           var pressnum=Queries.find().fetch().pop().press
+          start=moment(start).format("YYYY-MM-DD 00:00:00.000")
+             end=moment(end).format("YYYY-MM-DD 24:59:99.999")
+           return Earnedhours.find({timestamp: {$gt: start,$lt: end}, press:pressnum})
+           
+          
+           },
+ start: function (){
+          //
+           var start=Queries.find().fetch().pop().starttime
+          var end=Queries.find().fetch().pop().endtime
+           var pressnum=Queries.find().fetch().pop().press
+          start=moment(start).format("YYYY-MM-DD 00:00:00.000")
+             end=moment(end).format("YYYY-MM-DD 24:59:99.999")
+           return Parts.find({timestamp: {$gt: start,$lt: end}, press:pressnum})
+           
+          
+           },
+ finish: function (){
+          //
           
            
           
            },
-      
+date: function (){
+          //
+           var start=Queries.find().fetch().pop().starttime
+          var end=Queries.find().fetch().pop().endtime
+           var pressnum=Queries.find().fetch().pop().press
+          start=moment(start).format("YYYY-MM-DD 00:00:00.000")
+             end=moment(end).format("YYYY-MM-DD 24:59:99.999")
+           return Incomingcycles.find({timestamp: {$gt: start,$lt: end}, press:pressnum})
+           
+          
+           }, 
+job: function (){
+          //
+          
+           
+          
+           },
+partnumber: function (){
+          //
+          
+           
+          
+           },                                                                  
 });
 
 

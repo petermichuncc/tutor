@@ -14,12 +14,24 @@ Meteor.publish('machines', function() {
 Meteor.publish('parts', function() {
   return Parts.find();
 });
+Meteor.publish('queries', function() {
+  return Queries.find();
+});
+Meteor.publish('planneds', function() {
+  return Planneds.find();
+});
+Meteor.publish('incomingcycles', function() {
+  return Incomingcycles.find();
+});
 // Meteor.publish('Presscycles', function() {
 //   return Cycles.find();
 // });
 
 Meteor.publish('submissions', function() {
   return Submissions.find();
+});
+Meteor.publish('earnedhours', function() {
+  return Earnedhours.find();
 });
 
 // Meteor.publish('cycles-recent', function (startTime) {
@@ -28,7 +40,6 @@ Meteor.publish('submissions', function() {
 // });
 
 Meteor.publish('cycles-recent', function (startTime, pressnumber) {
-Cycles.remove({CycleTimeStamp: {$lt: moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000")}})
 
 return Cycles.find({CycleTimeStamp: {$gte: startTime},AutoStatus: '1' });
 });

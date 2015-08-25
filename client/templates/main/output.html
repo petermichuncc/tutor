@@ -3,149 +3,42 @@
     
     <!-- <script src="parts.js"></script>-->
    
-
-   
-    
-
 </head>
-
-
-
-
-    
-    
-    
-<!-- This part of the program contacts a parts template that outputs a table containing the info about the job. -->
-           
-
-   <!--  {{>jobstatus}}    
-     
-     
-     
-     {{>cb}}  -->
-  <!-- <div class="progress">
-  <div class="progress-bar progress-bar-striped active" role="progressbar"
-  aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
-    100%
-  </div> 
- 
-</div> --> 
 
         <div id="wrap"> 
        
-        
-        <br/>
-            Last idle period: --<br/>
-            Last changeover time: --
-           <table class="parts" width ="3000" cellpadding="0" border="0" align="center" cellspacing="0">
+    <table class="parts" width ="3000" cellpadding="0" border="0" align="center" cellspacing="0">
       
-    <th>Hour  </th><th>Part #</th><th>Planned</th><th>Actual</th><th>Earned Hours</th><th>Status</th><th WIDTH="350">Reason</th>
-      <tr><td>1</td> <td>{{part1}} </td> <td>{{planned1}}/{{plannedc1}} </td><td>{{incomingcycles1}}/{{incomingc1}}</td><td id="eh"> {{earnedhours1}}  </td> {{#if changeStatus1green}}   <div class="circleBase typeg"></div> {{else}} {{#if changeStatus1yellow}} <div class="circleBase typey"></div> {{alert1}} {{/if}}{{/if}} <td >{{a1}}</td></tr>
-   
-{{#if hour1second}}
-<tr><td>1</td> <td>{{part1p}} </td> <td>{{planned1p}}/{{plannedc1p}} </td><td>{{incomingcycles1p}}/{{incomingc1p}}</td><td id="eh"> {{earnedhours1p}}  </td> {{#if changeStatus1pgreen}}    <div class="circleBase typeg"></div> {{else}} {{#if changeStatus1pyellow}} <div class="circleBase typey"></div> {{alert1p}} {{/if}}{{/if}} <td >{{a1p}}</td></tr>
-     
-     
-  {{/if}}
-       <tr><td>2</td> <td>{{part2}} </td> <td>{{planned2}}/{{plannedc2}} </td><td>{{incomingcycles2}}/{{incomingc2}}</td><td id="eh"> {{earnedhours2}}  </td>{{#if changeStatus2green}}    <div class="circleBase typeg"></div> {{else}} {{#if changeStatus2yellow}} <div class="circleBase typey"></div> {{alert2}} {{/if}}{{/if}} <td >{{a2}}</td></tr>
-     
-       
-{{#if hour2second}}
-      <tr><td>2</td> <td>{{part2p}} </td> <td>{{planned2p}}/{{plannedc2p}} </td><td>{{incomingcycles2p}}/{{incomingc2p}}</td><td id="eh"> {{earnedhours2p}}  </td>{{#if changeStatus2pgreen}}    <div class="circleBase typeg"></div> {{else}} {{#if changeStatus2pyellow}} <div class="circleBase typey"></div> {{alert2p}} {{/if}}{{/if}} <td >{{a2p}}</td></tr>
-     
-      {{/if}}
-       
-       <tr><td>3</td> <td>{{part3}} </td> <td>{{planned3}}/{{plannedc3}} </td><td>{{incomingcycles3}}/{{incomingc3}}</td><td id="eh">{{earnedhours3}} </td>{{#if changeStatus3green}}    <div class="circleBase typeg"></div> {{else}} {{#if changeStatus3yellow}} <div class="circleBase typey"></div> {{alert3}} {{/if}}{{/if}} <td >{{a3}}</td></tr>
-     
-       
-{{#if hour3second}}
-      <tr><td>3</td> <td>{{part3p}} </td> <td>{{planned3p}}/{{plannedc3p}} </td><td>{{incomingcycles3p}}/{{incomingc3p}}</td><td id="eh"> {{earnedhours3p}}  </td>{{#if changeStatus3pgreen}}    <div class="circleBase typeg"></div> {{else}} {{#if changeStatus3pyellow}} <div class="circleBase typey"></div> {{alert3p}} {{/if}}{{/if}} <td >{{a3p}}</td></tr>
-     
-{{/if}}
-<tr><td>4</td> <td>{{part4}} </td> <td>{{planned4}}/{{plannedc4}} </td><td>{{incomingcycles4}}/{{incomingc4}}</td><td id="eh"> {{earnedhours4}}  </td>{{#if changeStatus4green}}    <div class="circleBase typeg"></div> {{else}} {{#if changeStatus4yellow}} <div class="circleBase typey"></div>{{alert4}} {{/if}}{{/if}} <td >{{a4}}</td></tr>
-     
-      
-{{#if hour4second}}
-       <tr><td>4</td> <td>{{part4p}} </td> <td>{{planned4p}}/{{plannedc4p}} </td><td>{{incomingcycles4p}}/{{incomingc4p}}</td><td id="eh">{{earnedhours4p}} </td>{{#if changeStatus4pgreen}}    <div class="circleBase typeg"></div> {{else}} {{#if changeStatus4pyellow}} <div class="circleBase typey"></div> {{alert4p}} {{/if}}{{/if}} <td >{{a4p}}</td></tr>
-     
-{{/if}}
-       <tr><td>5</td> <td>{{part5}} </td> <td>{{planned5}}/{{plannedc5}} </td><td>{{incomingcycles5}}/{{incomingc5}}</td><td id="eh">{{earnedhours5}} </td>{{#if changeStatus5green}}    <div class="circleBase typeg"></div> {{else}} {{#if changeStatus5yellow}} <div class="circleBase typey"></div> {{alert5}} {{/if}}{{/if}} <td >{{a5}}</td></tr>
-     
-       
-{{#if hour5second}}
-       <tr><td>5</td> <td>{{part5p}} </td> <td>{{planned5p}}/{{plannedc5p}} </td><td>{{incomingcycles5p}}/{{incomingc5p}}</td><td id="eh"> {{earnedhours5p}}  </td>{{#if changeStatus5pgreen}}    <div class="circleBase typeg"></div> {{else}} {{#if changeStatus5pyellow}} <div class="circleBase typey"></div> {{alert5p}} {{/if}}{{/if}} <td >{{a5p}}</td></tr>
-     
-{{/if}}
-       <tr><td>6</td> <td>{{part6}} </td> <td>{{planned6}}/{{plannedc6}} </td><td>{{incomingcycles6}}/{{incomingc6}}</td><td id="eh">{{earnedhours6}}</td>{{#if changeStatus6green}}    <div class="circleBase typeg"></div> {{else}} {{#if changeStatus6yellow}} <div class="circleBase typey"></div> {{alert6}} {{/if}}{{/if}} <td >{{a6}}</td></tr>
-     
-       
-{{#if hour6second}}
-       <tr><td>6</td> <td>{{part6p}} </td> <td>{{planned6p}}/{{plannedc6p}} </td><td>{{incomingcycles6p}}/{{incomingc6p}}</td><td id="eh"> {{earnedhours6p}} </td>{{#if changeStatus6pgreen}}   <div class="circleBase typeg"></div> {{else}} {{#if changeStatus6pyellow}} <div class="circleBase typey"></div> {{alert6p}} {{/if}}{{/if}} <td >{{a6p}}</td></tr>
-     
-{{/if}}
-      
-   <tr><td>7</td> <td>{{part7}} </td> <td>{{planned7}}/{{plannedc7}} </td><td>{{incomingcycles7}}/{{incomingc7}}</td><td id="eh">{{earnedhours7}} </td>{{#if changeStatus7green}}    <div class="circleBase typeg"></div> {{else}} {{#if changeStatus7yellow}} <div class="circleBase typey"></div>{{alert7}}
-     {{alert7}}  {{/if}}{{/if}} <td >{{a7}}</td></tr>
-       
-{{#if hour7second}}
-       <tr><td>7</td> <td>{{part7p}} </td> <td>{{planned7p}}/{{plannedc7p}} </td><td>{{incomingcycles7p}}/{{incomingc7p}}</td><td id="eh"> {{earnedhours7p}} </td>{{#if changeStatus7pgreen}}    <div class="circleBase typeg"></div> {{else}} {{#if changeStatus7pyellow}} <div class="circleBase typey"></div> {{alert7p}} {{/if}}{{/if}} <td >{{a7p}}</td></tr>
-     
-       {{/if}}
-       
-       <tr><td>8</td> <td>{{part8}} </td> <td>{{planned8}}/{{plannedc8}} </td><td>{{incomingcycles8}}/{{incomingc8}}</td><td id="eh">{{earnedhours8}}</td>{{#if changeStatus8green}}    <div class="circleBase typeg"></div> {{else}} {{#if changeStatus8yellow}} <div class="circleBase typey"></div> {{alert8}} {{/if}}{{/if}} <td >{{a8}}</td></tr>
-     
     
-   {{#if hour8second}}    
-       <tr><td>8</td> <td>{{part8p}} </td> <td>{{planned8p}}/{{plannedc8p}} </td><td>{{incomingcycles8p}}/{{incomingc8p}}</td><td id="eh">{{earnedhours8p}}</td>{{#if changeStatus8pgreen}}    <div class="circleBase typeg"></div> {{else}} {{#if changeStatus8pyellow}} <div class="circleBase typey"></div> {{alert8p}} {{/if}}{{/if}} <td >{{a8p}}</td></tr>
+      
+      <!-- <tr><td></td> <td></td> <td> </td><td></td><td>  </td>  <td> {{planneds}} </td><td>{{incomingcycles}}</td><td ></td></tr> -->
      
-  {{/if}} 
-        <tr><td></td> <td> </td> <td> </td><td>Total</td><td id="eh">{{earnedhourstotal}}</td><td></td><td ></td></tr>  
-   
+     Date <br> 
+     {{#each actual}}        
+      {{timestamp}} &nbsp;
+        {{/each}} 
+        <br>  
+    Incomingcycles <br> 
+     {{#each actual}}        
+      {{incomingcycles}} &nbsp;
+        {{/each}} 
+        <br>   
+      Planned  <br>          
+      {{#each planned}}        
+       {{planneds}}&nbsp;
+       {{/each}}
+        <br>   
+      Earned hours <br>          
+      {{#each earnedhours}}        
+       {{earnedhour}}&nbsp;
+       {{/each}}
+     
+      
       
 
    </table>
    </div>
-   <div id="left"> <!--start of div -->
    
- <script type = "text/javascript">
- $(".nav1").on("click", function(event){
-     if(confirm("Page Sent")){
-        return true;
-     } else {
-         event.preventDefault();
-        return false;
-     }
- });
-
-
- </script> 
-
-
-
-
-   <a href="{{pathFor 'main'}}"><input id="mybutton" type="image" name="submit" value="submit" src="http://i300.photobucket.com/albums/nn9/petermich/logo_zps0fiebugz.jpg" width=100%></a>
-      
-      <a class="nav" href="javascript:super()">page super</a>
-      
-        <a class="nav" href="javascript:techalert()">page tech</a>
-        <a class="nav" href="javascript:page('mh')">page mat HDL</a>
-        {{#if endjob}}
-      <a class="nav" href="{{pathFor 'endjob'}}">end job</a>
-   {{else}}
- {{#if submitjob}}
-     <a class="nav" href="{{pathFor 'table'}}">start new job</a>
-
-        {{/if}}
-        {{/if}}
-        <a class="nav" href="{{pathFor 'links'}}">links</a>
-    </div>
-   <form action="{{pathFor 'shift1'}}">
-   <span style="float:left;">
-  <button class="btn btn-default " type="submit">Shift 1</button> </span> </form> 
-  <form action="{{pathFor 'shift2'}}"><span style="float:left;">
-  <button class="btn btn-default " type="submit">Shift 2</button> </span> </form>
-  <form action="{{pathFor 'shift3'}}">
-  <button class="btn btn-default " type="submit">Shift 3</button> </form>
   
       
 
