@@ -14,13 +14,14 @@ planned1: function (){
           //basically I need to know the start time and end time
           //these can be retrieved from the most recently submitted 
             //I need to have the work center associated with the planned
-           var start=Queries.find().fetch().pop().starttime
+          var start=Queries.find().fetch().pop().starttime
           var pressnum=Queries.find().fetch().pop().press
         var start=moment(start).format("YYYY-MM-DD 00:00:00.000")
         var end=Queries.find().fetch().pop().endtime
              var end=moment(end).format("YYYY-MM-DD 24:59:99.999")
              var ehour= '1'
-           return Planneds.find({timestamp: {$gt: start,$lt: end}, press:pressnum, pl: ehour}).planneds
+             
+           return Planneds.find({timestamp: {$gt: start}, press:pressnum,pl: ehour}).fetch().pop().planneds
           
            },
  actual1: function (){
@@ -31,7 +32,7 @@ planned1: function (){
         var end=Queries.find().fetch().pop().endtime
              var end=moment(end).format("YYYY-MM-DD 24:59:99.999")
              var ehour= '1'
-           return Incomingcycles.find({timestamp: {$gt: start,$lt: end}, press:pressnum, ic:ehour}).incomingcycles
+           return Incomingcycles.find({timestamp: {$gt: start,$lt: end}, press:pressnum, ic:ehour}).fetch().pop().incomingcycles
            
           
            },
@@ -43,7 +44,7 @@ planned1: function (){
         var end=Queries.find().fetch().pop().endtime
              var end=moment(end).format("YYYY-MM-DD 24:59:99.999")
              var ehour= '1'
-           return Earnedhours.find({timestamp: {$gt: start,$lt: end}, press:pressnum, eh:ehour}).earnedhour
+           return Earnedhours.find({timestamp: {$gt: start,$lt: end}, press:pressnum, eh:ehour}).fetch().pop().earnedhour
            
            },
 partnumber1: function (){
@@ -79,20 +80,18 @@ partnumber1: function (){
            
           
            },
-date: function (){
-          //This should show I guess the year month and day of the job
-           
-           
-          
-           }, 
-job: function (){
-          //This will have logic that will determine if there was another job during this hour
-          //basically it will 
+
+job1: function (){
+          //I need to create an if statement to determine what to return
+          //for instance if this is the first Parts job submitted since the start of the query then return 1
+          //if this is the seconds job submitted since the start of the query then return 2
+          //so
           
            
           
            },
-                                                                  
+
+                                                                   
 });
 
 
