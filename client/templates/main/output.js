@@ -28,6 +28,7 @@ Template.output.helpers({
         var end=Queries.find().fetch().pop().endtime
              var end=moment(end).format("YYYY-MM-DD 24:59:99.999")
              var startime=Parts.find({timestamp: {$gt: start}, press:pressnum}).fetch().pop().timestamp
+           
            return Hours.find({timestamp: {$gt: start}, press:pressnum}).fetch().pop().timestamp
            
           
@@ -419,7 +420,54 @@ partnumber8: function (){
         var end=Queries.find().fetch().pop().endtime
              var end=moment(end).format("YYYY-MM-DD 24:59:99.999")
            return Parts.find({timestamp: {$gt: start}, press:pressnum}).fetch().pop().partnumber
-      },                                                                  
+      }, 
+      planned9: function (){
+          //basically I need to know the start time and end time
+          //these can be retrieved from the most recently submitted 
+            //I need to have the work center associated with the planned
+          var start=Queries.find().fetch().pop().starttime
+          var pressnum=Queries.find().fetch().pop().press
+        var start=moment(start).format("YYYY-MM-DD 00:00:00.000")
+        var end=Queries.find().fetch().pop().endtime
+             var end=moment(end).format("YYYY-MM-DD 24:59:99.999")
+             var ehour= '3'
+             
+           return Planneds.find({timestamp: {$gt: start}, press:pressnum,pl: ehour}).fetch().pop().planneds
+          
+           },
+ actual9: function (){
+          //
+            var start=Queries.find().fetch().pop().starttime
+          var pressnum=Queries.find().fetch().pop().press
+        var start=moment(start).format("YYYY-MM-DD 00:00:00.000")
+        var end=Queries.find().fetch().pop().endtime
+             var end=moment(end).format("YYYY-MM-DD 24:59:99.999")
+             var ehour= '3'
+           return Incomingcycles.find({timestamp: {$gt: start,$lt: end}, press:pressnum, ic:ehour}).fetch().pop().incomingcycles
+           
+          
+           },
+ earnedhours9: function (){
+          //
+          var start=Queries.find().fetch().pop().starttime
+          var pressnum=Queries.find().fetch().pop().press
+        var start=moment(start).format("YYYY-MM-DD 00:00:00.000")
+        var end=Queries.find().fetch().pop().endtime
+             var end=moment(end).format("YYYY-MM-DD 24:59:99.999")
+             var ehour= '3'
+           return Earnedhours.find({timestamp: {$gt: start,$lt: end}, press:pressnum, eh:ehour}).fetch().pop().earnedhour
+           
+           },
+partnumber9: function (){
+          //basically I will put the part number that will be stored in the incoming cycles database
+          //or I could put the part number associated with the job submitted this hour
+            var start=Queries.find().fetch().pop().starttime
+          var pressnum=Queries.find().fetch().pop().press
+        var start=moment(start).format("YYYY-MM-DD 00:00:00.000")
+        var end=Queries.find().fetch().pop().endtime
+             var end=moment(end).format("YYYY-MM-DD 24:59:99.999")
+           return Parts.find({timestamp: {$gt: start}, press:pressnum}).fetch().pop().partnumber
+      },                                                                 
 });
 
 
