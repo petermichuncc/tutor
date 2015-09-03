@@ -10,7 +10,7 @@ var text = $( "#someId" ).val();
 var post = {
       starttime: $( "#starttime" ).val(),
        endtime: $( "#endtime" ).val(),
-       press: $( "#press" ).val(),
+       workcenter: $( "#press" ).val(),
         timestamp: moment().format("YYYY-MM-DD HH:mm:ss.SSS")
         
      };
