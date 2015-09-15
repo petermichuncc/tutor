@@ -44,8 +44,8 @@ var end=moment(end).format("YYYY-MM-DD 24:59:99.999")
         var start=moment(start).format("YYYY-MM-DD 00:00:00.000")
         var end=Queries.find().fetch().pop().endtime
              var end=moment(end).format("YYYY-MM-DD 24:59:99.999")
-             var startime=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-
+             var starttime=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
+console.log ("this is the starttime" + starttime)
            return Hours.find({timestamp: {$gt: starttime,$lt: end}, workcenter:wc}).fetch().pop().timestamp
            
           
