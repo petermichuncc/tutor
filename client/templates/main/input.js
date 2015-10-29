@@ -10,12 +10,12 @@ var text = $( "#someId" ).val();
 var post = {
       starttime: $( "#starttime" ).val(),
        endtime: $( "#endtime" ).val(),
-       workcenter: $( "#press" ).val(),
+       workcenter: $( "#partnumber" ).val(),
         timestamp: moment().format("YYYY-MM-DD HH:mm:ss.SSS")
         
      };
 
-      Meteor.call('searchesInsert', post)
+      Meteor.call('queriesInsert', post)
 
 
 //Here is the logic to determine the page to go to based on the time of day
