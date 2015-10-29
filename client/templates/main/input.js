@@ -15,7 +15,7 @@ var post = {
         
      };
 
-      Meteor.call('queriesInsert', post)
+      Meteor.call('searchesInsert', post)
 
 
 //Here is the logic to determine the page to go to based on the time of day
