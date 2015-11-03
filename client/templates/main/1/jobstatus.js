@@ -29,7 +29,7 @@ var num="1"
  },
 statusgreen: function(){
    
-     
+     nowtime=time();
    
       
    
@@ -76,8 +76,8 @@ cycletime=Number(1000)/cycletime
  cycletimeNow= (3600/cycletimeNow) * Parts.find({press:num}).fetch().pop().cavitation  //this is the pieces per hour
 
 
-
  var lag = moment(nowtime).diff(start, 'minutes', true );
+
  if (cycletimeNow>=cycletime && lag <cycletime*2)
      {
      return true

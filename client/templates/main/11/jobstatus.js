@@ -19,7 +19,7 @@
  },
 statusgreen: function(){
    
-     
+     nowtime=time();
    
       
    

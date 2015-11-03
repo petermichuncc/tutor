@@ -22,7 +22,7 @@ statusgreen: function(){
    
      
    
-      
+      nowtime=time();
    
      //figure out cycle time
          var start =Cycles.find({PressNumber: num, AutoStatus:'1', CycleTimeStamp: {$gte: Parts.find({press:num}).fetch().pop().timestamp.toString()}}).fetch().pop().CycleTimeStamp

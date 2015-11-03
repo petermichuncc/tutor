@@ -20,7 +20,7 @@
 statusgreen: function(){
    
      
-   
+   nowtime=time();
       
    
      //figure out cycle time

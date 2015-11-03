@@ -16,11 +16,11 @@ width:200px;
 .container {
     width: 100%;
 }
-#label
+.label
 {
 text-align: center;
-font-size: 135 ;
-
+font-size: 120% ;
+color: black;
 }
 
 #lefttab
@@ -57,7 +57,7 @@ font-size: 150% ;
 .rectangle {
     width: 60px;
     height: 120px;
-   
+   text-align: left;
 }
 #eh { text-align: center; }
 
