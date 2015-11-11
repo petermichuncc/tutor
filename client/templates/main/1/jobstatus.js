@@ -112,11 +112,13 @@ hours=0
   }
 });
 }
-catch(err)
+catch(e)
 {
+  if ( e instanceof TypeError)
+  {
  BootstrapModalPrompt.prompt({
     title: "Workcenter Status",
-    content: "There isn't a recent job to show"
+    content: "Partnumber: "+part
 }, function(result) {
   if (result) {
     // User confirmed it, so go do something.
@@ -125,9 +127,10 @@ catch(err)
     // User did not confirm, do nothing.
   }
 });
+}
+}
+}
 
-}
-}
 });
 
 
