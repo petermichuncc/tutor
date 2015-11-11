@@ -11,7 +11,7 @@ Meteor.publish('hours', function() {
 Meteor.publish('machines', function() {
   return Machines.find();
 });
-Meteor.publish('parts', function() {
+Meteor.publish('parts', function(num) {
   return Parts.find();
 });
 Meteor.publish('queries', function() {
