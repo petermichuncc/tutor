@@ -68,7 +68,9 @@ font-size: 150% ;
 .rectangle {
     width: 60px;
     height: 120px;
-   text-align: left;
+   text-align: center;
+   
+   
 }
 #eh { text-align: center; }
 

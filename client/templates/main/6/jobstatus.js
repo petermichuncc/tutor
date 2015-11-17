@@ -13,13 +13,19 @@
    }
   Template.jobstatus6.events({
   'click .rectangle': function(event){
+    var lastEnd = Hours.find({press:num}).fetch().pop().timestamp
+ var lastjob= Parts.find({press:num}).fetch().pop().timestamp
+   if(moment(lastjob).isAfter(lastEnd))
+   {
    try{
 
     var part=Parts.find({press:num}).fetch().pop().partnumber
-var begin =Parts.find({press:num}).fetch().pop().timestamp.toString()
-            var prev =Cycles.findOne({PressNumber: num, AutoStatus:'1', CycleTimeStamp: {$gt: begin}}).CycleTimeStamp
-             var start =Cycles.findOne({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$lt: prev}}).CycleTimeStamp
-      
+ var begin =Parts.find({press:num}).fetch().pop().timestamp.toString()
+           
+       var start =Cycles.find({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: begin}}).fetch().pop().CycleTimeStamp
+       
+       var  prev =Cycles.find({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: begin, $lt: start}}).fetch().pop().CycleTimeStamp
+
        // //I should always compare with the most recently submitted job
 
        // var planned=1000/Number(cycletime)
@@ -43,16 +49,28 @@ var begin =Parts.find({press:num}).fetch().pop().timestamp.toString()
               
               }
 
- var cycletimeNow = moment(prev).diff(start, 'seconds', true )
+ var cycletimeNow = moment(start).diff(prev, 'seconds', true )
 
    var piecesPerHour= (Number(3600)/cycletimeNow) * Parts.find({press:num}).fetch().pop().cavitation  //this is the pieces per hour
+            //ReactiveMethod.call('cumulatives', start,num);
+            //I need to count all the cycles before yesterday at 11 then start counting from that time
+            //if the last job occured prior to yesterday at 11
+            //I do this since I only subscribe data since yesterday at 11.
+              var yesterday=moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000")
+               if (moment(yesterday).isAfter(begin))
+               {
+                 
+                 made=ReactiveMethod.call('amountMade', begin,yesterday,num);
+              amountMade=Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: yesterday}}).count() * Parts.find({press:num},{sort: {timestamp: -1}, limit: 1}).fetch().pop().cavitation;
+              amountMade=amountMade+made
+             }
+              else
+              {
+              amountMade=Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: begin}}).count() * Parts.find({press:num},{sort: {timestamp: -1}, limit: 1}).fetch().pop().cavitation;
+           }
             
-              amountMade=Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: start}}).count() * Parts.find({press:num},{sort: {timestamp: -1}, limit: 1}).fetch().pop().cavitation;
            
-           
-            
-           
-          //console.log("this is the cumulative"+ Cumulatives.find({timestamp: {$gte: begin},press: num}).fetch().pop().cumulatives)
+    
          var  hoursRemaining=(Parts.find({press:num}).fetch().pop().quantity - amountMade)/piecesPerHour
         hoursRemaining= Number(hoursRemaining)
      
@@ -73,7 +91,7 @@ var begin =Parts.find({press:num}).fetch().pop().timestamp.toString()
 
             percent=0;
            }
-   
+  
    
     
   var hoursRemaining=percent
@@ -90,7 +108,9 @@ hours=0
          {
           minutes=0
          }
-         var text = hours.toString().concat(" hours and ",minutes," minutes left") 
+         var text = hours.toString().concat(" hours and ",minutes," minutes left")
+         
+      
  BootstrapModalPrompt.prompt({
     title: "Workcenter Status",
     content: "Partnumber: "+part+", "+text
@@ -121,9 +141,8 @@ catch(e)
 }
 }
 }
-
+}
 });
-
 
 
  Template.jobstatus6.helpers({
@@ -171,8 +190,11 @@ statusgreen: function(){
               cycletime=cycletimeQ
               
             }
-           
+//this is not the cycletime it is the pc/hr           
 cycletime=Number(1000)/cycletime
+//I need to convert this to the actual cycle time in seconds
+//
+cycletimeEstimated=Number(3600)/(cycletime/Number(Parts.find({press:num}).fetch().pop().cavitation))
 
  var cycletimeNow = moment(start).diff(prev, 'seconds', true )
 
@@ -184,7 +206,7 @@ cycletime=Number(1000)/cycletime
 
  var lag = moment(nowtime).diff(start, 'seconds', true );
 
- if (cycletimeNow>=cycletime && lag <cycletime*2)
+ if (cycletimeNow>=cycletime && lag <cycletimeEstimated*2)
      {
      return true
    }
@@ -239,14 +261,15 @@ cycletime=Number(1000)/cycletime
            
 cycletime=Number(1000)/cycletime
  var cycletimeNow = moment(start).diff(prev, 'seconds', true )
- 
+ cycletimeEstimated=Number(3600)/(cycletime/Number(Parts.find({press:num}).fetch().pop().cavitation))
+
 // console.log("This is the cycletime" + cycletime)
  cycletimeNow= (3600/cycletimeNow) * Parts.find({press:num}).fetch().pop().cavitation  //this is the pieces per hour
- 
+ //lag should look at the most recent cycle
  var lag = moment(nowtime).diff(start, 'seconds', true );
 
 //fix lag (minutes)to compare to cycle time (seconds)
- if (cycletimeNow<cycletime && lag <cycletime*2)
+ if (cycletimeNow<cycletime && lag <cycletimeEstimated*2)
      {
      return true
    }
@@ -254,11 +277,10 @@ cycletime=Number(1000)/cycletime
    {
     return false
    }
-   // }, 1000);
+   
  }
    
-//   // }, 1000);
+
 
 
  })
-

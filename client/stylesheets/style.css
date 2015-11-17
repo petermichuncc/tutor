@@ -198,7 +198,8 @@ textarea{
     background: #FFFAFA    ;
     box-shadow: 5px 5px 15px #888888;
   font-size: 8px;
-  padding: 1%;
+   
+    padding: 0;
   color: black;
   text-align: center;
 }
@@ -208,7 +209,8 @@ textarea{
     background: green;
     box-shadow: 5px 5px 15px #888888;
   font-size: 8px;
-  padding: 1%;
+   
+    padding: 0;
   text-align: center;
 }
 #statusyellow{
@@ -217,7 +219,8 @@ textarea{
     background: #F7FC12;
     box-shadow: 5px 5px 15px #888888;
   font-size: 8px;
-  padding: 1%;
+   
+    padding: 0;
   text-align: center;
 }
 .circleBase {
