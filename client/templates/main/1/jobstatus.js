@@ -169,14 +169,18 @@ catch(e)
  },
 statusgreen: function(){
    
-     
+     var lastEnd = Hours.find({press:num}).fetch().pop().timestamp
+ 
+  var begin =Parts.find({press:num}).fetch().pop().timestamp.toString()
+      if( moment(begin).isAfter(lastEnd)) 
+      {   
    
       
      nowtime=time();
      //figure out cycle time
-         var start =Cycles.find({PressNumber: num, AutoStatus:'1', CycleTimeStamp: {$gte: Parts.find({press:num}).fetch().pop().timestamp.toString()}}).fetch().pop().CycleTimeStamp
+         var start =Cycles.find({PressNumber: num, AutoStatus:'1', CycleTimeStamp: {$gte: begin}}).fetch().pop().CycleTimeStamp
        
-       var  prev =Cycles.find({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: Parts.find({press:num}).fetch().pop().timestamp, $lt: start}}).fetch().pop().CycleTimeStamp
+       var  prev =Cycles.find({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: begin, $lt: start}}).fetch().pop().CycleTimeStamp
         
         //I should always compare with the most recently submitted job
         
@@ -232,19 +236,23 @@ cycletimeEstimated=Number(3600)/(cycletime/Number(Parts.find({press:num}).fetch(
    }
 
 // // }, 1000);
-   
+   }
  },
 
 
  statusyellow: function(){
-     
+     var lastEnd = Hours.find({press:num}).fetch().pop().timestamp
+ 
+  var begin =Parts.find({press:num}).fetch().pop().timestamp.toString()
+      if( moment(begin).isAfter(lastEnd)) 
+      {   
    
    nowtime=time();
 
      //figure out cycle time
-        var start =Cycles.find({PressNumber: num, AutoStatus:'1', CycleTimeStamp: {$gte: Parts.find({press:num}).fetch().pop().timestamp.toString()}}).fetch().pop().CycleTimeStamp
+        var start =Cycles.find({PressNumber: num, AutoStatus:'1', CycleTimeStamp: {$gte: begin}}).fetch().pop().CycleTimeStamp
        
-        var prev =Cycles.find({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: Parts.find({press:num}).fetch().pop().timestamp.toString(), $lt: start}}).fetch().pop().CycleTimeStamp
+        var prev =Cycles.find({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: begin, $lt: start}}).fetch().pop().CycleTimeStamp
         
         //I should always compare with the most recently submitted job
         
@@ -296,7 +304,17 @@ cycletime=Number(1000)/cycletime
    
  }
    
-
+}
 
 
  })
+
+
+
+
+
+
+
+
+
+
