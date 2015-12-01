@@ -12,14 +12,11 @@ Meteor.subscribe('parts');
 Meteor.subscribe('hours');
 var num="1"
 function time (){
-    
-    
-    var nowtime=Chronos.currentTime(30000)
+    var nowtime=TimeSync.serverTime(null, 30000)
     nowtime=moment(nowtime).format("YYYY-MM-DD HH:mm:ss.SSS")
- 
-
-    return nowtime;
+   return nowtime;
    }
+  setInterval(function(){ TimeSync.resync(); }, 30000);
  Template.jobstatus1.events({
   'click .rectangle': function(event){
    //basically run this code only if the last job is after the last end job
@@ -124,7 +121,7 @@ hours=0
       
  BootstrapModalPrompt.prompt({
     title: "Workcenter Status",
-    content: "Partnumber: "+part+", "+text
+    content: "Part number: "+part+", "+text
 }, function(result) {
   if (result) {
     // User confirmed it, so go do something.
@@ -140,7 +137,7 @@ catch(e)
   {
  BootstrapModalPrompt.prompt({
     title: "Workcenter Status",
-    content: "Partnumber: "+part
+    content: "Part number: "+part
 }, function(result) {
   if (result) {
     // User confirmed it, so go do something.

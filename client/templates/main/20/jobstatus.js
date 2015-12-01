@@ -3,14 +3,11 @@
  Meteor.subscribe('parts');
   var num= "20"
 function time (){
-    
-    
-    var nowtime=Chronos.currentTime(30000)
+    var nowtime=TimeSync.serverTime(null, 30000)
     nowtime=moment(nowtime).format("YYYY-MM-DD HH:mm:ss.SSS")
- 
-
-    return nowtime;
+   return nowtime;
    }
+  setInterval(function(){ TimeSync.resync(); }, 30000);
  Template.jobstatus20.events({
   'click .rectangle': function(event){
     var lastEnd = Hours.find({press:num}).fetch().pop().timestamp
@@ -113,7 +110,7 @@ hours=0
       
  BootstrapModalPrompt.prompt({
     title: "Workcenter Status",
-    content: "Partnumber: "+part+", "+text
+    content: "Part number: "+part+", "+text
 }, function(result) {
   if (result) {
     // User confirmed it, so go do something.
@@ -129,7 +126,7 @@ catch(e)
   {
  BootstrapModalPrompt.prompt({
     title: "Workcenter Status",
-    content: "Partnumber: "+part
+    content: "Part number: "+part
 }, function(result) {
   if (result) {
     // User confirmed it, so go do something.
