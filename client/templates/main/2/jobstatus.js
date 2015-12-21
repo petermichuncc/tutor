@@ -1,150 +1,19 @@
- 
 
- Meteor.subscribe('parts');
+
+ 
 var num="2"
 function time (){
-    var nowtime=TimeSync.serverTime(null, 30000)
+    var nowtime=TimeSync.serverTime(null, 60000)
     nowtime=moment(nowtime).format("YYYY-MM-DD HH:mm:ss.SSS")
    return nowtime;
    }
-  setInterval(function(){ TimeSync.resync(); }, 30000);
-   Template.jobstatus2.events({
-   'click .rectangle': function(event){
-     var lastEnd = Hours.find({press:num}).fetch().pop().timestamp
- var lastjob= Parts.find({press:num}).fetch().pop().timestamp
-   if(moment(lastjob).isAfter(lastEnd))
-   {
-   try{
-
-    var part=Parts.find({press:num}).fetch().pop().partnumber
- var begin =Parts.find({press:num}).fetch().pop().timestamp.toString()
-           
-       var start =Cycles.find({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: begin}}).fetch().pop().CycleTimeStamp
-       
-       var  prev =Cycles.find({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: begin, $lt: start}}).fetch().pop().CycleTimeStamp
-
-       // //I should always compare with the most recently submitted job
-
-       // var planned=1000/Number(cycletime)
-             var cycletimeH=Parts.find({press:num}).fetch().pop().cycletimeH
-             var cycletimeP=Parts.find({press:num}).fetch().pop().cycletimeP
-             var cycletimeQ=Parts.find({press:num}).fetch().pop().cycletimeQ
-              if (cycletimeH>0 )
-             {
-               cycletime=cycletimeH
-             
-           }
-
-              else if ((cycletimeH<=0 || cycletimeH=="") && cycletimeP> 0)
-            {
-              cycletime=cycletimeP
-              
-             }
-              else if ((cycletimeH<=0 || cycletimeH=="") && (cycletimeP<=0 || cycletimeP=="") && cycletimeQ!=0)
-             {
-                cycletime=cycletimeQ
-              
-              }
-
- var cycletimeNow = moment(start).diff(prev, 'seconds', true )
-
-   var piecesPerHour= (Number(3600)/cycletimeNow) * Parts.find({press:num}).fetch().pop().cavitation  //this is the pieces per hour
-            //ReactiveMethod.call('cumulatives', start,num);
-            //I need to count all the cycles before yesterday at 11 then start counting from that time
-            //if the last job occured prior to yesterday at 11
-            //I do this since I only subscribe data since yesterday at 11.
-              var yesterday=moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000")
-               if (moment(yesterday).isAfter(begin))
-               {
-                 
-                 made=ReactiveMethod.call('amountMade', begin,yesterday,num);
-              amountMade=Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: yesterday}}).count() * Parts.find({press:num},{sort: {timestamp: -1}, limit: 1}).fetch().pop().cavitation;
-              amountMade=amountMade+made
-             }
-              else
-              {
-              amountMade=Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: begin}}).count() * Parts.find({press:num},{sort: {timestamp: -1}, limit: 1}).fetch().pop().cavitation;
-           }
-            
-           
-    
-         var  hoursRemaining=(Parts.find({press:num}).fetch().pop().quantity - amountMade)/piecesPerHour
-        hoursRemaining= Number(hoursRemaining)
-     
-    
-       if (hoursRemaining <0)
-      {
-       hoursRemaining=0
-      }
-    
-            var percent= Number(hoursRemaining)
-            if (percent >0)
-            {
-
-            percent=Number(percent.toFixed(3))
-                 }              
-          if (percent<=0)
-            {
-
-            percent=0;
-           }
-  
-   
-    
-  var hoursRemaining=percent
- var hours=parseInt(hoursRemaining)
- if (hours <=0)
- {
-hours=0
-
- }
-        var  minutes= hoursRemaining % 1
-         minutes = minutes * 60
-         minutes = parseInt(minutes)
-         if (minutes <=0)
-         {
-          minutes=0
-         }
-         var text = hours.toString().concat(" hours and ",minutes," minutes left")
-         
-      
- BootstrapModalPrompt.prompt({
-    title: "Workcenter Status",
-    content: "Part number: "+part+", "+text
-}, function(result) {
-  if (result) {
-    // User confirmed it, so go do something.
-  }
-  else {
-    // User did not confirm, do nothing.
-  }
-});
+    Template.jobstatus2.rendered = function () {
+     Meteor.subscribe('parts', num);
+Meteor.subscribe('hours', num);
+ var begin =moment().subtract(10, 'days').format("YYYY-MM-DD 00:00:00.000")
+Meteor.subscribe('cycles-recent', begin, num)
+setInterval(function(){ TimeSync.resync(); }, 60000);
 }
-catch(e)
-{
-  if ( e instanceof TypeError)
-  {
- BootstrapModalPrompt.prompt({
-    title: "Workcenter Status",
-    content: "Part number: "+part
-}, function(result) {
-  if (result) {
-    // User confirmed it, so go do something.
-  }
-  else {
-    // User did not confirm, do nothing.
-  }
-});
-}
-}
-}
-}
-});
-
- 
-   
-
-
  Template.jobstatus2.helpers({
  workcenter: function()
  {
@@ -288,10 +157,149 @@ cycletime=Number(1000)/cycletime
    
  }
    
-}
+},
+
+
 
 
  })
+
+
+   Template.jobstatus2.events({
+   'click .rectangle': function(event){
+  
+     var lastEnd = Hours.find({press:num}).fetch().pop().timestamp
+ var lastjob= Parts.find({press:num}).fetch().pop().timestamp
+console.log("this is the last job in status 2" + lastjob)
+   if(moment(lastjob).isAfter(lastEnd))
+   {
+   try{
+ 
+    var part=Parts.find({press:num}).fetch().pop().partnumber
+    
+     var lastEnd = Hours.find({press:num}).fetch().pop().timestamp
+ 
+ var begin =Parts.find({press:num}).fetch().pop().timestamp.toString()
+         
+       var start =Cycles.find({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: begin}}).fetch().pop().CycleTimeStamp
+       
+       var  prev =Cycles.find({PressNumber: num, AutoStatus:'1',CycleTimeStamp: {$gt: begin, $lt: start}}).fetch().pop().CycleTimeStamp
+
+       // //I should always compare with the most recently submitted job
+
+       // var planned=1000/Number(cycletime)
+             var cycletimeH=Parts.find({press:num}).fetch().pop().cycletimeH
+             var cycletimeP=Parts.find({press:num}).fetch().pop().cycletimeP
+             var cycletimeQ=Parts.find({press:num}).fetch().pop().cycletimeQ
+              if (cycletimeH>0 )
+             {
+               cycletime=cycletimeH
+             
+           }
+
+              else if ((cycletimeH<=0 || cycletimeH=="") && cycletimeP> 0)
+            {
+              cycletime=cycletimeP
+              
+             }
+              else if ((cycletimeH<=0 || cycletimeH=="") && (cycletimeP<=0 || cycletimeP=="") && cycletimeQ!=0)
+             {
+                cycletime=cycletimeQ
+              
+              }
+
+ var cycletimeNow = moment(start).diff(prev, 'seconds', true )
+
+   var piecesPerHour= (Number(3600)/cycletimeNow) * Parts.find({press:num}).fetch().pop().cavitation  //this is the pieces per hour
+            //ReactiveMethod.call('cumulatives', start,num);
+            //I need to count all the cycles before yesterday at 11 then start counting from that time
+            //if the last job occured prior to yesterday then run this code
+            //I do this since I only subscribe data since yesterday at 11.
+            //
+              
+               
+              amountMade=Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: begin}}).count() * Parts.find({press:num},{sort: {timestamp: -1}, limit: 1}).fetch().pop().cavitation;
+           
+            
+           
+    
+         var  hoursRemaining=(Parts.find({press:num}).fetch().pop().quantity - amountMade)/piecesPerHour
+        hoursRemaining= Number(hoursRemaining)
+    
+    
+       if (hoursRemaining <0)
+      {
+       hoursRemaining=0
+      }
+    
+            var percent= Number(hoursRemaining)
+            if (percent >0)
+            {
+
+            percent=Number(percent.toFixed(3))
+                 }              
+          if (percent<=0)
+            {
+
+            percent=0;
+           }
+  
+   
+    
+  var hoursRemaining=percent
+ var hours=parseInt(hoursRemaining)
+ if (hours <=0)
+ {
+hours=0
+
+ }
+        var  minutes= hoursRemaining % 1
+         minutes = minutes * 60
+         minutes = parseInt(minutes)
+         if (minutes <=0)
+         {
+          minutes=0
+         }
+         var text = hours.toString().concat(" hours and ",minutes," minutes left")
+      
+      
+ BootstrapModalPrompt.prompt({
+    title: "Workcenter Status",
+    content: "Part number: "+part+", "+text
+}, function(result) {
+  if (result) {
+    // User confirmed it, so go do something.
+  }
+  else {
+    // User did not confirm, do nothing.
+  }
+});
+}
+catch(e)
+{
+  if ( e instanceof TypeError)
+  {
+ BootstrapModalPrompt.prompt({
+    title: "Workcenter Status",
+    content: "Part number: "+part
+}, function(result) {
+  if (result) {
+    // User confirmed it, so go do something.
+  }
+  else {
+    // User did not confirm, do nothing.
+  }
+});
+}
+}
+}
+}
+});
+
+ 
+   
+
+
 
 
 

@@ -1,7 +1,7 @@
 <template name="jobstatus12">
 <!-- change the div to a button-->
 {{#if statusgreen}}
-     <button id="statusgreen"  class="rectangle "> 
+     <button id="statusgreenbutton"  class="rectangle "> 
 
         <span class="label">{{workcenter}} </span><br>
         <span class="label">At or</span><br>
@@ -12,7 +12,7 @@
     
  {{else}}
  {{#if statusyellow}}
-     <button id="statusyellow"  class="rectangle"> 
+     <button id="statusyellowbutton"  class="rectangle"> 
 
         <span class="label">{{workcenter}}</span><br>
         <span class="label">Below</span><br>
@@ -20,7 +20,7 @@
      </button>
       {{else}}
 
-     <button id="statuswhite" class="rectangle"> 
+     <button id="statuswhitebutton" class="rectangle"> 
 
        <span class="label">{{workcenter}} </span><br>
         <span class="label">Idle</span>

@@ -1,3 +1,18 @@
+Template.output3.rendered =function(){
+$("#btnExport").click(function (e) {
+    window.open('data:application/vnd.ms-excel,' + $('#dvData').html());
+    e.preventDefault();
+});
+
+Meteor.subscribe('partsall');
+Meteor.subscribe('hoursall');
+Meteor.subscribe('incomingcyclesall');
+ Meteor.subscribe('earnedhoursall');
+Meteor.subscribe('plannedsall');
+};
+
+
+
 Template.output3.helpers({
     
  start: function (){

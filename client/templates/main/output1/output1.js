@@ -1,10 +1,5 @@
-   Meteor.subscribe('parts');
-Meteor.subscribe('hours');
-Meteor.subscribe('incomingcycles');
- Meteor.subscribe('earnedhours');
-Meteor.subscribe('planneds');
-Meteor.subscribe('earnedhours');
-// Meteor.subscribe('reasons');
+   
+
 Meteor.subscribe('queries');
 //this code needs to also show hours with two jobs in the same hour
 var num = "1"
@@ -13,6 +8,12 @@ $("#btnExport").click(function (e) {
     window.open('data:application/vnd.ms-excel,' + $('#dvData').html());
     e.preventDefault();
 });
+
+Meteor.subscribe('partsall');
+Meteor.subscribe('hoursall');
+Meteor.subscribe('incomingcyclesall');
+ Meteor.subscribe('earnedhoursall');
+Meteor.subscribe('plannedsall');
 };
 
 
@@ -27,7 +28,7 @@ Template.output.helpers({
         var start=moment(start).format("YYYY-MM-DD 07:00:00.000")
          
          var end=moment(start).format("YYYY-MM-DD 08:00:00.000")
-        console.log("this is the count of jobs submitted this hour " + Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).count)
+        
         if (Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).count >= 1)
         {
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
@@ -599,8 +600,10 @@ planned1: function (){
              var end=moment(end).format("YYYY-MM-DD 24:59:99.999")
                     
               var ehour= '1'
-        var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp  
+        var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
+          
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
+         
            return Incomingcycles.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, ic:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().incomingcycles
                     },
            actual2: function (){
@@ -1376,11 +1379,16 @@ partnumber1: function (){
             
            
              var ehour= '1'
-             var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp  
-         var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
-           if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
-            {            
-              return Parts.find({timestamp: {$gt: start,$lt: end}, workcenter:wc},{sort: {timestamp: 1}, limit: 1}).fetch().pop().partnumber
+             
+             
+         var newend=moment(start).format("YYYY-MM-DD 24:59:99.999")
+         console.log("This is the wc" + wc)
+       
+           if (Planneds.find({timestamp: {$gte: start,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).count() >0)
+            {            console.log("test a")
+              var planned=Planneds.find({timestamp: {$gte: start,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().timestamp
+              console.log("This is planned " + planned)
+              return Parts.find({timestamp: {$lt: planned}, workcenter:wc}).fetch().pop().partnumber
             }
                    
       },

@@ -3,29 +3,75 @@ body{
     margin: 0; 
     padding: 0;
 	background: #999999;
-	color: #ffffff;
+	color: black;
 	font-weight: 300;
 	height: 100%;
 }
 .form-control
 {
 width:200px;
-
+color: black;
 
 }
-.modal-header
-{
-    color:black;
+.relative {
+    position: relative;
+    left: 30px;
+   
 }
-.modal-content {
+#statuswhitebutton{
+  border:#222222 1px solid;
+    overflow: hidden;
+    background: #FFFAFA    ;
+    box-shadow: 5px 5px 15px #888888;
+  font-size: 8px;
+   
+    padding: 0;
   color: black;
+  text-align: center;
 }
-.modal-body
+#statusgreenbutton{
+  border:#222222 1px solid;
+    overflow: hidden;
+    background: green;
+    box-shadow: 5px 5px 15px #888888;
+  font-size: 8px;
+   
+    padding: 0;
+  text-align: center;
+}
+#statusyellowbutton{
+  border:#222222 1px solid;
+    overflow: hidden;
+    background: #F7FC12;
+    box-shadow: 5px 5px 15px #888888;
+  font-size: 8px;
+   
+    padding: 0;
+  text-align: center;
+}
+.rectangle {
+    width: 60px;
+    height: 120px;
+   text-align: center;
+   
+   
+}
+.right
 {
-    color:black;
+   position: absolute;
+    left: 540px;
 }
-.container {
-    width: 100%;
+
+.typer {
+    width: 40px;
+    height: 40px;
+    background: red;
+     margin-bottom: 5px;
+     margin-top: 2px;
+    
+    
+   
+    padding: 10px;
 }
 .label
 {
@@ -65,12 +111,32 @@ padding-left:5em;
 font-size: 150% ;
 
 }
-.rectangle {
-    width: 60px;
-    height: 120px;
-   text-align: center;
-   
-   
+.modal-header
+{
+    color:black;
+}
+
+.modal-body
+{
+    color:black;
+}
+.container {
+    width: 100%;
+}
+#label
+{
+
+font-size: 200% ;
+
+}
+ul li {
+
+}
+#time
+{
+
+font-size: 150% ;
+
 }
 #eh { text-align: center; }
 
@@ -155,7 +221,9 @@ table.display th{
 	padding: 5px;
 	text-align: center;
 }
-
+#pardot-form {
+color:white;
+}
 table.display td{ 
 	padding: 5px;
 	width: 3%;
@@ -284,7 +352,7 @@ input[type="button"]:active{
 	margin-top: 2px;
 	box-shadow: none;
 } 
-input[type="submit"]{ 
+/*input[type="submit"]{ 
 	font-size: 10px;
 	border: #333333 1px solid;
 	background: #c2c2c2;
@@ -297,7 +365,7 @@ input[type="submit"]:disabled{
 input[type="submit"]:active{
 	margin-top: 2px;
 	box-shadow: none;
-} 
+}*/ 
 
 progress {
     -webkit-appearance: progress-bar;

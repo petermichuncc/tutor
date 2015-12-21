@@ -1,3 +1,19 @@
+
+Template.output2.rendered =function(){
+$("#btnExport").click(function (e) {
+    window.open('data:application/vnd.ms-excel,' + $('#dvData').html());
+    e.preventDefault();
+});
+
+Meteor.subscribe('partsall');
+Meteor.subscribe('hoursall');
+Meteor.subscribe('incomingcyclesall');
+ Meteor.subscribe('earnedhoursall');
+Meteor.subscribe('plannedsall');
+};
+
+
+
 Template.output2.helpers({
     
  start: function (){
@@ -650,11 +666,13 @@ planned1: function (){
         var start=moment(start).format("YYYY-MM-DD 00:00:00.000")
          var end=Queries.find().fetch().pop().endtime
              var end=moment(end).format("YYYY-MM-DD 24:59:99.999")
-                    
+                    console.log("this is the workcenter"+workcenter)
               var ehour= '1'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+        timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
+         console.log(" this is the start" + timestamp + " this is the end" +newend)
+         console.log("This is the cycles" + Incomingcycles.find({}).fetch().pop().incomingcycles)
            return Incomingcycles.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, ic:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().incomingcycles
                     },
            actual2: function (){
@@ -669,7 +687,7 @@ planned1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
               var ehour= '2'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+       timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            return Incomingcycles.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, ic:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().incomingcycles
            },
@@ -685,7 +703,7 @@ planned1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
             var ehour= '3'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+       timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            return Incomingcycles.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, ic:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().incomingcycles
           
@@ -702,7 +720,7 @@ planned1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
             var ehour= '4'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp  
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+       timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            return Incomingcycles.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, ic:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().incomingcycles
           
@@ -719,7 +737,7 @@ planned1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
            var ehour= '5'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")  
+       timestamp = moment(timestamp).add(1,'days')  
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            return Incomingcycles.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, ic:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().incomingcycles
           
@@ -736,7 +754,7 @@ planned1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
             var ehour= '6'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")  
+       timestamp = moment(timestamp).add(1,'days')  
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            return Incomingcycles.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, ic:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().incomingcycles
            },
@@ -752,7 +770,7 @@ planned1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
             var ehour= '7'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+       timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            return Incomingcycles.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, ic:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().incomingcycles
            },
@@ -768,7 +786,7 @@ planned1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
             var ehour= '8'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+       timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            return Incomingcycles.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, ic:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().incomingcycles
            },
@@ -784,7 +802,7 @@ planned1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
             var ehour= '9'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+       timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            return Incomingcycles.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, ic:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().incomingcycles
           
@@ -801,7 +819,7 @@ planned1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
              var ehour= '10'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-       timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+      timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            return Incomingcycles.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, ic:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().incomingcycles
            },
@@ -817,7 +835,7 @@ planned1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
              var ehour= '11'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+       timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            return Incomingcycles.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, ic:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().incomingcycles
           
@@ -834,7 +852,7 @@ planned1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
             var ehour= '12'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+       timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            return Incomingcycles.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, ic:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().incomingcycles
           
@@ -851,7 +869,7 @@ planned1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
               var ehour= '13'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+       timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            return Incomingcycles.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, ic:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().incomingcycles
            },
@@ -867,7 +885,7 @@ planned1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
            var ehour= '14'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-       timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+      timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            return Incomingcycles.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, ic:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().incomingcycles
            },
@@ -883,7 +901,7 @@ planned1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
            var ehour= '15'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+       timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            return Incomingcycles.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, ic:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().incomingcycles
           
@@ -899,7 +917,7 @@ planned1: function (){
                           
             var ehour= '16'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+       timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            return Incomingcycles.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, ic:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().incomingcycles
           
@@ -915,7 +933,7 @@ planned1: function (){
                           
             var ehour= '17'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+       timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            return Incomingcycles.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, ic:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().incomingcycles
            },
@@ -930,7 +948,7 @@ planned1: function (){
                           
            var ehour= '18'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+       timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            return Incomingcycles.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, ic:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().incomingcycles
            },
@@ -945,7 +963,7 @@ planned1: function (){
            
            var ehour= '19'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+       timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            return Incomingcycles.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, ic:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().incomingcycles
            },
@@ -961,7 +979,7 @@ planned1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
             var ehour= '20'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+       timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            return Incomingcycles.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, ic:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().incomingcycles
           
@@ -977,7 +995,7 @@ planned1: function (){
                           
            var ehour= '21'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+       timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            return Incomingcycles.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, ic:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().incomingcycles
            },
@@ -992,7 +1010,7 @@ planned1: function (){
            
             var ehour= '22'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+       timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            return Incomingcycles.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, ic:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().incomingcycles
           
@@ -1007,7 +1025,7 @@ planned1: function (){
              var end=moment(end).format("YYYY-MM-DD 24:59:99.999")
            var ehour= '23'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+       timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            return Incomingcycles.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, ic:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().incomingcycles
            },
@@ -1022,7 +1040,7 @@ planned1: function (){
                           
            var ehour= '24'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+       timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            return Incomingcycles.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, ic:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().incomingcycles
           
@@ -1041,7 +1059,7 @@ planned1: function (){
            
               var ehour= '1'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+       timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            
            return Earnedhours.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, eh:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().earnedhour
@@ -1061,7 +1079,7 @@ planned1: function (){
             
               var ehour= '2'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+       timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            
            return Earnedhours.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, eh:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().earnedhour
@@ -1079,7 +1097,7 @@ planned1: function (){
             
                var ehour= '3'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+       timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            
            return Earnedhours.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, eh:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().earnedhour
@@ -1097,7 +1115,7 @@ planned1: function (){
              
               var ehour= '4'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+       timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            
            return Earnedhours.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, eh:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().earnedhour
@@ -1115,7 +1133,7 @@ planned1: function (){
             
                var ehour= '5'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+       timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            
            return Earnedhours.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, eh:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().earnedhour
@@ -1133,7 +1151,7 @@ planned1: function (){
             
              var ehour= '6'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+       timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            
            return Earnedhours.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, eh:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().earnedhour
@@ -1150,7 +1168,7 @@ planned1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
               var ehour= '7'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+       timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            
            return Earnedhours.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, eh:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().earnedhour
@@ -1167,7 +1185,7 @@ planned1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
               var ehour= '8'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+       timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            
            return Earnedhours.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, eh:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().earnedhour
@@ -1184,7 +1202,7 @@ planned1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
              var ehour= '9'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+       timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            
            return Earnedhours.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, eh:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().earnedhour
@@ -1201,7 +1219,7 @@ planned1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
              var ehour= '10'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+       timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            
            return Earnedhours.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, eh:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().earnedhour
@@ -1219,7 +1237,7 @@ planned1: function (){
             
              var ehour= '11'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")  
+       timestamp = moment(timestamp).add(1,'days')  
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            
            return Earnedhours.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, eh:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().earnedhour
@@ -1237,7 +1255,7 @@ planned1: function (){
             
                var ehour= '12'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
-       timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+      timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            
            return Earnedhours.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, eh:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().earnedhour
@@ -1254,7 +1272,7 @@ planned1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
              var ehour= '13'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")  
+       timestamp = moment(timestamp).add(1,'days')  
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            
            return Earnedhours.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, eh:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().earnedhour
@@ -1272,7 +1290,7 @@ planned1: function (){
              
               var ehour= '14'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")  
+       timestamp = moment(timestamp).add(1,'days')  
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            
            return Earnedhours.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, eh:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().earnedhour
@@ -1289,7 +1307,7 @@ planned1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
             var ehour= '15'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
-       timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+      timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            
            return Earnedhours.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, eh:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().earnedhour 
@@ -1307,7 +1325,7 @@ planned1: function (){
              
               var ehour= '16'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+       timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            
            return Earnedhours.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, eh:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().earnedhour
@@ -1325,7 +1343,7 @@ planned1: function (){
             
               var ehour= '17'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+       timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            
            return Earnedhours.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, eh:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().earnedhour
@@ -1344,7 +1362,7 @@ planned1: function (){
             
              var ehour= '18'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+       timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            
            return Earnedhours.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, eh:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().earnedhour
@@ -1362,7 +1380,7 @@ planned1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
               var ehour= '19'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+       timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            
            return Earnedhours.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, eh:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().earnedhour
@@ -1381,7 +1399,7 @@ planned1: function (){
            
              var ehour= '20'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")  
+       timestamp = moment(timestamp).add(1,'days')  
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            
            return Earnedhours.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, eh:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().earnedhour
@@ -1400,7 +1418,7 @@ planned1: function (){
             
              var ehour= '21'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+       timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            
            return Earnedhours.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, eh:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().earnedhour
@@ -1419,7 +1437,7 @@ planned1: function (){
             
               var ehour= '22'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+       timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            
            return Earnedhours.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, eh:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().earnedhour
@@ -1438,7 +1456,7 @@ planned1: function (){
              
               var ehour= '23'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")  
+       timestamp = moment(timestamp).add(1,'days')  
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            
            return Earnedhours.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, eh:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().earnedhour
@@ -1457,7 +1475,7 @@ planned1: function (){
              
              var ehour= '24'
         var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
-        timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+       timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            
            return Earnedhours.find({timestamp: {$gt: timestamp,$lt: newend}, wc:workcenter, eh:ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop().earnedhour
@@ -1478,7 +1496,7 @@ partnumber1: function (){
            
              var ehour= '1'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")  
+            timestamp = moment(timestamp).add(1,'days')  
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -1498,7 +1516,7 @@ partnumber1: function (){
                           
             var ehour= '2'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+            timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -1518,7 +1536,7 @@ partnumber1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
              var ehour= '3'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+            timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -1538,7 +1556,7 @@ partnumber1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
              var ehour= '4'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")  
+            timestamp = moment(timestamp).add(1,'days')  
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -1558,7 +1576,7 @@ partnumber1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
              var ehour= '5'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")  
+            timestamp = moment(timestamp).add(1,'days')  
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -1578,7 +1596,7 @@ partnumber1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
                var ehour= '6'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")  
+            timestamp = moment(timestamp).add(1,'days')  
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -1598,7 +1616,7 @@ partnumber1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
               var ehour= '7'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")  
+            timestamp = moment(timestamp).add(1,'days')  
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -1618,7 +1636,7 @@ partnumber1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
               var ehour= '8'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+            timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -1638,7 +1656,7 @@ partnumber1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
              var ehour= '9'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+            timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -1658,7 +1676,7 @@ partnumber1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
               var ehour= '10'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+            timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -1678,7 +1696,7 @@ partnumber1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
               var ehour= '11'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")  
+            timestamp = moment(timestamp).add(1,'days')  
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -1698,7 +1716,7 @@ partnumber1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
              var ehour= '12'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+            timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -1718,7 +1736,7 @@ partnumber1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
                var ehour= '13'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+            timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -1738,7 +1756,7 @@ partnumber1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
               var ehour= '14'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+            timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -1758,7 +1776,7 @@ partnumber1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
              var ehour= '15'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp  
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+            timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -1778,7 +1796,7 @@ partnumber1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
             var ehour= '16'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp  
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+            timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -1798,7 +1816,7 @@ partnumber1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
              var ehour= '17'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+            timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -1818,7 +1836,7 @@ partnumber1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
              var ehour= '18'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp  
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+            timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -1838,7 +1856,7 @@ partnumber1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
               var ehour= '19'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+            timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -1858,7 +1876,7 @@ partnumber1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
               var ehour= '20'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+            timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -1878,7 +1896,7 @@ partnumber1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
                var ehour= '21'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp  
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+            timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -1898,7 +1916,7 @@ partnumber1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
               var ehour= '22'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp  
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+            timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -1919,7 +1937,7 @@ partnumber1: function (){
             //count should go from the start of the query to the end of the hour of the day the job was submitted.
               var ehour= '23'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp  
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+            timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -1938,7 +1956,7 @@ partnumber1: function (){
                           
              var ehour= '24'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp  
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+            timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -1963,7 +1981,7 @@ job1: function (){
             var workcenter=Queries.find().fetch().pop().workcenter      
           var ehour= '1'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+            timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -1986,7 +2004,7 @@ job1: function (){
           var workcenter=Queries.find().fetch().pop().workcenter      
           var ehour= '2'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp  
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+            timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -2008,7 +2026,7 @@ job1: function (){
        var workcenter=Queries.find().fetch().pop().workcenter      
           var ehour= '3'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp  
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+            timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -2030,7 +2048,7 @@ job1: function (){
        var workcenter=Queries.find().fetch().pop().workcenter      
           var ehour= '4'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+            timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -2052,7 +2070,7 @@ job1: function (){
        var workcenter=Queries.find().fetch().pop().workcenter      
           var ehour= '5'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp  
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+            timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -2074,7 +2092,7 @@ job1: function (){
        var workcenter=Queries.find().fetch().pop().workcenter      
           var ehour= '6'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp  
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+            timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -2096,7 +2114,7 @@ job1: function (){
        var workcenter=Queries.find().fetch().pop().workcenter      
           var ehour= '7'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp  
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+            timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -2118,7 +2136,7 @@ job1: function (){
        var workcenter=Queries.find().fetch().pop().workcenter      
           var ehour= '8'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp  
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+            timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -2140,7 +2158,7 @@ job1: function (){
        var workcenter=Queries.find().fetch().pop().workcenter      
           var ehour= '9'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp  
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+            timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -2162,7 +2180,7 @@ job1: function (){
        var workcenter=Queries.find().fetch().pop().workcenter      
           var ehour= '10'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp  
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+            timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -2184,7 +2202,7 @@ job1: function (){
        var workcenter=Queries.find().fetch().pop().workcenter      
           var ehour= '11'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+            timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -2206,7 +2224,7 @@ job1: function (){
        var workcenter=Queries.find().fetch().pop().workcenter      
           var ehour= '12'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+            timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -2228,7 +2246,7 @@ job1: function (){
        var workcenter=Queries.find().fetch().pop().workcenter      
           var ehour= '13'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+            timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -2250,7 +2268,7 @@ job1: function (){
        var workcenter=Queries.find().fetch().pop().workcenter      
           var ehour= '14'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+            timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -2272,7 +2290,7 @@ job1: function (){
        var workcenter=Queries.find().fetch().pop().workcenter      
           var ehour= '15'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+            timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -2294,7 +2312,7 @@ job1: function (){
        var workcenter=Queries.find().fetch().pop().workcenter      
           var ehour= '16'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp  
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+            timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -2316,7 +2334,7 @@ job1: function (){
        var workcenter=Queries.find().fetch().pop().workcenter      
           var ehour= '17'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+            timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -2338,7 +2356,7 @@ job1: function (){
        var workcenter=Queries.find().fetch().pop().workcenter      
           var ehour= '18'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp  
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+            timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -2360,7 +2378,7 @@ job1: function (){
        var workcenter=Queries.find().fetch().pop().workcenter      
           var ehour= '19'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+            timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -2382,7 +2400,7 @@ job1: function (){
        var workcenter=Queries.find().fetch().pop().workcenter      
           var ehour= '20'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+            timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -2404,7 +2422,7 @@ job1: function (){
        var workcenter=Queries.find().fetch().pop().workcenter      
           var ehour= '21'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp  
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+            timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -2426,7 +2444,7 @@ job1: function (){
        var workcenter=Queries.find().fetch().pop().workcenter      
           var ehour= '22'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp 
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000") 
+            timestamp = moment(timestamp).add(1,'days') 
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -2448,7 +2466,7 @@ job1: function (){
        var workcenter=Queries.find().fetch().pop().workcenter      
           var ehour= '23'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp  
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+            timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
@@ -2470,7 +2488,7 @@ job1: function (){
        var workcenter=Queries.find().fetch().pop().workcenter      
           var ehour= '24'
              var timestamp=Parts.findOne({timestamp: {$gt: start,$lt: end}, workcenter:wc}).timestamp  
-             timestamp = moment(timestamp).add(1,'days').format("YYYY-MM-DD 07:00:00.000")
+            timestamp = moment(timestamp).add(1,'days')
          var newend=moment(timestamp).format("YYYY-MM-DD 24:59:99.999")
            if (typeof Planneds.find({timestamp: {$gte: timestamp,$lt: newend}, wc:workcenter,pl: ehour},{sort: {timestamp: 1}, limit: 1}).fetch().pop() =='object')
             {            
