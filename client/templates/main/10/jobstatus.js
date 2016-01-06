@@ -2,17 +2,13 @@
 
  
   var num= "10"
- function time (){
-    var nowtime=TimeSync.serverTime(null, 60000)
-    nowtime=moment(nowtime).format("YYYY-MM-DD HH:mm:ss.SSS")
-   return nowtime;
-   }
+ 
    Template.jobstatus10.rendered = function () {
   Meteor.subscribe('parts', num);
 Meteor.subscribe('hours', num);
  var begin =moment().subtract(10, 'days').format("YYYY-MM-DD 00:00:00.000")
 Meteor.subscribe('cycles-recent', begin, num)
-setInterval(function(){ TimeSync.resync(); }, 60000);
+
 }
  Template.jobstatus10.events({
   'click .rectangle': function(event){

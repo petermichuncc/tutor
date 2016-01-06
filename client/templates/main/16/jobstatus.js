@@ -2,11 +2,7 @@
 
  Meteor.subscribe('parts');
  var num= "16"
- function time (){
-    var nowtime=TimeSync.serverTime(null, 60000)
-    nowtime=moment(nowtime).format("YYYY-MM-DD HH:mm:ss.SSS")
-   return nowtime;
-   }
+ 
    Template.jobstatus16.rendered = function () {
  Meteor.subscribe('parts', num);
 Meteor.subscribe('hours', num);

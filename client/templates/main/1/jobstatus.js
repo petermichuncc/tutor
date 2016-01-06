@@ -8,20 +8,36 @@
 
 
 
-
+/*made = function(){
+  made=ReactiveMethod.call('amountMade', begin,yesterday,num);
+                console.log("This is the made test" + made)
+}*/
 var num="1"
-function time (){
-    var nowtime=TimeSync.serverTime(null, 60000)
-    nowtime=moment(nowtime).format("YYYY-MM-DD HH:mm:ss.SSS")
-   return nowtime;
-   }
+time = function(){
+  if (TimeSync.isSynced())
+  {
+  var nowtime=moment(TimeSync.serverTime(null, 120000)).format("YYYY-MM-DD HH:mm:ss.SSS")
+  return nowtime
+}
+}
     Template.jobstatus1.rendered = function () {
          Meteor.subscribe('parts', num);
 Meteor.subscribe('hours', num);
  var begin =moment().subtract(10, 'days').format("YYYY-MM-DD 00:00:00.000")
 Meteor.subscribe('cycles-recent', begin, num)
-setInterval(function(){ TimeSync.resync(); }, 60000);
+
 }
+Template.jobstatus1.helpers({
+        test: function ()
+ { 
+  
+         made=ReactiveMethod.call('amountMade', begin,yesterday,num);
+                console.log("This is the made test" + made)
+                return made
+        
+ }
+
+});
   
  Template.jobstatus1.events({
   'click .rectangle': function(event){
@@ -70,6 +86,9 @@ setInterval(function(){ TimeSync.resync(); }, 60000);
             //I need to count all the cycles before yesterday at 11 then start counting from that time
             //if the last job occured prior to yesterday at 11
             //I do this since I only subscribe data since yesterday at 11.
+              var yesterday=moment().subtract(1, 'days').format("YYYY-MM-DD 23:00:00.000")
+             
+              
                amountMade=Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: begin}}).count() * Parts.find({press:num},{sort: {timestamp: -1}, limit: 1}).fetch().pop().cavitation;
            
             
