@@ -61,7 +61,7 @@ setInterval(function(){ TimeSync.resync(); }, 60000);
             //I do this since I only subscribe data since yesterday at 11.
               amountMade=Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: begin}}).count() * Parts.find({press:num},{sort: {timestamp: -1}, limit: 1}).fetch().pop().cavitation;
            
-           
+           console.log("this is the cycles " +Cycles.find({PressNumber: num,AutoStatus: "1",CycleTimeStamp: {$gte: begin}}).count() + "This is the cav" + Parts.find({press:num},{sort: {timestamp: -1}, limit: 1}).fetch().pop().cavitation)
     
          var  hoursRemaining=(Parts.find({press:num}).fetch().pop().quantity - amountMade)/piecesPerHour
         hoursRemaining= Number(hoursRemaining)
