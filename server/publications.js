@@ -20,6 +20,9 @@ Meteor.publish('queries', function() {
 Meteor.publish('planneds', function() {
   return Planneds.find();
 });
+Meteor.publish('tutors', function() {
+  return Tutors.find();
+});
 Meteor.publish('incomingcycles', function() {
   return Incomingcycles.find();
 });
