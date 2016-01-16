@@ -1,0 +1,78 @@
+<template name="press2">
+ <head>
+<title>new query</title>
+</head>
+
+<body>
+
+<!-- {{>single}} -->
+
+
+  <div id="right">
+    <div id="wrap">
+    
+  
+      <form name="myForm" onsubmit="return validateForm()" method="post" class="workcenterSelection">
+      <table>
+      
+        
+        <tr>
+        <td>Tutor:</td> <td> 
+        <div class="form-group">
+            <label for="endtime"></label>
+        {{>partnumber}}
+          
+          </div>
+           </td>
+        </tr>
+             
+          
+        
+      </table>
+      
+       <button type="submit" class="btn btn-default">Remove</button>
+      <!-- <input type="submit" value="Submit" class="btn btn-primary"/> -->
+
+      </form>
+      <form name="myForm" onsubmit="return validateForm()" method="post" class="workcenteradd">
+      <table>
+      
+        
+        <tr>
+        <td>Name:</td> <td> 
+        <div class="form-group">
+            <label for="endtime"></label>
+            <input type="press" name="press" required class="form-control" id="tutor" placeholder="Enter the name of this tutor">
+          </div>
+           </td>
+        </tr>
+           <tr>
+        <td>Subject:</td> <td> 
+          <div class="form-group">
+            <label for="endtime"></label>
+            <input type="press" name="press" required class="form-control" id="subject" placeholder="Enter the subject for this tutor">
+          </div>
+          </td>
+        </tr>
+          
+          
+        
+      </table>
+      
+       <button type="submit" class="btn btn-default">Add</button>
+      <!-- <input type="submit" value="Submit" class="btn btn-primary"/> -->
+
+      </form>
+<!-- <button type="submit" class="btn btn-default" onclick="alert('Make sure the machine is in Automatic before continuing');">Enter</button> 
+
+ -->
+<!-- <input type='button' onclick='checkForm()' value='Enter' /> -->
+
+    </div>
+  </div>
+</body>
+
+
+
+
+</template>
