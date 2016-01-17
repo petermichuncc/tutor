@@ -7,7 +7,7 @@ Template.partnumber.rendered = function () {
 }
 
 Template.partnumber.events = {
-  'keyup input#partnumber': function () {
+  'keyup input#tutor': function () {
     AutoCompletion.autocomplete({
       element: 'input#tutor',       // DOM identifier for the element
       collection: Tutors,              // MeteorJS collection object

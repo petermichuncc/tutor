@@ -26,11 +26,13 @@ console.log(event);
 var text = $( "#someId" ).val();
 // "CellNum": "22",
 //       "CellID": "3100Q"
-console.log("this is the name" + $( "#tutor" ).val())
+console.log("this is the name" + $( "#name" ).val())
 console.log("this is the subject"+ $( "#subject" ).val())
+console.log("this is the location" + Geolocation.latLng())
 var post = {
-      Name: $( "#tutor" ).val(),
+      Name: $( "#name" ).val(),
        Subject: $( "#subject" ).val(),
+       Distance: $( "#distance" ).val(),
         
         
      };
@@ -51,4 +53,15 @@ Workcenters.allow({
   remove: function (userId, doc) {
     return true;
   }
+})
+
+Template.press.helpers({
+
+/*location: function ()
+
+{
+
+  return Geolocation.latLng()
+} */
+
 })
