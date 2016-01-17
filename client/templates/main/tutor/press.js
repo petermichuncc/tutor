@@ -20,8 +20,13 @@ function success(pos) {
   console.log('More or less ' + crd.accuracy + ' meters.');
   var latitude=crd.latitude
   var longitude=crd.longitude
-  Session.set("lat",latitude )
+  setInterval(function(){
+Session.set("lat",latitude )
  Session.set("long",longitude)
+
+
+  }, 3000);
+  
 
  console.log("lat" + Session.get("lat"))
 };
@@ -61,11 +66,16 @@ var text = $( "#someId" ).val();
 
 console.log("this is the name" + $( "#name" ).val())
 console.log("this is the subject"+ $( "#subject" ).val())
-console.log("this is the location" + Geolocation.latLng())
+
+
 var post = {
       Name: $( "#name" ).val(),
        Subject: $( "#subject" ).val(),
-       Distance: $( "#distance" ).val()
+       Distance: $( "#distance" ).val(),
+       Latitude:Session.get("lat"),
+       Longitude:Session.get("long"),
+
+
         
         
      };
