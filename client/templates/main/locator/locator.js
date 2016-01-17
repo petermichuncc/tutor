@@ -3,7 +3,7 @@ Template.locator.helpers({
 
 tutors: function(){
      
-      return Tutors.find({})
+      return Tutors.find({Distance:{$gte: "15"}})
 
     }
 
