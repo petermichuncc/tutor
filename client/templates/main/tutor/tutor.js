@@ -1,7 +1,44 @@
 var num = "1"
 
 
-Template.press2.events({
+
+Template.tutor.rendered = function ()
+{
+
+var options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0
+};
+
+function success(pos) {
+  var crd = pos.coords;
+
+  console.log('Your current position is:');
+  console.log('Latitude : ' + crd.latitude);
+  console.log('Longitude: ' + crd.longitude);
+  console.log('More or less ' + crd.accuracy + ' meters.');
+  var latitude=crd.latitude
+  var longitude=crd.longitude
+  setInterval(function(){
+Session.set("lat",latitude )
+ Session.set("long",longitude)
+
+
+  }, 3000);
+  
+
+ console.log("lat" + Session.get("lat"))
+};
+
+function error(err) {
+  console.warn('ERROR(' + err.code + '): ' + err.message);
+};
+ navigator.geolocation.getCurrentPosition(success, error, options);
+ setInterval(function(){ console.log("outside lat" + Session.get("lat"))}, 3000);
+ 
+}
+Template.tutor.events({
 "submit .workcenterSelection": function(event){
 event.defaultPrevented;
 console.log(event);
@@ -15,7 +52,7 @@ console.log("you chose this center" + center)
 //Here is the logic to determine the page to go to based on the time of day
 
 
-	Router.go('press');
+	Router.go('tutor');
 
 
 return false;
@@ -26,11 +63,18 @@ console.log(event);
 var text = $( "#someId" ).val();
 // "CellNum": "22",
 //       "CellID": "3100Q"
+
 console.log("this is the name" + $( "#name" ).val())
 console.log("this is the subject"+ $( "#subject" ).val())
+
+
 var post = {
       Name: $( "#name" ).val(),
        Subject: $( "#subject" ).val(),
+       Latitude:Session.get("lat"),
+       Longitude:Session.get("long")
+
+
         
         
      };
@@ -41,7 +85,7 @@ var post = {
 //Here is the logic to determine the page to go to based on the time of day
 
 
-	Router.go('press');
+	Router.go('tutor');
 
 
 return false;
@@ -53,7 +97,7 @@ Workcenters.allow({
   }
 })
 
-Template.press2.helpers({
+Template.tutor.helpers({
 
 /*location: function ()
 

@@ -2,7 +2,7 @@ var num = "1"
 
 
 
-Template.press.rendered = function ()
+Template.student.rendered = function ()
 {
 
 var options = {
@@ -38,7 +38,7 @@ function error(err) {
  setInterval(function(){ console.log("outside lat" + Session.get("lat"))}, 3000);
  
 }
-Template.press.events({
+Template.student.events({
 "submit .workcenterSelection": function(event){
 event.defaultPrevented;
 console.log(event);
@@ -46,13 +46,13 @@ var center = $( "#name" ).val();
 console.log("you chose this center" + center)
 
 
-      Meteor.call('tutorsRemove', center)
+      Meteor.call('studentsRemove', center)
 
 
 //Here is the logic to determine the page to go to based on the time of day
 
 
-	Router.go('press');
+  Router.go('student');
 
 
 return false;
@@ -71,22 +71,21 @@ console.log("this is the subject"+ $( "#subject" ).val())
 var post = {
       Name: $( "#name" ).val(),
        Subject: $( "#subject" ).val(),
-       Distance: $( "#distance" ).val(),
        Latitude:Session.get("lat"),
-       Longitude:Session.get("long"),
+       Longitude:Session.get("long")
 
 
         
         
      };
 
-      Meteor.call('tutorsInsert', post)
+      Meteor.call('studentsInsert', post)
 
 
 //Here is the logic to determine the page to go to based on the time of day
 
 
-	Router.go('press');
+  Router.go('student');
 
 
 return false;
@@ -98,7 +97,7 @@ Workcenters.allow({
   }
 })
 
-Template.press.helpers({
+Template.student.helpers({
 
 /*location: function ()
 
