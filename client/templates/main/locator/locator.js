@@ -38,6 +38,8 @@ distance: function(){
 
 //basically set lat 1 and lon 1 to the tutor and lat and lon 2 to the student
 //compare the distance and then output it to the user.
+//The user can then select those tutors within a certain distance from them.
+
 
 function distance(lat1, lon1, lat2, lon2, unit) {
 	var radlat1 = Math.PI * lat1/180
