@@ -64,12 +64,12 @@ var text = $( "#someId" ).val();
 // "CellNum": "22",
 //       "CellID": "3100Q"
 
-console.log("this is the name" + $( "#name" ).val())
+console.log("this is the name" + $( "#subject1" ).val())
 console.log("this is the subject"+ $( "#subject" ).val())
 
 
 var post = {
-      Name: $( "#name" ).val(),
+      Name: $( "#subject1" ).val(),
        Subject: $( "#subject" ).val(),
        Latitude:Session.get("lat"),
        Longitude:Session.get("long")
