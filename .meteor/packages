@@ -44,3 +44,4 @@ simple:reactive-method
 mdg:geolocation
 aslagle:reactive-table
 accounts-ui
+dburles:google-maps
