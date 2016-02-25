@@ -4,8 +4,12 @@
 </head>
 
 <body>
- <div class="map-container">
-    {{> googleMap name="exampleMap" options=exampleMapOptions}}
+  <div class="map-container">
+    {{#unless geolocationError}}
+      {{> googleMap name="map" options=mapOptions}}
+    {{else}}
+      Geolocation failed: {{geolocationError}}
+    {{/unless}}
   </div>
 
   
